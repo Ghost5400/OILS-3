@@ -1286,9 +1286,8 @@ GFH_STEP_CMD_QUESTIONS = {   1: [   {   'hint': 'Use the command that initialize
 
 _INTERNET_STATUS = None        # None = not checked yet; True/False after first check
 _QUESTIONS_JSON_URLS = [
-    "https://raw.githubusercontent.com/prajwalchonnad/OILS-3/main/arcade/git/data/questions.json",
-    "https://raw.githubusercontent.com/prajwalchonnad/OILS-3/main/questions.json",
-    "https://raw.githubusercontent.com/prajwalchonnad/just-learning-git-/main/questions.json",
+    "https://raw.githubusercontent.com/Ghost5400/OILS-3/main/arcade/git/data/questions.json",
+    "https://raw.githubusercontent.com/Ghost5400/OILS-3/main/questions.json",
 ]
 _REMOTE_BANK = None            # Cached parsed remote questions.json
 _LOCAL_BANK = None             # Cached parsed local questions.json

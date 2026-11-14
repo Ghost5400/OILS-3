@@ -2,7 +2,7 @@
 """
 🎮 OILS-3: OOPS, I LEARNT SOMETHING! (3rd Sem Engineering Edition)
 Author: Prajwal D. Chonnad
-Repository: prajwalchonnad/OILS-3
+Repository: Ghost5400/OILS-3
 
 Master Arcade Hub for all three 3rd-Sem engineering lab subjects:
   - 🐙 Git Mastery & Survival Arcade

@@ -1,113 +1,61 @@
 ================================================================================
-     ___  ____   ___  _   _ _____   _   _ ____  
-    / _ \| __ ) / _ \| | | |_   _| | | | / ___| 
-   | | | |  _ \| | | | | | | | |   | | | \___ \ 
-   | |_| | |_) | |_| | |_| | | |   | |_| |___) |
-    \___/|____/ \___/ \___/  |_|    \___/|____/ 
-
-     OILS-3: The Student Manifesto & The Story Behind the Screen
-================================================================================
-   "Because learning to code shouldn't feel like memorizing a phone book.
-    It should feel like dropping a beat, solving a mystery, and building 
-    something you're genuinely proud of."
+                                   ABOUT US
 ================================================================================
 
-
-1. 🎧 THE SPARK: WHEN CODE MET THE BEAT
+WHO WE ARE & WHAT WE DO
 --------------------------------------------------------------------------------
-Picture this: A cold Tuesday afternoon in an engineering college computer lab. 
-Flickering monitors, a blackboard covered in terrifying C pointers, and students 
-frantically copying lines of code they barely understood just to pass a signature 
-check before the lab bell rang.
+OILS-3 (Oops, I Learnt Something!) is an open-source, interactive terminal lab 
+companion created to help engineering students genuinely understand and master 
+their practical curriculum.
 
-That frustration sparked something different in the mind of PRAJWAL D CHONNAD.
-
-Prajwal — a B.Tech Computer Science student, an intern at Vajravyuha, and a 
-passionate Music Producer and DJ — realized a profound truth: 
-When you learn to DJ, you don't memorize sheet music in silence. You feel the 
-tempo, tweak the knobs, watch the waveform, and hear the drop. 
-
-So why was engineering education teaching programming languages through silent, 
-boring, rote-memorized walls of text? Why couldn't a Stack, a Linked List, or a 
-Git rebase be visualized, stepped through, touched, and felt? 
-
-That single question gave birth to OILS: "Oops, I Learnt Something!"
+Targeted at 3rd Semester Computer Science & Engineering students under the VTU 
+2025 Scheme, OILS-3 covers Data Structures (1BCS304), Java OOP (1BCS302), and 
+Git Version Control (1BCSL307A). Instead of copying programs for manual marks, 
+students can interact with step-by-step memory models, read concise block-by-block 
+logic breakdowns, resolve emergency debugging bugs, and practice timed viva drills 
+with dynamically randomized questions.
 
 
-2. ⚡ THE SYNERGY: TURNING AN IDEA INTO AN ARCHITECTURE
+HOW THIS STARTED
 --------------------------------------------------------------------------------
-A spark needs fuel to become a flame. Prajwal shared his raw vision with his 
-classmate and longtime collaborator, ADITYA GOTHE — the Founder of Vajravyuha.in.
+The idea originated from PRAJWAL D CHONNAD — currently an intern at Vajravyuha 
+and a B.Tech Computer Science student. Being deeply passionate about music 
+production and DJing, Prajwal experienced firsthand how difficult and counter-
+intuitive it was to learn programming languages through conventional, rote-heavy 
+teaching methods. He envisioned an interactive, hands-on tool that makes learning 
+code intuitive rather than stressful.
 
-Aditya brought high-octane engineering rigor, modular systems thinking, and 
-architectural clarity to the table. Together, late nights turned into brainstorming 
-sessions:
-- What if code wasn't explained line-by-boring-line, but block-by-block with 
-  real-world intuition?
-- What if every lab experiment had its own interactive ASCII memory sandbox where 
-  students could watch pointers move step by step?
-- What if the viva questions weren't predictable, but dynamically randomized with 
-  instant examiner feedback to build genuine confidence?
-
-Aditya took the raw, musical soul of the idea, reorganized the foundations, 
-engineered the modular engines, and helped transform OILS-3 into the polished, 
-production-grade learning terminal you see today.
+To bring the project to life, he collaborated with ADITYA GOTHE, his classmate 
+and the Founder of Vajravyuha.in. Aditya organized the core idea, restructured 
+the design, and engineered the modular terminal architecture to turn it into a 
+reliable, full-featured lab companion.
 
 
-3. ❤️ THE MISSION: BY THE STUDENTS, FOR THE STUDENTS
+THE CREATORS
 --------------------------------------------------------------------------------
-We didn't build OILS-3 to fulfill an assignment. We built it because we were 
-tired of seeing our friends panic before lab exams. We were tired of students 
-failing viva voce not because they were incapable, but because conventional 
-teaching made programming feel alien.
+• PRAJWAL D CHONNAD
+  - B.Tech Student (Computer Science & Engineering)
+  - Intern at Vajravyuha
+  - Music Producer & DJ
+  - LinkedIn : https://www.linkedin.com/in/prajwal-chonnad-4894a02b9
+  - Instagram: https://www.instagram.com/dj_pajju_ckd
 
-OILS-3 is proof that when students take their education into their own hands, 
-learning can be fast, visually intuitive, deeply empowering, and genuinely FUN.
+• ADITYA GOTHE
+  - Founder, Vajravyuha.in
+  - B.Tech Classmate (Computer Science & Engineering)
+  - Systems Architecture & Project Direction
+  - LinkedIn : https://www.linkedin.com/in/aditya-gothe5400
+  - Instagram: https://www.instagram.com/ascend.of.adi (Behind the scenes)
+
+• VAJRAVYUHA
+  - Website  : https://vajravyuha.in
 
 
-================================================================================
-👥 MEET THE CREATORS
-================================================================================
-
-🎧 PRAJWAL D CHONNAD
+OUR MOTIVATION
 --------------------------------------------------------------------------------
-Role        : Originator, Core Developer & Creative Visionary
-Background  : B.Tech Student (Computer Science & Engineering)
-Affiliation : Intern at Vajravyuha (vajravyuha.in)
-Passions    : Software Engineering, Music Production, DJing & Creative Systems
-🔗 LinkedIn : https://www.linkedin.com/in/prajwal-chonnad-4894a02b9
-📸 Instagram: https://www.instagram.com/dj_pajju_ckd  (DJ Pajju)
+We built this because we have lived through the same lab exam stress and viva 
+anxiety as our peers. We wanted to build something that actually helps students 
+learn with confidence.
 
-
-⚡ ADITYA GOTHE
---------------------------------------------------------------------------------
-Role        : Architect, Systems Strategist & Co-Creator
-Background  : Founder, Vajravyuha.in | B.Tech CSE Classmate
-Passions    : Technology Leadership, Distributed Architectures & Student Impact
-🔗 LinkedIn : https://www.linkedin.com/in/aditya-gothe5400
-📸 Instagram: https://www.instagram.com/ascend.of.adi (Behind the Scenes)
-
-
-🏢 VAJRAVYUHA
---------------------------------------------------------------------------------
-Empowering next-generation engineering solutions, student innovation, and tech.
-🌐 Website  : https://vajravyuha.in
-
-
+MADE BY THE STUDENTS FOR THE STUDENTS WITH LOVE ❤️
 ================================================================================
-💌 A NOTE TO EVERY STUDENT READING THIS:
-================================================================================
-If you're sitting in a lab right now feeling stressed about your upcoming viva 
-or your semester practicals: take a deep breath. You're not bad at coding; 
-the conventional methods were just failing you. 
-
-Run the experiments, play with the sandboxes, test yourself in the Viva Gauntlet, 
-and walk into your lab examination with your head held high. 
-
-You've got this. We built this for you.
-
-================================================================================
-             MADE BY THE STUDENTS, FOR THE STUDENTS WITH LOVE ❤️
-                       Prajwal D Chonnad & Aditya Gothe
-================================================================================
-

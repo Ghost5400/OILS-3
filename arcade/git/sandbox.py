@@ -1002,8 +1002,8 @@ def analyze_universal_git_command(user_query):
             warning = "Lists all registered remote repository nicknames and their URLs."
             simulated_output = (
                 f"$ git {cmd_str}\n"
-                "origin  https://github.com/prajwalchonnad/OILS-3.git (fetch)\n"
-                "origin  https://github.com/prajwalchonnad/OILS-3.git (push)"
+                "origin  https://github.com/Ghost5400/OILS-3.git (fetch)\n"
+                "origin  https://github.com/Ghost5400/OILS-3.git (push)"
             )
         when_to_use = [
             "'git remote -v' to verify where your repo is pointing on GitHub.",
