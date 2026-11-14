@@ -13,11 +13,12 @@ Master Arcade Hub for all three 3rd-Sem engineering lab subjects:
 import os
 import sys
 
-# Ensure For_Developers directory is on Python search path
+# Ensure For_Developers and root directory are on Python search path
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DEV_DIR = os.path.join(SCRIPT_DIR, "For_Developers")
-if DEV_DIR not in sys.path:
-    sys.path.insert(0, DEV_DIR)
+for p in (SCRIPT_DIR, DEV_DIR):
+    if p not in sys.path:
+        sys.path.insert(0, p)
 
 import time
 import random
@@ -40,7 +41,8 @@ def _configure_console():
         try:
             subprocess.Popen(
                 [sys.executable, script_path, "--new-window"],
-                creationflags=subprocess.CREATE_NEW_CONSOLE
+                creationflags=subprocess.CREATE_NEW_CONSOLE,
+                cwd=SCRIPT_DIR
             )
             print("\n\033[92m[*] Launching 'OILS-3: Master Arcade Hub' in a new dedicated window! 🚀\033[0m\n")
             sys.exit(0)
@@ -55,33 +57,16 @@ def _configure_console():
             pass
 
 # ── Arcade Submodule Imports ────────────────────────────────────────────────
-from arcade.core import (
-    Color, clear_screen, prompt_input, spinner,
-    print_slow, typewrite, anim_correct, anim_wrong,
-)
+from arcade.core import Color, clear_screen, prompt_input
 from arcade.session import (
-    _SESSION, _record_concept_mastered, _unlock_badge,
-    _show_session_header, _end_of_session_summary, _show_trophy_case,
-    _init_profile_dialog, _get_rank, _xp_bar,
-    BANNER, _BADGES, _clear_local_db,
+    _SESSION, _show_session_header, _end_of_session_summary,
+    _show_trophy_case, _init_profile_dialog, BANNER, _BADGES, _clear_local_db,
 )
-from arcade.git.studio import (
-    mode_git_studio, GIT_EXPERIMENTS,
-)
-from arcade.git.sandbox import (
-    mode_git_command_sandbox,
-    analyze_universal_git_command,
-)
-from arcade.dsa.studio import mode_dsa_studio, DSA_EXPERIMENTS
-from arcade.java.studio import mode_java_studio, JAVA_EXPERIMENTS
+from arcade.git.studio import mode_git_studio
+from arcade.dsa.studio import mode_dsa_studio
+from arcade.java.studio import mode_java_studio
 from arcade.vault import _show_code_vault
 from arcade.viva_bank import run_viva_drill_session
-
-__all__ = [
-    "analyze_universal_git_command",
-    "mode_git_command_sandbox",
-    "main",
-]
 
 def mode_quickfire_drill_hub():
     """
@@ -96,7 +81,7 @@ def mode_quickfire_drill_hub():
         print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
         print("  Select your lab to get the 15 most important viva questions (2 sets per lab):\n")
         print(f"  {Color.YELLOW}[1]{Color.RESET} 🐙  {Color.BOLD}Git Lab (1BCSL307A){Color.RESET}        (2 Sets · 30 Top Viva Questions)")
-        print(f"  {Color.GREEN}[2]{Color.RESET} 🌳  {Color.BOLD}DSA Lab (1BCSL306){Color.RESET}         (2 Sets · 30 Top Viva Questions)")
+        print(f"  {Color.GREEN}[2]{Color.RESET} 🌳  {Color.BOLD}DSA Lab (1BCS304){Color.RESET}           (2 Sets · 30 Top Viva Questions)")
         print(f"  {Color.CYAN}[3]{Color.RESET} ☕  {Color.BOLD}Java OOP Lab (1BCS302){Color.RESET}     (2 Sets · 30 Top Viva Questions)")
         print(f"  {Color.DIM}[0]{Color.RESET} ⬅️   Back to Main Menu\n")
 
@@ -142,7 +127,7 @@ def main():
         print(f"  {Color.YELLOW}[1]{Color.RESET} 🐙  {Color.BOLD}Git Lab Studio{Color.RESET}  {Color.DIM}(1BCSL307A · 12 Experiments){Color.RESET}")
         print(f"      {Color.DIM}↳ 12 VTU Lab Experiments, Block Explanations, Command Library, Sandbox & Socratic Viva{Color.RESET}")
 
-        print(f"\n  {Color.GREEN}[2]{Color.RESET} 🌳  {Color.BOLD}DSA Lab Studio{Color.RESET}  {Color.DIM}(1BCSL306 · 12 Experiments){Color.RESET}")
+        print(f"\n  {Color.GREEN}[2]{Color.RESET} 🌳  {Color.BOLD}DSA Lab Studio{Color.RESET}  {Color.DIM}(1BCS304 · 12 Experiments){Color.RESET}")
         print(f"      {Color.DIM}↳ Interactive Memory Sandboxes, 3-Part Block Logic, Disaster Scenarios & Viva{Color.RESET}")
 
         print(f"\n  {Color.CYAN}[3]{Color.RESET} ☕  {Color.BOLD}Java OOP Lab Studio{Color.RESET}  {Color.DIM}(1BCS302 · 10 Experiments){Color.RESET}")
