@@ -1,8 +1,13 @@
+# pyright: reportMissingImports=false
 """
 arcade.git.sandbox — Universal Git Command Sandbox and Danger Radar.
 """
-from arcade.core import Color, clear_screen, prompt_input
-from arcade.session import _record_concept_mastered, _unlock_badge
+try:
+    from arcade.core import Color, clear_screen, prompt_input  # type: ignore
+    from arcade.session import _record_concept_mastered, _unlock_badge  # type: ignore
+except (ImportError, ValueError):
+    from ..core import Color, clear_screen, prompt_input  # type: ignore
+    from ..session import _record_concept_mastered, _unlock_badge  # type: ignore
 
 GIT_CORE_SUBCOMMANDS = {
     "add": ("Stages file changes from the working directory into the Staging Area (Index) for the next commit snapshot.", "CAUTION", 3.0),

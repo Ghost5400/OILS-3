@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false
 """
 arcade.dialogues — Context-Aware Dialogue Engine for OILS-3.
 Provides 40+ authentic, non-AI-slop 3rd-sem engineering student banter lines
@@ -5,7 +6,11 @@ rotated via no-repeat shuffle decks across Hub, Git, DSA, Java, and Viva screens
 """
 
 import random
-from arcade.core import Color
+
+try:
+    from arcade.core import Color  # type: ignore
+except (ImportError, ValueError):
+    from .core import Color  # type: ignore
 
 DIALOGUE_POOLS = {
     "general": [
@@ -108,3 +113,4 @@ def print_dialogue(category: str = "general", prefix: str = "  💬 ", newline_a
     color = THEME_COLORS.get((category or "general").lower(), Color.YELLOW)
     end = "\n" if newline_after else ""
     print(f"{prefix}{color}{line}{Color.RESET}{end}")
+

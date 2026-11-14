@@ -1,0 +1,9 @@
+{
+  "extraPaths": [
+    ".",
+    "arcade",
+    ".."
+  ],
+  "reportMissingImports": false,
+  "reportMissingModuleSource": false
+}

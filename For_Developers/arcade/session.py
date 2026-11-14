@@ -1,16 +1,23 @@
+# pyright: reportMissingImports=false
 """
 arcade.session — User profile, local database, educational milestones, and learning progress.
 """
 import os
 import json
 import time
-import random
 
-from arcade.core import (
-    PROJECT_ROOT, Color, clear_screen, prompt_input, typewrite,
-)
-import arcade.core as _core_mod
-from arcade.dialogues import print_dialogue
+try:
+    from arcade.core import (  # type: ignore
+        PROJECT_ROOT, Color, clear_screen, prompt_input, typewrite,
+    )
+    import arcade.core as _core_mod  # type: ignore
+    from arcade.dialogues import print_dialogue  # type: ignore
+except (ImportError, ValueError):
+    from .core import (  # type: ignore
+        PROJECT_ROOT, Color, clear_screen, prompt_input, typewrite,
+    )
+    from . import core as _core_mod  # type: ignore
+    from .dialogues import print_dialogue  # type: ignore
 
 DB_PATH = os.path.join(PROJECT_ROOT, "oils_local_db.json")
 

@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false
 """
 arcade.dsa.studio — DSA Lab Studio (1BCSL306 — 12 Experiments, VTU 2025 Scheme).
 Interactive memory sandboxes, fast & fun block logic breakdowns, disaster recovery & viva.
@@ -6,28 +7,52 @@ import os
 import time
 import random
 
-from arcade.core import (
-    PROJECT_ROOT, Color, clear_screen, prompt_input, spinner,
-    print_slow, anim_correct, anim_wrong, shuffle_mcq_options,
-)
-from arcade.session import (
-    _SESSION, _record_concept_mastered, _unlock_badge,
-    _save_to_local_db, _show_session_header,
-)
-from arcade.vault import _view_source_file
-from arcade.dsa.experiments_data import DSA_EXPERIMENTS
-from arcade.dsa.disasters import DSA_DISASTER_SCENARIOS
-from arcade.dsa.vivas import DSA_VIVA_GAUNTLET
-from arcade.dsa.visualizers_interactive import (
-    visualizer_stack,
-    visualizer_linear_queue,
-    visualizer_circular_queue,
-    visualizer_singly_linked_list,
-    visualizer_circular_linked_list,
-    visualizer_bst,
-    visualizer_hash_table,
-    mode_dsa_visualizers_menu,
-)
+try:
+    from arcade.core import (  # type: ignore
+        PROJECT_ROOT, Color, clear_screen, prompt_input, spinner,
+        print_slow, anim_correct, anim_wrong, shuffle_mcq_options,
+    )
+    from arcade.session import (  # type: ignore
+        _SESSION, _record_concept_mastered, _unlock_badge,
+        _save_to_local_db, _show_session_header,
+    )
+    from arcade.vault import _view_source_file  # type: ignore
+    from arcade.dsa.experiments_data import DSA_EXPERIMENTS  # type: ignore
+    from arcade.dsa.disasters import DSA_DISASTER_SCENARIOS  # type: ignore
+    from arcade.dsa.vivas import DSA_VIVA_GAUNTLET  # type: ignore
+    from arcade.dsa.visualizers_interactive import (  # type: ignore
+        visualizer_stack,
+        visualizer_linear_queue,
+        visualizer_circular_queue,
+        visualizer_singly_linked_list,
+        visualizer_circular_linked_list,
+        visualizer_bst,
+        visualizer_hash_table,
+        mode_dsa_visualizers_menu,
+    )
+except (ImportError, ValueError):
+    from ..core import (  # type: ignore
+        PROJECT_ROOT, Color, clear_screen, prompt_input, spinner,
+        print_slow, anim_correct, anim_wrong, shuffle_mcq_options,
+    )
+    from ..session import (  # type: ignore
+        _SESSION, _record_concept_mastered, _unlock_badge,
+        _save_to_local_db, _show_session_header,
+    )
+    from ..vault import _view_source_file  # type: ignore
+    from .experiments_data import DSA_EXPERIMENTS  # type: ignore
+    from .disasters import DSA_DISASTER_SCENARIOS  # type: ignore
+    from .vivas import DSA_VIVA_GAUNTLET  # type: ignore
+    from .visualizers_interactive import (  # type: ignore
+        visualizer_stack,
+        visualizer_linear_queue,
+        visualizer_circular_queue,
+        visualizer_singly_linked_list,
+        visualizer_circular_linked_list,
+        visualizer_bst,
+        visualizer_hash_table,
+        mode_dsa_visualizers_menu,
+    )
 
 # Map experiments to interactive sandboxes
 EXP_SANDBOX_MAP = {

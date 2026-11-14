@@ -1,13 +1,20 @@
+# pyright: reportMissingImports=false
 """
 arcade.vault — In-Terminal Code Vault and source file viewer.
 Instant access to all verified source files, experiments, and commands across Git, DSA, and Java.
 """
 import os
 
-from arcade.core import PROJECT_ROOT, Color, clear_screen, prompt_input
-from arcade.session import _unlock_badge, _SESSION, _save_to_local_db
-from arcade.git.story import LAB_EXPERIMENTS
-from arcade.dialogues import print_dialogue
+try:
+    from arcade.core import PROJECT_ROOT, Color, clear_screen, prompt_input  # type: ignore
+    from arcade.session import _unlock_badge, _SESSION, _save_to_local_db  # type: ignore
+    from arcade.git.story import LAB_EXPERIMENTS  # type: ignore
+    from arcade.dialogues import print_dialogue  # type: ignore
+except (ImportError, ValueError):
+    from .core import PROJECT_ROOT, Color, clear_screen, prompt_input  # type: ignore
+    from .session import _unlock_badge, _SESSION, _save_to_local_db  # type: ignore
+    from .git.story import LAB_EXPERIMENTS  # type: ignore
+    from .dialogues import print_dialogue  # type: ignore
 
 def _view_source_file(file_path, title):
     clear_screen()

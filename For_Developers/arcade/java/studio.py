@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false
 """
 arcade.java.studio — Java OOP Lab Studio (1BCS302 — 10 Experiments, VTU 2025 Scheme).
 Interactive architecture & runtime sandboxes, fast & fun block logic breakdowns & viva.
@@ -6,18 +7,32 @@ import os
 import time
 import random
 
-from arcade.core import (
-    PROJECT_ROOT, Color, clear_screen, prompt_input, spinner,
-    print_slow, anim_correct, anim_wrong, shuffle_mcq_options,
-)
-from arcade.session import (
-    _SESSION, _record_concept_mastered, _unlock_badge,
-    _save_to_local_db, _show_session_header,
-)
-from arcade.vault import _view_source_file
-from arcade.java.experiments_data import JAVA_EXPERIMENTS
-from arcade.java.disasters import JAVA_DISASTER_SCENARIOS
-from arcade.java.vivas import JAVA_VIVA_GAUNTLET
+try:
+    from arcade.core import (  # type: ignore
+        PROJECT_ROOT, Color, clear_screen, prompt_input, spinner,
+        print_slow, anim_correct, anim_wrong, shuffle_mcq_options,
+    )
+    from arcade.session import (  # type: ignore
+        _SESSION, _record_concept_mastered, _unlock_badge,
+        _save_to_local_db, _show_session_header,
+    )
+    from arcade.vault import _view_source_file  # type: ignore
+    from arcade.java.experiments_data import JAVA_EXPERIMENTS  # type: ignore
+    from arcade.java.disasters import JAVA_DISASTER_SCENARIOS  # type: ignore
+    from arcade.java.vivas import JAVA_VIVA_GAUNTLET  # type: ignore
+except (ImportError, ValueError):
+    from ..core import (  # type: ignore
+        PROJECT_ROOT, Color, clear_screen, prompt_input, spinner,
+        print_slow, anim_correct, anim_wrong, shuffle_mcq_options,
+    )
+    from ..session import (  # type: ignore
+        _SESSION, _record_concept_mastered, _unlock_badge,
+        _save_to_local_db, _show_session_header,
+    )
+    from ..vault import _view_source_file  # type: ignore
+    from .experiments_data import JAVA_EXPERIMENTS  # type: ignore
+    from .disasters import JAVA_DISASTER_SCENARIOS  # type: ignore
+    from .vivas import JAVA_VIVA_GAUNTLET  # type: ignore
 
 
 # ==============================================================================

@@ -1,9 +1,13 @@
+# pyright: reportMissingImports=false
 """
 arcade.dsa.visualizers_interactive — Interactive ASCII Memory & Data Structure Sandboxes.
 Preserves the user-driven, step-by-step learning style of commit 237ae62.
 """
 import time
-from arcade.core import Color, clear_screen, prompt_input
+try:
+    from arcade.core import Color, clear_screen, prompt_input  # type: ignore
+except (ImportError, ValueError):
+    from ..core import Color, clear_screen, prompt_input  # type: ignore
 
 
 # ==============================================================================

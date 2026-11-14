@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false
 """
 arcade.viva_bank — Comprehensive Viva Question Bank for VTU 2025 Scheme.
 Contains 6 full practice sets (2 sets per lab, 15 questions each):
@@ -6,10 +7,14 @@ Contains 6 full practice sets (2 sets per lab, 15 questions each):
   - Java OOP Lab (1BCS302): Set 1 & Set 2
 Includes Socratic Guided Hinting runner with warm mentor feedback.
 """
-import random
-from arcade.core import Color, clear_screen, prompt_input, spinner, anim_correct, anim_wrong, shuffle_mcq_options
-from arcade.session import _record_concept_mastered, _show_session_header, _unlock_badge
-from arcade.dialogues import print_dialogue
+try:
+    from arcade.core import Color, clear_screen, prompt_input, spinner, anim_correct, anim_wrong, shuffle_mcq_options  # type: ignore
+    from arcade.session import _record_concept_mastered, _unlock_badge  # type: ignore
+    from arcade.dialogues import print_dialogue  # type: ignore
+except (ImportError, ValueError):
+    from .core import Color, clear_screen, prompt_input, spinner, anim_correct, anim_wrong, shuffle_mcq_options  # type: ignore
+    from .session import _record_concept_mastered, _unlock_badge  # type: ignore
+    from .dialogues import print_dialogue  # type: ignore
 
 # ════════════════════════════════════════════════════════════════════════════════
 # 1. GIT LAB (1BCSL307A) — 30 VIVA QUESTIONS (SET 1 & SET 2)

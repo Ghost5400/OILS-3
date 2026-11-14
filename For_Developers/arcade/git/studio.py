@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false
 """
 arcade.git.studio — Git Lab Studio (1BCSL307A — 12 Experiments, VTU 2025 Scheme).
 Strictly experiment-grounded engineering lab companion, command library & viva hub.
@@ -10,21 +11,28 @@ import os
 import time
 import random
 
-from arcade.core import (
-    Color, clear_screen, prompt_input, spinner,
-    print_slow, anim_correct, anim_wrong, shuffle_mcq_options,
-)
-from arcade.session import (
-    _SESSION, _record_concept_mastered, _unlock_badge,
-    _save_to_local_db, _show_session_header, BANNER,
-)
-from arcade.git.sandbox import mode_git_command_sandbox
-
-# ==============================================================================
-# 12 VTU GIT LAB EXPERIMENTS (1BCSL307A)
-# ==============================================================================
-
-from arcade.git.experiments_data import GIT_EXPERIMENTS
+try:
+    from arcade.core import (  # type: ignore
+        Color, clear_screen, prompt_input, spinner,
+        print_slow, anim_correct, anim_wrong, shuffle_mcq_options,
+    )
+    from arcade.session import (  # type: ignore
+        _SESSION, _record_concept_mastered, _unlock_badge,
+        _save_to_local_db, _show_session_header, BANNER,
+    )
+    from arcade.git.sandbox import mode_git_command_sandbox  # type: ignore
+    from arcade.git.experiments_data import GIT_EXPERIMENTS  # type: ignore
+except (ImportError, ValueError):
+    from ..core import (  # type: ignore
+        Color, clear_screen, prompt_input, spinner,
+        print_slow, anim_correct, anim_wrong, shuffle_mcq_options,
+    )
+    from ..session import (  # type: ignore
+        _SESSION, _record_concept_mastered, _unlock_badge,
+        _save_to_local_db, _show_session_header, BANNER,
+    )
+    from .sandbox import mode_git_command_sandbox  # type: ignore
+    from .experiments_data import GIT_EXPERIMENTS  # type: ignore
 
 
 

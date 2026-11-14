@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false
 """
 arcade.git.questions — Git for Humans checkpoint quiz engine and remote question bank.
 """
@@ -9,10 +10,16 @@ import random
 import urllib.request
 import urllib.error
 
-from arcade.core import (
-    PROJECT_ROOT, Color, clear_screen, prompt_input, spinner,
-    progress_bar, typewrite, anim_correct, anim_wrong,
-)
+try:
+    from arcade.core import (  # type: ignore
+        PROJECT_ROOT, Color, clear_screen, prompt_input, spinner,
+        progress_bar, typewrite, anim_correct, anim_wrong,
+    )
+except (ImportError, ValueError):
+    from ..core import (  # type: ignore
+        PROJECT_ROOT, Color, clear_screen, prompt_input, spinner,
+        progress_bar, typewrite, anim_correct, anim_wrong,
+    )
 
 def _ask_checkpoint_q(item):
     """

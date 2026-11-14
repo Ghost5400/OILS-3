@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false
 """
 arcade.git.story — Git for Humans story mode, Viva Gauntlet, Disaster Recovery,
 Command Arena, and Git Arcade menu.
@@ -5,17 +6,30 @@ Command Arena, and Git Arcade menu.
 import time
 import random
 
-from arcade.core import (
-    Color, clear_screen, prompt_input, spinner, progress_bar,
-    print_slow, anim_correct, anim_wrong,
-)
-from arcade.session import (
-    _record_concept_mastered, _unlock_badge,
-    _show_session_header, BANNER, _SESSION, _save_to_local_db,
-)
-from arcade.git.questions import _run_step_checkpoint
-from arcade.git.sandbox import mode_git_command_sandbox
-from arcade.dialogues import print_dialogue
+try:
+    from arcade.core import (  # type: ignore
+        Color, clear_screen, prompt_input, spinner, progress_bar,
+        print_slow, anim_correct, anim_wrong,
+    )
+    from arcade.session import (  # type: ignore
+        _record_concept_mastered, _unlock_badge,
+        _show_session_header, BANNER, _SESSION, _save_to_local_db,
+    )
+    from arcade.git.questions import _run_step_checkpoint  # type: ignore
+    from arcade.git.sandbox import mode_git_command_sandbox  # type: ignore
+    from arcade.dialogues import print_dialogue  # type: ignore
+except (ImportError, ValueError):
+    from ..core import (  # type: ignore
+        Color, clear_screen, prompt_input, spinner, progress_bar,
+        print_slow, anim_correct, anim_wrong,
+    )
+    from ..session import (  # type: ignore
+        _record_concept_mastered, _unlock_badge,
+        _show_session_header, BANNER, _SESSION, _save_to_local_db,
+    )
+    from .questions import _run_step_checkpoint  # type: ignore
+    from .sandbox import mode_git_command_sandbox  # type: ignore
+    from ..dialogues import print_dialogue  # type: ignore
 
 VIVA_QUESTIONS = [
     {
