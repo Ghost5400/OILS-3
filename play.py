@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# pyright: reportMissingImports=false
 """
 🎮 OILS-3: OOPS, I LEARNT SOMETHING! (3rd Sem Engineering Edition)
 Author: Prajwal D. Chonnad
@@ -21,7 +22,6 @@ for p in (SCRIPT_DIR, DEV_DIR):
         sys.path.insert(0, p)
 
 import time
-import random
 import subprocess
 
 # Ensure UTF-8 output on Windows consoles
@@ -57,16 +57,28 @@ def _configure_console():
             pass
 
 # ── Arcade Submodule Imports ────────────────────────────────────────────────
-from arcade.core import Color, clear_screen, prompt_input
-from arcade.session import (
-    _SESSION, _show_session_header, _end_of_session_summary,
-    _show_trophy_case, _init_profile_dialog, BANNER, _BADGES, _clear_local_db,
-)
-from arcade.git.studio import mode_git_studio
-from arcade.dsa.studio import mode_dsa_studio
-from arcade.java.studio import mode_java_studio
-from arcade.vault import _show_code_vault
-from arcade.viva_bank import run_viva_drill_session
+try:
+    from arcade.core import Color, clear_screen, prompt_input  # type: ignore
+    from arcade.session import (  # type: ignore
+        _SESSION, _show_session_header, _end_of_session_summary,
+        _show_trophy_case, _init_profile_dialog, BANNER, _BADGES, _clear_local_db,
+    )
+    from arcade.git.studio import mode_git_studio  # type: ignore
+    from arcade.dsa.studio import mode_dsa_studio  # type: ignore
+    from arcade.java.studio import mode_java_studio  # type: ignore
+    from arcade.vault import _show_code_vault  # type: ignore
+    from arcade.viva_bank import run_viva_drill_session  # type: ignore
+except ImportError:
+    from For_Developers.arcade.core import Color, clear_screen, prompt_input  # type: ignore
+    from For_Developers.arcade.session import (  # type: ignore
+        _SESSION, _show_session_header, _end_of_session_summary,
+        _show_trophy_case, _init_profile_dialog, BANNER, _BADGES, _clear_local_db,
+    )
+    from For_Developers.arcade.git.studio import mode_git_studio  # type: ignore
+    from For_Developers.arcade.dsa.studio import mode_dsa_studio  # type: ignore
+    from For_Developers.arcade.java.studio import mode_java_studio  # type: ignore
+    from For_Developers.arcade.vault import _show_code_vault  # type: ignore
+    from For_Developers.arcade.viva_bank import run_viva_drill_session  # type: ignore
 
 def mode_quickfire_drill_hub():
     """
