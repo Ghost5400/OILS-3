@@ -9,6 +9,7 @@ Includes Socratic Guided Hinting runner with warm mentor feedback.
 import random
 from arcade.core import Color, clear_screen, prompt_input, spinner, anim_correct, anim_wrong, shuffle_mcq_options
 from arcade.session import _record_concept_mastered, _show_session_header, _unlock_badge
+from arcade.dialogues import print_dialogue
 
 # ════════════════════════════════════════════════════════════════════════════════
 # 1. GIT LAB (1BCSL307A) — 30 VIVA QUESTIONS (SET 1 & SET 2)
@@ -1260,8 +1261,8 @@ def run_viva_drill_session(subject_key, set_key):
     print(f"\n{Color.YELLOW}{Color.BOLD}╔══════════════════════════════════════════════════════════════════════════════╗")
     print(f"║  🎓 {sub_data['title']:<72} ║")
     print(f"║  📖 {set_data['name']:<72} ║")
-    print(f"╚══════════════════════════════════════════════════════════════════════════════╝{Color.RESET}")
-    print(f"\n  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}")
+    print(f"╚══════════════════════════════════════════════════════════════════════════════╝{Color.RESET}\n")
+    print_dialogue(subject_key or "viva")
     print(f"  {Color.DIM}15 high-yield viva questions with Socratic hints. No stress, take your time!{Color.RESET}\n")
     prompt_input("  Press Enter to begin the practice drill... ")
 
@@ -1335,7 +1336,7 @@ def run_viva_drill_session(subject_key, set_key):
     print(f"║  🎉 PRACTICE DRILL COMPLETE — {sub_data['title']:<43} ║")
     print(f"╚══════════════════════════════════════════════════════════════════════════════╝{Color.RESET}\n")
 
-    print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+    print_dialogue("viva")
     print(f"  🎯 Questions Practiced       : {total_q}")
     print(f"  🌟 Mastered on First Try    : {Color.GREEN}{correct_first_try}{Color.RESET}")
     print(f"  💡 Mastered with Mentor Clue : {Color.YELLOW}{correct_second_try}{Color.RESET}")

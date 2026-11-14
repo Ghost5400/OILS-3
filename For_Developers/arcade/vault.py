@@ -7,6 +7,7 @@ import os
 from arcade.core import PROJECT_ROOT, Color, clear_screen, prompt_input
 from arcade.session import _unlock_badge, _SESSION, _save_to_local_db
 from arcade.git.story import LAB_EXPERIMENTS
+from arcade.dialogues import print_dialogue
 
 def _view_source_file(file_path, title):
     clear_screen()
@@ -53,8 +54,8 @@ def _show_code_vault():
         clear_screen()
         print(f"\n{Color.MAGENTA}{Color.BOLD}================================================================================{Color.RESET}")
         print("  ⚡ QUICK REFERENCE & CODE VAULT — Full In-Terminal Program Viewer")
-        print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}")
         print(f"{Color.MAGENTA}{Color.BOLD}================================================================================{Color.RESET}\n")
+        print_dialogue("general")
 
         base = PROJECT_ROOT
         dsa_dir = os.path.join(base, "dsa-lab", "programs")

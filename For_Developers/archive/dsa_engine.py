@@ -673,7 +673,7 @@ def mode_dsa_viva():
     print(f"\n{Color.YELLOW}{Color.BOLD}=================================================================={Color.RESET}")
     print(f"{Color.YELLOW}{Color.BOLD}  🎓 DSA LAB VIVA PREP & CONCEPT MASTERY (1BCSL306) 🎓{Color.RESET}")
     print(f"{Color.YELLOW}{Color.BOLD}=================================================================={Color.RESET}")
-    print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+    print(f"  {Color.YELLOW}Breathe. Nobody in this batch actually understands all 3 labs either. You're fine.{Color.RESET}\n")
     print("  Stress-free practice with Socratic hints and examiner expectations.\n")
 
     score = 0

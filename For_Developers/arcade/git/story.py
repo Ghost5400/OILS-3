@@ -15,6 +15,7 @@ from arcade.session import (
 )
 from arcade.git.questions import _run_step_checkpoint
 from arcade.git.sandbox import mode_git_command_sandbox
+from arcade.dialogues import print_dialogue
 
 VIVA_QUESTIONS = [
     {
@@ -473,7 +474,7 @@ def mode_viva_gauntlet():
     print(f"{Color.CYAN}{Color.BOLD}╔════════════════════════════════════════════════════════════════════╗")
     print("║   🎓 MODE 3: GIT LAB VIVA PREP & CONCEPTUAL Q&A (1BCSL307A)       ║")
     print("╚════════════════════════════════════════════════════════════════════╝\n")
-    print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+    print_dialogue("git")
     print_slow("Explore real examiner questions at your own pace with Socratic hints and clear takeaways.\n", 0.015, Color.CYAN)
     
     score = 0

@@ -68,6 +68,7 @@ try:
     from arcade.java.studio import mode_java_studio  # type: ignore
     from arcade.vault import _show_code_vault  # type: ignore
     from arcade.viva_bank import run_viva_drill_session  # type: ignore
+    from arcade.dialogues import print_dialogue  # type: ignore
 except ImportError:
     from For_Developers.arcade.core import Color, clear_screen, prompt_input  # type: ignore
     from For_Developers.arcade.session import (  # type: ignore
@@ -79,6 +80,7 @@ except ImportError:
     from For_Developers.arcade.java.studio import mode_java_studio  # type: ignore
     from For_Developers.arcade.vault import _show_code_vault  # type: ignore
     from For_Developers.arcade.viva_bank import run_viva_drill_session  # type: ignore
+    from For_Developers.arcade.dialogues import print_dialogue  # type: ignore
 
 def mode_quickfire_drill_hub():
     """
@@ -90,7 +92,7 @@ def mode_quickfire_drill_hub():
         print(f"\n{Color.YELLOW}{Color.BOLD}╔══════════════════════════════════════════════════════════════════════════════╗")
         print("║   ⚡ QUICK-FIRE VIVA DRILL — VTU High-Yield Practice Sets (6 Total Sets)    ║")
         print(f"╚══════════════════════════════════════════════════════════════════════════════╝{Color.RESET}\n")
-        print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+        print_dialogue("viva")
         print("  Select your lab to get the 15 most important viva questions (2 sets per lab):\n")
         print(f"  {Color.YELLOW}[1]{Color.RESET} 🐙  {Color.BOLD}Git Lab (1BCSL307A){Color.RESET}        (2 Sets · 30 Top Viva Questions)")
         print(f"  {Color.GREEN}[2]{Color.RESET} 🌳  {Color.BOLD}DSA Lab (1BCS304){Color.RESET}           (2 Sets · 30 Top Viva Questions)")

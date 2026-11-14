@@ -516,7 +516,7 @@ def mode_java_viva():
     print(f"\n{Color.YELLOW}{Color.BOLD}=================================================================={Color.RESET}")
     print(f"{Color.YELLOW}{Color.BOLD}  🎓 JAVA OOP VIVA PREP & CONCEPT MASTERY (1BCS302) 🎓{Color.RESET}")
     print(f"{Color.YELLOW}{Color.BOLD}=================================================================={Color.RESET}")
-    print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+    print(f"  {Color.YELLOW}Welcome to Java, where AbstractProxyFactoryBeanDelegate is considered a concise, readable variable name.{Color.RESET}\n")
     print("  Stress-free practice with Socratic hints and examiner expectations.\n")
 
     score = 0

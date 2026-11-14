@@ -10,6 +10,7 @@ from arcade.core import (
     PROJECT_ROOT, Color, clear_screen, prompt_input, typewrite,
 )
 import arcade.core as _core_mod
+from arcade.dialogues import print_dialogue
 
 DB_PATH = os.path.join(PROJECT_ROOT, "oils_local_db.json")
 
@@ -164,7 +165,7 @@ def _init_profile_dialog():
         print(f"\n{Color.CYAN}{Color.BOLD}{'═'*78}{Color.RESET}")
         print("  💾 SAVED LAB PROGRESS FOUND ON THIS DEVICE")
         print(f"{Color.CYAN}{Color.BOLD}{'═'*78}{Color.RESET}\n")
-        print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+        print_dialogue("general")
 
         exps = set(data.get("experiments_done", []))
         git_done = len([e for e in exps if str(e).startswith("GIT-")])
@@ -303,7 +304,7 @@ def _get_rank(xp=0):
 def _show_session_header(show_welcome=True, subject=None):
     """Print clean learning progress and local DB status header."""
     if show_welcome:
-        print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}")
+        print_dialogue(subject or "general")
 
     git_done, dsa_done, java_done = _get_subject_counts()
 
@@ -356,7 +357,7 @@ def _end_of_session_summary():
     print(f"{Color.CYAN}{Color.BOLD}  🎓 LEARNING SESSION SUMMARY — OILS-3 LAB COMPANION{Color.RESET}")
     print(f"{Color.CYAN}{Color.BOLD}{'═'*74}{Color.RESET}\n")
 
-    print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+    print_dialogue("general")
     typewrite(f"  ⏱️  Time Spent Learning : {mins}m {secs}s", 0.012, Color.CYAN)
     typewrite(f"  🧪 Lab Experiments Done : {total_exps}/34 (Git: {git_done}/12 · DSA: {dsa_done}/12 · Java: {java_done}/10)", 0.012, Color.GREEN)
     typewrite(f"  🎬 Visualizers Explored : {vis_done}/22 Core Memory & Architecture Concepts", 0.012, Color.BLUE)
