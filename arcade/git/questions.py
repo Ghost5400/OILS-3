@@ -1286,6 +1286,7 @@ GFH_STEP_CMD_QUESTIONS = {   1: [   {   'hint': 'Use the command that initialize
 
 _INTERNET_STATUS = None        # None = not checked yet; True/False after first check
 _QUESTIONS_JSON_URLS = [
+    "https://raw.githubusercontent.com/prajwalchonnad/OILS-3/main/arcade/git/data/questions.json",
     "https://raw.githubusercontent.com/prajwalchonnad/OILS-3/main/questions.json",
     "https://raw.githubusercontent.com/prajwalchonnad/just-learning-git-/main/questions.json",
 ]
@@ -1315,11 +1316,16 @@ def _get_local_bank():
     if _LOCAL_BANK is not None:
         return _LOCAL_BANK
     try:
-        local_path = os.path.join(PROJECT_ROOT, "questions.json")
-        if os.path.isfile(local_path):
-            with open(local_path, "r", encoding="utf-8") as f:
-                _LOCAL_BANK = json.load(f)
-                return _LOCAL_BANK
+        candidate_paths = [
+            os.path.join(os.path.dirname(__file__), "data", "questions.json"),
+            os.path.join(PROJECT_ROOT, "arcade", "git", "data", "questions.json"),
+            os.path.join(PROJECT_ROOT, "questions.json"),
+        ]
+        for path in candidate_paths:
+            if os.path.isfile(path):
+                with open(path, "r", encoding="utf-8") as f:
+                    _LOCAL_BANK = json.load(f)
+                    return _LOCAL_BANK
     except Exception:
         pass
     return None

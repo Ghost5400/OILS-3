@@ -2,10 +2,11 @@
 
 > *"Welcome buddy, don't worry I am there for u ❤️; we will face it together..."*
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/prajwalchonnad/OILS-3)
 ![OILS-3](https://img.shields.io/badge/OILS--3-Oops%2C%20I%20Learnt%20Something!-6f42c1?style=for-the-badge&logo=codeforces&logoColor=white)
 ![Semester](https://img.shields.io/badge/Target-3rd%20Sem%20CSE%2FISE-informational?style=for-the-badge)
 ![Git](https://img.shields.io/badge/Git-1BCSL307A%20Complete-F05032?style=for-the-badge&logo=git&logoColor=white)
-![DSA](https://img.shields.io/badge/DSA-1BCSL306%20Complete-orange?style=for-the-badge&logo=c&logoColor=white)
+![DSA](https://img.shields.io/badge/DSA-1BCS304%20Complete-orange?style=for-the-badge&logo=c&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-1BCS302%20Complete-blue?style=for-the-badge&logo=openjdk&logoColor=white)
 
 ---
@@ -18,16 +19,22 @@ Instead of confusing code dumps, high-stress pressure, or disconnected textbook 
 
 ```
 OILS-3/
-├── 🚀 Main Companion Launcher (play.py / play.bat)
-│   ├── 🐙 Git Lab Studio (1BCSL307A — 12 Experiments, Story Mode, Command Arena, Socratic Viva)
-│   ├── 🌳 DSA Lab Studio (1BCSL306 — 12 Experiments, 12 Visualizers, Sandboxes, Emergency Debugging, Viva)
-│   ├── ☕ Java OOP Studio (1BCS302 — 10 Experiments, 10 Visualizers, Sandboxes, Emergency Debugging, Viva)
-│   ├── 🎬 Visual Concept Studio (22 Deep Animated Memory & Architecture Visualizers)
-│   ├── 🎓 High-Yield Viva Practice Hub (6 Sets · 90 Top Questions with Socratic Guided Hints)
-│   ├── ⚡ Quick Reference & In-Terminal Code Vault (Instant access to all 34 lab source files)
-│   └── 🏆 Educational Milestones Cabinet (13 Syllabus Milestones tracked locally)
-├── 🌳 DSA Lab Module (dsa-lab/programs/) — 12 Verified C Source Files (1BCSL306)
-└── ☕ Java Lab Module (java-lab/programs/) — 10 Verified Java Source Files (1BCS302)
+├── 📜 open_me.txt            <-- Complete launch instructions & VTU 2025 scheme catalog
+├── 📜 about_us.txt           <-- The story, creators (Prajwal & Aditya), and student manifesto
+├── 🚀 play.py / play.bat     <-- Cross-platform terminal launchers (Windows, Mac, Linux)
+├── 🐚 play.sh                <-- Native bash launcher for Mac, Linux & Mobile Termux
+├── 📁 arcade/                <-- Pedagogy engines (DSA, Java, Git, Viva Bank, Memory Sandboxes)
+│   ├── core.py               <-- Terminal UI styling, animated banner & dynamic MCQ shuffling
+│   ├── dsa/                  <-- 12 DSA experiments, interactive ASCII sandboxes & disasters
+│   ├── java/                 <-- 10 Java experiments, OOP visualizers & disasters
+│   └── git/                  <-- 12 Git experiments, command arena, sandbox & question bank
+├── 🌳 dsa-lab/programs/      <-- 12 Verified VTU C Programs (1BCS304)
+├── ☕ java-lab/programs/     <-- 10 Verified VTU Java Programs (1BCS302)
+├── 📚 docs/                  <-- Curated handbooks, git cheatsheets and guides
+│   ├── GIT_REFERENCE.md      <-- The plain-English zero-jargon guide
+│   ├── GIT_COMMANDS.md       <-- The complete command reference
+│   └── GIT_CHEATSHEET.txt    <-- Quick syntax reference
+└── 📦 archive/               <-- Historical monolithic engines
 ```
 
 ---
@@ -48,8 +55,9 @@ Master version control before team project merge conflicts blow up!
   - 🚨 **Disaster Recovery:** Hands-on scenarios fixing detached HEAD, secret leaks, merge conflicts, and lost commits.
   - 🧪 **Interactive Command Sandbox & Danger Radar:** Simulated execution of 30+ Git commands with safety meters and emergency undo blueprints.
 - **Handbooks & Cheatsheets:**
-  - 📖 [GIT_FOR_HUMANS.md](GIT_FOR_HUMANS.md) — The plain-English zero-jargon guide.
-  - 📚 [GIT_COMMANDS.md](GIT_COMMANDS.md) — The complete cheatsheet from beginner to ninja.
+  - 📖 [docs/GIT_REFERENCE.md](docs/GIT_REFERENCE.md) — The plain-English zero-jargon guide.
+  - 📚 [docs/GIT_COMMANDS.md](docs/GIT_COMMANDS.md) — The complete cheatsheet from beginner to ninja.
+  - 📜 [docs/GIT_CHEATSHEET.txt](docs/GIT_CHEATSHEET.txt) — High-yield exam syntax notes.
 
 ---
 
@@ -140,24 +148,49 @@ Progress is tied strictly to genuine academic achievements, saved directly to yo
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start & Cross-Platform Terminal Access
 
-### 1. Clone the Repo:
+### 💻 On Windows
 ```bash
 git clone https://github.com/prajwalchonnad/OILS-3.git
 cd OILS-3
+# Double click play.bat OR run in PowerShell/CMD:
+.\play.bat
 ```
 
-### 2. Launch the Companion:
+### 🍎 On macOS & Linux
 ```bash
-python play.py
+git clone https://github.com/prajwalchonnad/OILS-3.git
+cd OILS-3
+chmod +x play.sh
+./play.sh
 ```
-*(On Windows: Just double-click **`play.bat`**!)*
+
+### 📱 On Mobile Devices (Android Termux / iOS iSH)
+Run the companion directly in your phone terminal:
+```bash
+pkg update && pkg install git python -y
+git clone https://github.com/prajwalchonnad/OILS-3.git
+cd OILS-3 && python play.py
+```
+
+### 🌐 Zero-Install Browser Terminal (GitHub Codespaces)
+Don't want to install Python or Git locally?
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/prajwalchonnad/OILS-3)
+Click the badge above to open an instant, genuine Linux terminal right inside your web browser on PC, tablet, or phone!
 
 ---
 
-## 👨‍💻 Author & Dedication
+## 👥 The Creators & Student Manifesto
 
-Curated with ❤️ by **Prajwal D. Chonnad** for engineering students everywhere.
+> *"Because learning to code shouldn't feel like memorizing a phone book. It should feel like dropping a beat, solving a mystery, and building something you're genuinely proud of."*
 
-> *"Welcome buddy, don't worry I am there for u ❤️; we will face it together..."*
+Born from the creative vision of **PRAJWAL D CHONNAD** (CSE Student, DJ & Intern at Vajravyuha) and architected in collaboration with **ADITYA GOTHE** (Founder, Vajravyuha.in).
+
+📖 Read the complete student manifesto in [`about_us.txt`](about_us.txt)  
+📋 Detailed VTU 2025 Scheme syllabus & setup guide in [`open_me.txt`](open_me.txt)
+
+```
+             MADE BY THE STUDENTS, FOR THE STUDENTS WITH LOVE ❤️
+                       Prajwal D Chonnad & Aditya Gothe
+```
