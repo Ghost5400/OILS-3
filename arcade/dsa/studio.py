@@ -1,6 +1,6 @@
 """
 arcade.dsa.studio — DSA Lab Studio (1BCSL306 — 12 Experiments, VTU 2025 Scheme).
-Interactive memory sandboxes, 3-part block logic breakdowns, disaster recovery & viva.
+Interactive memory sandboxes, fast & fun block logic breakdowns, disaster recovery & viva.
 """
 import os
 import time
@@ -8,7 +8,7 @@ import random
 
 from arcade.core import (
     PROJECT_ROOT, Color, clear_screen, prompt_input, spinner,
-    print_slow, anim_correct, anim_wrong,
+    print_slow, anim_correct, anim_wrong, shuffle_mcq_options,
 )
 from arcade.session import (
     _SESSION, _record_concept_mastered, _unlock_badge,
@@ -61,21 +61,23 @@ def mode_dsa_disaster():
         print_slow(s['story'], 0.010, Color.WHITE)
         print(f"\n{Color.CYAN}{Color.BOLD}Diagnostic Question:{Color.RESET}\n  {s['prompt']}\n")
 
-        for idx, ch in enumerate(s["choices"], 1):
+        # Dynamically shuffle disaster choices so option 1 isn't always correct!
+        shuffled_choices, target_idx = shuffle_mcq_options(s["choices"], s["ans_idx"])
+        for idx, ch in enumerate(shuffled_choices, 1):
             print(f"  {Color.YELLOW}[{idx}]{Color.RESET} {ch}")
 
         while True:
-            pick = prompt_input(f"\n{Color.BOLD}Your decision [1 - 4] (0=Menu): {Color.RESET}").strip()
+            pick = prompt_input(f"\n{Color.BOLD}Your decision [1 - {len(shuffled_choices)}] (0=Menu): {Color.RESET}").strip()
             if pick in ["0", "menu", "q", "exit"]:
                 return
-            if pick in ["1", "2", "3", "4"]:
+            if pick.isdigit() and 1 <= int(pick) <= len(shuffled_choices):
                 pick = int(pick)
                 break
             print(f"{Color.RED}Please enter 1, 2, 3, or 4!{Color.RESET}")
 
         spinner("Analyzing heap state & pointer registers", duration=0.6, color=Color.RED)
 
-        if pick == s["ans_idx"]:
+        if pick == target_idx:
             anim_correct()
             _record_concept_mastered("disaster averted")
             _unlock_badge("dsa_memory")
@@ -84,8 +86,8 @@ def mode_dsa_disaster():
             print(f"{Color.GREEN}{s['reaction']}{Color.RESET}\n")
         else:
             anim_wrong()
-            print(f"\n{Color.RED}{Color.BOLD}❌ WRONG DIAGNOSIS! Correct answer was [{s['ans_idx']}]:{Color.RESET}")
-            print(f"   {Color.WHITE}{s['choices'][s['ans_idx']-1]}{Color.RESET}")
+            print(f"\n{Color.RED}{Color.BOLD}❌ WRONG DIAGNOSIS! Correct answer was [{target_idx}]:{Color.RESET}")
+            print(f"   {Color.WHITE}{shuffled_choices[target_idx - 1]}{Color.RESET}")
             print(f"\n{Color.DIM}{s['reaction']}{Color.RESET}\n")
         prompt_input(f"{Color.DIM}Press Enter for next scenario...{Color.RESET}")
 
@@ -99,7 +101,7 @@ def run_dsa_experiment_lab(exp):
     base_dir = PROJECT_ROOT
     source_path = os.path.join(base_dir, exp["file"])
 
-    # Stage 1: The Big Picture & Intuition
+    # Stage 1: The Big Picture Story
     clear_screen()
     print()
     _show_session_header(subject="dsa")
@@ -107,9 +109,10 @@ def run_dsa_experiment_lab(exp):
     print(f"║  🌳 EXPERIMENT {exp['num']:02d} ({exp['part']}): {exp['title']:<52} ║")
     print("╚" + ("═" * 78) + "╝" + Color.RESET)
     print()
-    print(f"{Color.YELLOW}{Color.BOLD}[Stage 1/4] 💡 THE BIG PICTURE & MENTAL MODEL:{Color.RESET}")
+    print(f"{Color.YELLOW}{Color.BOLD}[Stage 1/4] 💡 THE BIG PICTURE STORY (How the whole program works):{Color.RESET}")
     print()
-    print_slow(f"  {exp['concept']}", 0.008, Color.WHITE)
+    story_text = exp.get("story", exp.get("concept", ""))
+    print_slow(f"  {story_text}", 0.008, Color.WHITE)
     print()
     print(f"{Color.CYAN}{Color.BOLD}🎯 VTU Lab Requirement:{Color.RESET}")
     print(f"  {exp['problem']}")
@@ -124,7 +127,7 @@ def run_dsa_experiment_lab(exp):
     print(Color.DIM + ("─" * 80) + Color.RESET)
     prompt_input(f"{Color.GREEN}{Color.BOLD}👉 Press Enter to inspect the complete C code first...{Color.RESET}")
 
-    # Stage 2: Complete Source Code First
+    # Stage 2: Complete Source Code
     clear_screen()
     print()
     print(Color.GREEN + Color.BOLD + "╔" + ("═" * 78) + "╗")
@@ -136,11 +139,9 @@ def run_dsa_experiment_lab(exp):
     funny_spinners = [
         "Consulting Stack Overflow (just kidding, we have the code)",
         "malloc()-ing your brain cells for maximum absorption",
-        "Asking ChatGPT... nah, we wrote this ourselves",
-        "Garbage collecting wrong assumptions",
         "Compiling elegance into your neurons",
     ]
-    spinner(random.choice(funny_spinners), duration=0.5, color=Color.GREEN)
+    spinner(random.choice(funny_spinners), duration=0.4, color=Color.GREEN)
     print()
 
     if os.path.isfile(source_path):
@@ -164,11 +165,11 @@ def run_dsa_experiment_lab(exp):
     elif sub_pick == "S" and sb_tuple:
         sb_tuple[1]()
 
-    # Stage 3: Structured 3-Part Block Breakdown
+    # Stage 3: Fast & Fun 3-Bullet Block Logic Breakdown
     clear_screen()
     print()
     print(Color.MAGENTA + Color.BOLD + "╔" + ("═" * 78) + "╗")
-    print("║  🔍 [Stage 3/4] 3-PART STRUCTURED BLOCK LOGIC BREAKDOWN                      ║")
+    print("║  🔍 [Stage 3/4] STEP-BY-STEP CODE EXPLANATION (From First Line to Last Line) ║")
     print("╚" + ("═" * 78) + "╝" + Color.RESET)
     print()
 
@@ -179,23 +180,24 @@ def run_dsa_experiment_lab(exp):
             print(f"    {Color.WHITE}{Color.BOLD}{l}{Color.RESET}")
         print("  " + Color.DIM + ("─" * 72) + Color.RESET)
 
-        # 1. Purpose & Role
-        print(f"  {Color.GREEN}{Color.BOLD}1. 🎯 Purpose & Role:{Color.RESET}")
-        print(f"     {b.get('purpose', b.get('explanation', ''))}\n")
+        # 1. 🎯 What we are doing
+        doing_text = b.get("doing", b.get("purpose", ""))
+        print(f"  {Color.GREEN}{Color.BOLD}1. 🎯 What we are doing:{Color.RESET}")
+        print(f"     {doing_text}\n")
 
-        # 2. Inside the Block
-        if "inside" in b:
-            print(f"  {Color.CYAN}{Color.BOLD}2. 🔍 Inside the Block (Components & Variables):{Color.RESET}")
-            for item in b["inside"]:
+        # 2. 🔍 How it works
+        how_items = b.get("how", b.get("inside", []))
+        if how_items:
+            print(f"  {Color.CYAN}{Color.BOLD}2. 🔍 How it works:{Color.RESET}")
+            for item in how_items:
                 print(f"     • {item}")
             print()
 
-        # 3. Execution Flow
-        if "flow" in b:
-            print(f"  {Color.YELLOW}{Color.BOLD}3. ⚙️ Step-by-Step Execution Flow:{Color.RESET}")
-            for step in b["flow"]:
-                print(f"     ↳ {step}")
-            print()
+        # 3. 💡 Real-world intuition / Watch out
+        watchout_text = b.get("watchout", "")
+        if watchout_text:
+            print(f"  {Color.YELLOW}{Color.BOLD}3. 💡 Real-World Intuition / Exam Trap:{Color.RESET}")
+            print(f"     {watchout_text}\n")
 
         if idx < len(exp["blocks"]):
             prompt_input(f"  {Color.DIM}Press Enter for Block {idx+1}...{Color.RESET}\n")
@@ -203,7 +205,7 @@ def run_dsa_experiment_lab(exp):
     print(Color.DIM + ("─" * 80) + Color.RESET)
     prompt_input(f"{Color.GREEN}{Color.BOLD}👉 Ready? Press Enter to test your understanding with a quick challenge!{Color.RESET}")
 
-    # Stage 4: Guided Code Challenge (MCQ)
+    # Stage 4: Guided Code Challenge (MCQ with Dynamic Randomization)
     clear_screen()
     ch = exp["challenge"]
     print()
@@ -213,11 +215,12 @@ def run_dsa_experiment_lab(exp):
     print()
     _show_session_header(subject="dsa")
 
-    print(f"{Color.BOLD}{Color.WHITE}{ch['prompt']}{Color.RESET}")
-    print()
+    print(f"{Color.BOLD}{Color.WHITE}{ch['prompt']}{Color.RESET}\n")
 
     if "opts" in ch:
-        for opt in ch["opts"]:
+        # Dynamically shuffle options so correct answer is truly random on the fly!
+        shuffled_opts, target_opt = shuffle_mcq_options(ch["opts"], ch.get("correct_opt", "A"))
+        for opt in shuffled_opts:
             print(f"  {Color.CYAN}{opt}{Color.RESET}")
         print()
         print("  " + Color.DIM + "(Tip: Type A, B, C, D or 'H' for a Hint  |  No shame in hints!)" + Color.RESET)
@@ -232,35 +235,16 @@ def run_dsa_experiment_lab(exp):
                 break
             print(f"{Color.RED}Please type A, B, C, or D!{Color.RESET}")
 
-        spinner(random.choice([
-            "Analyzing your code selection",
-            "Consulting the C standard committee",
-            "Checking pointer arithmetic sanity",
-            "Running valgrind on your answer",
-        ]), duration=0.6, color=Color.CYAN)
+        spinner("Analyzing your answer", duration=0.4, color=Color.CYAN)
 
-        if ans == ch.get("correct_opt", "A"):
+        if ans == target_opt:
             anim_correct()
             _record_concept_mastered("MCQ correct")
             print(f"\n{Color.GREEN}{Color.BOLD}🎉 {ch['praise']}{Color.RESET}\n")
         else:
             anim_wrong()
             print(f"\n{Color.RED}{Color.BOLD}❌ {ch['roast']}{Color.RESET}")
-            print(f"   {Color.YELLOW}✅ Expected Answer was ({ch.get('correct_opt', 'A')}): {ch['hint']}{Color.RESET}\n")
-    else:
-        print(f"  {Color.DIM}Hint: {ch['hint']}{Color.RESET}\n")
-        user_ans = prompt_input(f"{Color.GREEN}Your Answer > {Color.RESET}").strip()
-        norm_user = "".join(user_ans.split()).lower()
-        norm_accepted = ["".join(a.split()).lower() for a in ch.get("answers", [])]
-
-        if norm_user in norm_accepted or any(norm_user in a for a in norm_accepted):
-            anim_correct()
-            _record_concept_mastered("correct")
-            print(f"\n{Color.GREEN}{Color.BOLD}🎉 {ch['praise']}{Color.RESET}\n")
-        else:
-            anim_wrong()
-            print(f"\n{Color.RED}{Color.BOLD}❌ {ch['roast']}{Color.RESET}")
-            print(f"   {Color.YELLOW}Expected: {ch['hint']}{Color.RESET}\n")
+            print(f"   {Color.YELLOW}✅ Expected Answer was ({target_opt}): {ch['hint']}{Color.RESET}\n")
 
     # Mark experiment as done
     exp_id = f"DSA-{exp['num']}"
@@ -284,9 +268,11 @@ def mode_dsa_viva():
     random.shuffle(questions)
 
     for idx, q in enumerate(questions, 1):
+        # Dynamically shuffle options so answer is truly randomized!
+        shuffled_opts, target_ans = shuffle_mcq_options(q["options"], q["ans"])
         print(f"\n{Color.CYAN}{Color.BOLD}[Question {idx}/{len(questions)}]{Color.RESET}")
         print(f"{Color.BOLD}{q['q']}{Color.RESET}\n")
-        for opt in q["options"]:
+        for opt in shuffled_opts:
             print(f"  {opt}")
 
         attempt = 1
@@ -304,7 +290,7 @@ def mode_dsa_viva():
                 print(f"{Color.RED}Please type A, B, C, or D!{Color.RESET}")
                 continue
 
-            if ans == q["ans"]:
+            if ans == target_ans:
                 solved = True
                 anim_correct()
                 _record_concept_mastered("viva correct")
@@ -320,7 +306,7 @@ def mode_dsa_viva():
                     print(f"  {Color.YELLOW}💡 Clue: {q['tip']}{Color.RESET}")
                     attempt += 1
                 else:
-                    print(f"  {Color.MAGENTA}No worries! The correct answer is [{q['ans']}].{Color.RESET}")
+                    print(f"  {Color.MAGENTA}No worries! The correct answer is [{target_ans}].{Color.RESET}")
                     attempt += 1
 
         print(f"\n  {Color.CYAN}💡 Examiner Expectation: {q['tip']}{Color.RESET}")

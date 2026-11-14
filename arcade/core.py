@@ -179,3 +179,60 @@ def prompt_input(prompt_text=""):
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+
+def shuffle_mcq_options(options, correct_val):
+    """
+    Dynamically shuffles options (A/B/C/D or 1/2/3/4) so the correct answer
+    lands in a completely randomized position each time.
+    
+    Supports:
+      - options: list of strings (either with prefix 'A) ', '[A] ' or plain text)
+      - correct_val: 'A', 'B', 'C', 'D' or 1-based integer index (1, 2, 3, 4)
+      
+    Returns:
+      (shuffled_options, new_correct_val)
+    """
+    if not options or len(options) <= 1:
+        return options, correct_val
+
+    import re
+    cleaned = []
+    for opt in options:
+        c = re.sub(r'^(?:\[[A-D]\]|[A-D]\)|\b[A-D]\.)\s*', '', opt.strip())
+        cleaned.append(c)
+
+    # Determine which item in options is the correct one
+    if isinstance(correct_val, int):
+        target_idx = correct_val - 1
+    elif isinstance(correct_val, str) and correct_val.upper() in ("A", "B", "C", "D"):
+        target_idx = ord(correct_val.upper()) - ord("A")
+    else:
+        target_idx = 0
+
+    if target_idx < 0 or target_idx >= len(cleaned):
+        target_idx = 0
+    correct_item = cleaned[target_idx]
+
+    # Pair items and shuffle
+    indices = list(range(len(cleaned)))
+    random.shuffle(indices)
+    shuffled_cleaned = [cleaned[i] for i in indices]
+    new_idx = shuffled_cleaned.index(correct_item)
+
+    letters = ["A", "B", "C", "D", "E", "F"]
+    has_bracket = any(opt.strip().startswith("[A]") or opt.strip().startswith("[B]") for opt in options)
+    has_paren = any(opt.strip().startswith("A)") or opt.strip().startswith("B)") for opt in options)
+
+    if has_bracket:
+        formatted = [f"[{letters[i]}] {item}" for i, item in enumerate(shuffled_cleaned)]
+        new_val = letters[new_idx]
+    elif has_paren:
+        formatted = [f"{letters[i]}) {item}" for i, item in enumerate(shuffled_cleaned)]
+        new_val = letters[new_idx]
+    else:
+        formatted = shuffled_cleaned
+        new_val = new_idx + 1 if isinstance(correct_val, int) else letters[new_idx]
+
+    return formatted, new_val
+
+

@@ -7,7 +7,7 @@ Contains 6 full practice sets (2 sets per lab, 15 questions each):
 Includes Socratic Guided Hinting runner with warm mentor feedback.
 """
 import random
-from arcade.core import Color, clear_screen, prompt_input, spinner, anim_correct, anim_wrong
+from arcade.core import Color, clear_screen, prompt_input, spinner, anim_correct, anim_wrong, shuffle_mcq_options
 from arcade.session import _record_concept_mastered, _show_session_header, _unlock_badge
 
 # ════════════════════════════════════════════════════════════════════════════════
@@ -1266,13 +1266,16 @@ def run_viva_drill_session(subject_key, set_key):
     prompt_input("  Press Enter to begin the practice drill... ")
 
     for idx, item in enumerate(questions, 1):
+        # Dynamically shuffle options so the correct answer is randomized every session!
+        shuffled_opts, target_ans = shuffle_mcq_options(item["options"], item["ans"])
+
         clear_screen()
         print(f"\n{Color.CYAN}{Color.BOLD}╔══════════════════════════════════════════════════════════════════════════════╗")
         print(f"║  Question {idx:02d} of {total_q:02d}  •  {sub_data['title']:<53} ║")
         print(f"╚══════════════════════════════════════════════════════════════════════════════╝{Color.RESET}\n")
 
         print(f"  {Color.BOLD}{Color.WHITE}{item['q']}{Color.RESET}\n")
-        for opt in item["options"]:
+        for opt in shuffled_opts:
             print(f"    {Color.CYAN}{opt}{Color.RESET}")
 
         print(f"\n  {Color.DIM}(Tip: Type A, B, C, D  |  'H' for Mentor Clue  |  '0' to Exit){Color.RESET}\n")
@@ -1295,7 +1298,7 @@ def run_viva_drill_session(subject_key, set_key):
 
             spinner("Reflecting on your answer", duration=0.35, color=Color.YELLOW)
 
-            if ans == item["ans"]:
+            if ans == target_ans:
                 solved = True
                 anim_correct()
                 if attempt == 1:
@@ -1317,7 +1320,7 @@ def run_viva_drill_session(subject_key, set_key):
                     anim_wrong()
                     reviewed_together += 1
                     print(f"\n  {Color.MAGENTA}🤝 No worries at all buddy! Learning is a process — we face it together.{Color.RESET}")
-                    print(f"  {Color.YELLOW}The correct answer is [{item['ans']}].{Color.RESET}")
+                    print(f"  {Color.YELLOW}The correct answer is [{target_ans}].{Color.RESET}")
                     attempt += 1
 
         print(f"\n  {Color.CYAN}{'─'*74}{Color.RESET}")
