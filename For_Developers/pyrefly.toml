@@ -1,0 +1,6 @@
+search-path = [
+    ".",
+    "arcade",
+    "..",
+]
+preset = "off"
