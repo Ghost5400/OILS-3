@@ -1238,3 +1238,4 @@ def mode_git_studio():
                 time.sleep(0.6)
         else:
             time.sleep(0.3)
+

@@ -748,3 +748,4 @@ def mode_dsa_visualizers_menu():
             visualizer_bst()
         elif ch == "7":
             visualizer_hash_table()
+
