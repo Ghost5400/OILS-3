@@ -8,7 +8,7 @@ Includes Socratic Guided Hinting runner with warm mentor feedback.
 """
 import random
 from arcade.core import Color, clear_screen, prompt_input, spinner, anim_correct, anim_wrong
-from arcade.session import _award_xp, _show_session_header, _unlock_badge
+from arcade.session import _record_concept_mastered, _show_session_header, _unlock_badge
 
 # ════════════════════════════════════════════════════════════════════════════════
 # 1. GIT LAB (1BCSL307A) — 30 VIVA QUESTIONS (SET 1 & SET 2)
@@ -1300,11 +1300,11 @@ def run_viva_drill_session(subject_key, set_key):
                 anim_correct()
                 if attempt == 1:
                     correct_first_try += 1
-                    _award_xp(20, "viva question correct")
+                    _record_concept_mastered("viva question correct")
                     print(f"\n  {Color.GREEN}{Color.BOLD}✔ {item['praise']}{Color.RESET}")
                 else:
                     correct_second_try += 1
-                    _award_xp(10, "viva second attempt correct")
+                    _record_concept_mastered("viva second attempt correct")
                     print(f"\n  {Color.GREEN}{Color.BOLD}🎉 Brilliant recovery buddy! You nailed it! ❤️{Color.RESET}")
             else:
                 if attempt == 1:

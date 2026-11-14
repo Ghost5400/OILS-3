@@ -53,7 +53,7 @@ from arcade.core import (
     print_slow, typewrite, anim_correct, anim_wrong,
 )
 from arcade.session import (
-    _SESSION, _award_xp, _break_streak, _unlock_badge,
+    _SESSION, _record_concept_mastered, _unlock_badge,
     _show_session_header, _end_of_session_summary, _show_trophy_case,
     _init_profile_dialog, _get_rank, _xp_bar,
     BANNER, _BADGES, _clear_local_db,
@@ -69,6 +69,7 @@ from arcade.dsa.studio import mode_dsa_studio, DSA_EXPERIMENTS
 from arcade.java.studio import mode_java_studio, JAVA_EXPERIMENTS
 from arcade.vault import _show_code_vault
 from arcade.viva_bank import run_viva_drill_session
+from arcade.visualizers import visualizer_theater_hub
 
 __all__ = [
     "analyze_universal_git_command",
@@ -131,27 +132,31 @@ def main():
         print(BANNER)
         _show_session_header()
 
-        print(f"{Color.BOLD}MAIN ARCADE SELECTION:{Color.RESET}")
+        print(f"{Color.BOLD}VTU 3RD SEM LAB MODULES & CONCEPT STUDIOS:{Color.RESET}")
         print(f"  {Color.YELLOW}[1]{Color.RESET} 🐙  {Color.BOLD}Git Lab{Color.RESET}  {Color.DIM}(1BCSL307A · 12 Experiments){Color.RESET}")
         print(f"      {Color.DIM}↳ Practical commands, commit workflows, merge/rebase & disaster recovery{Color.RESET}")
 
         print(f"\n  {Color.GREEN}[2]{Color.RESET} 🌳  {Color.BOLD}DSA Lab{Color.RESET}  {Color.DIM}(1BCSL306 · 12 Experiments){Color.RESET}")
-        print(f"      {Color.DIM}↳ Visualizers (Stack & Linked List), Block Logic, Code Challenges, Disaster Recovery, Viva{Color.RESET}")
+        print(f"      {Color.DIM}↳ 12 Stepper Visualizers, Sandboxes, Block Logic, Code Challenges, Emergency Debugging, Viva{Color.RESET}")
 
         print(f"\n  {Color.CYAN}[3]{Color.RESET} ☕  {Color.BOLD}Java OOP Lab Studio{Color.RESET}  {Color.DIM}(1BCS302 · 10 Experiments){Color.RESET}")
-        print(f"      {Color.DIM}↳ Polymorphism & Thread Visualizers, Block Logic, Code Challenges, Disaster Recovery, Viva{Color.RESET}")
+        print(f"      {Color.DIM}↳ 10 Architecture Visualizers, Sandboxes, Block Logic, Code Challenges, Emergency Debugging, Viva{Color.RESET}")
 
         print(f"\n  {Color.MAGENTA}[4]{Color.RESET} ⚡  {Color.BOLD}Quick Reference & In-Terminal Code Vault{Color.RESET}")
-        print(f"      {Color.DIM}↳ Instant in-terminal access to all the files, commands and experiments urgently all at once...{Color.RESET}")
+        print(f"      {Color.DIM}↳ Instant in-terminal access to all lab source files and experiments at once...{Color.RESET}")
 
-        print(f"\n  {Color.YELLOW}[Q]{Color.RESET} ⚡  {Color.BOLD}Quick-Fire 5-Question Drill{Color.RESET}  {Color.DIM}(choose your lab and we will get 15 most imp viva questions for u 2 sets from each lab , diffrent questions each set total 6 practice sets){Color.RESET}")
+        print(f"\n  {Color.BLUE}[V]{Color.RESET} 🎬  {Color.BOLD}Visual Concept Studio{Color.RESET}  {Color.CYAN}(22 Deep Memory & Architecture Visualizers for DSA & Java){Color.RESET}")
+        print(f"      {Color.DIM}↳ Step-by-step & animated visualizers: Pointers, Heap vs Stack, Floyd's Cycle, Infix/Postfix, QuickSort, MergeSort, BST, AVL, JVM, String Pool, Threads & HashMaps{Color.RESET}")
 
-        print(f"\n  {Color.MAGENTA}[T]{Color.RESET} 🏆  {Color.BOLD}Trophy Case & Achievements{Color.RESET}  {Color.DIM}({len(_SESSION['badges'])}/{len(_BADGES)} Unlocked){Color.RESET}")
+        print(f"\n  {Color.YELLOW}[Q]{Color.RESET} 🎓  {Color.BOLD}High-Yield Viva Practice Hub{Color.RESET}  {Color.DIM}(6 Sets · 90 Top Viva Questions with Socratic Hints){Color.RESET}")
+
+        trophies_count = len(_SESSION.get("trophies", []) or _SESSION.get("badges", []))
+        print(f"\n  {Color.MAGENTA}[T]{Color.RESET} 🏆  {Color.BOLD}Educational Milestones (Trophies){Color.RESET}  {Color.DIM}({trophies_count}/{len(_BADGES)} Achieved){Color.RESET}")
 
         print(f"\n  {Color.DIM}[R]{Color.RESET} 🔄  {Color.DIM}Start Fresh / Reset Local Progress{Color.RESET}")
         print(f"  {Color.DIM}[5]{Color.RESET} 🏃  Exit to Terminal  {Color.DIM}(choose whether to save progress){Color.RESET}\n")
 
-        choice = prompt_input(f"{Color.BOLD}Enter your choice [1 - 5, Q, T, R]: {Color.RESET}").strip().upper()
+        choice = prompt_input(f"{Color.BOLD}Enter your choice [1 - 5, V, Q, T, R]: {Color.RESET}").strip().upper()
 
         if choice == "1":
             mode_git_arcade()
@@ -161,6 +166,8 @@ def main():
             mode_java_studio()
         elif choice == "4":
             _show_code_vault()
+        elif choice == "V":
+            visualizer_theater_hub()
         elif choice == "Q":
             mode_quickfire_drill_hub()
         elif choice == "T":

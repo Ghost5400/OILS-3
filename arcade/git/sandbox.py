@@ -2,7 +2,7 @@
 arcade.git.sandbox — Universal Git Command Sandbox and Danger Radar.
 """
 from arcade.core import Color, clear_screen, prompt_input
-from arcade.session import _award_xp, _unlock_badge
+from arcade.session import _record_concept_mastered, _unlock_badge
 
 GIT_CORE_SUBCOMMANDS = {
     "add": ("Stages file changes from the working directory into the Staging Area (Index) for the next commit snapshot.", "CAUTION", 3.0),
@@ -1583,9 +1583,7 @@ def mode_git_command_sandbox():
         else:
             entry = analyze_universal_git_command(cmd_input)
             if entry:
-                _unlock_badge("git_survivor")
-                _unlock_badge("danger_radar")
-                _award_xp(15, f"Sandbox lookup: {entry['raw_cmd']}")
+                _unlock_badge("git_basics")
                 _radar_show_entry(entry)
             else:
                 clear_screen()

@@ -10,7 +10,7 @@ from arcade.core import (
     print_slow, anim_correct, anim_wrong,
 )
 from arcade.session import (
-    _award_xp, _break_streak, _unlock_badge,
+    _record_concept_mastered, _unlock_badge,
     _show_session_header, BANNER, _SESSION, _save_to_local_db,
 )
 from arcade.git.questions import _run_step_checkpoint
@@ -507,7 +507,7 @@ def mode_viva_gauntlet():
             if choice == item["ans"]:
                 solved = True
                 anim_correct()
-                _award_xp(20, "git viva")
+                _record_concept_mastered("git viva")
                 score += 1
                 if attempt == 1:
                     print(f"\n{Color.GREEN}{Color.BOLD}✔ CORRECT! {item['praise']}{Color.RESET}")
@@ -575,14 +575,13 @@ def mode_disaster_recovery():
 
         if pick == scenario["ans_idx"]:
             anim_correct()
-            _award_xp(150, "git disaster averted")
-            _unlock_badge("git_survivor")
+            _record_concept_mastered("git disaster averted")
+            _unlock_badge("git_recovery")
             score += 150
-            print(f"\n{Color.GREEN}{Color.BOLD}✅ Correct! (+150 XP){Color.RESET}")
+            print(f"\n{Color.GREEN}{Color.BOLD}✅ DISASTER AVERTED! Correct recovery strategy.{Color.RESET}")
             print(f"{Color.GREEN}{scenario['reaction']}{Color.RESET}\n")
         else:
             anim_wrong()
-            _break_streak()
             correct_choice = scenario["choices"][scenario["ans_idx"] - 1]
             print(f"\n{Color.RED}{Color.BOLD}❌ Not quite. The right answer was [{scenario['ans_idx']}]:{Color.RESET}")
             print(f"   {Color.WHITE}{correct_choice}{Color.RESET}")
@@ -1871,9 +1870,9 @@ def run_arena_level(level_name, challenges, level_color):
                 spinner(f"Simulating '$ {user_cmd}'", duration=0.6, color=Color.GREEN)
                 anim_correct()
                 points = 100 if attempts == 0 else 50
-                _award_xp(points, "git arena command")
+                _record_concept_mastered("git arena command")
                 score += points
-                print(f"\n{Color.GREEN}{Color.BOLD}✅ Correct! (+{points} XP){Color.RESET}\n")
+                print(f"\n{Color.GREEN}{Color.BOLD}✅ Correct command! Nicely done.{Color.RESET}\n")
                 if "output" in ch:
                     print(f"{Color.CYAN}{Color.BOLD}🖥️ Simulated Terminal Output:{Color.RESET}")
                     print(f"{Color.WHITE}─────────────────────────────────────────────────────────────{Color.RESET}")
@@ -1884,7 +1883,6 @@ def run_arena_level(level_name, challenges, level_color):
             else:
                 attempts += 1
                 anim_wrong()
-                _break_streak()
                 if attempts < max_attempts:
                     print(f"\n{Color.RED}❌ Not quite (Attempt 1 of 2).{Color.RESET}  💡 Clue: {ch['hint']}")
                 else:

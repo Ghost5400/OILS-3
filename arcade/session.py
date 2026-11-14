@@ -1,5 +1,5 @@
 """
-arcade.session — Gamification, user profile, local database, XP, and badges.
+arcade.session — User profile, local database, educational milestones, and learning progress.
 """
 import os
 import json
@@ -14,22 +14,43 @@ import arcade.core as _core_mod
 DB_PATH = os.path.join(PROJECT_ROOT, "oils_local_db.json")
 
 _SESSION = {
-    "xp": 0, "streak": 0, "max_streak": 0,
-    "correct": 0, "wrong": 0,
-    "experiments_done": [], "badges": [],
+    "experiments_done": [],
+    "visualizers_explored": [],
+    "viva_practiced": 0,
+    "trophies": [],
+    "badges": [],
+    "correct": 0,
+    "wrong": 0,
     "start_time": time.time()
 }
+
+_BADGES = {
+    "git_basics":        {"name": "🐙 Git Foundations", "desc": "Mastered repository setup, staging, commits & status workflow."},
+    "git_branches":      {"name": "🌿 Branch & Merge Navigator", "desc": "Mastered branch creation, merging, and merge conflict resolution."},
+    "git_recovery":      {"name": "🚨 Git Rescue Specialist", "desc": "Mastered stash, reset, revert, and disaster recovery commands."},
+    "git_lab_complete":  {"name": "📦 Git Lab Scholar", "desc": "Explored all 12 official Git Lab experiments & commands (1BCSL307A)."},
+    "dsa_memory":        {"name": "🧠 Pointer & Memory Master", "desc": "Explored Stack vs Heap, malloc(), dangling pointers, and free()."},
+    "dsa_linear":        {"name": "📦 Stack & Queue Architect", "desc": "Mastered Stack LIFO, Circular Queues, and Infix to Postfix evaluation."},
+    "dsa_linked":        {"name": "🔗 Linked List Virtuoso", "desc": "Mastered Singly, Doubly, and Polynomial Linked List operations."},
+    "dsa_trees":         {"name": "🌲 BST & Tree Explorer", "desc": "Mastered Binary Search Tree insertion, deletion & Inorder traversals."},
+    "dsa_graphs_hash":   {"name": "🕸️ Graph & Hash Navigator", "desc": "Mastered Hash collisions, Linear Probing, BFS, and DFS traversals."},
+    "dsa_lab_complete":  {"name": "🌳 DSA Lab Scholar", "desc": "Completed all 12 verified Data Structures lab programs (1BCSL306)."},
+    "java_oop_core":     {"name": "☕ OOP Core Architect", "desc": "Mastered Classes, Inheritance, Encapsulation & Dynamic Dispatch."},
+    "java_concurrency":  {"name": "🧵 Thread & Concurrency Specialist", "desc": "Mastered Multithreading lifecycle, synchronized locks & monitors."},
+    "java_lab_complete": {"name": "☕ Java Lab Scholar", "desc": "Completed all 10 verified Java OOP lab programs (1BCS302)."}
+}
+
+_TROPHIES = _BADGES
 
 def _save_to_local_db():
     """Saves user progress right to their local device — no cloud/backend needed!"""
     try:
         data = {
-            "xp": _SESSION.get("xp", 0),
-            "max_streak": _SESSION.get("max_streak", 0),
-            "correct": _SESSION.get("correct", 0),
-            "wrong": _SESSION.get("wrong", 0),
             "experiments_done": sorted(list(set(_SESSION.get("experiments_done", [])))),
-            "badges": sorted(list(set(_SESSION.get("badges", [])))),
+            "visualizers_explored": sorted(list(set(_SESSION.get("visualizers_explored", [])))),
+            "viva_practiced": _SESSION.get("viva_practiced", 0),
+            "trophies": sorted(list(set(_SESSION.get("trophies", []) or _SESSION.get("badges", [])))),
+            "badges": sorted(list(set(_SESSION.get("badges", []) or _SESSION.get("trophies", [])))),
             "last_saved": time.strftime("%Y-%m-%d %H:%M:%S")
         }
         with open(DB_PATH, "w", encoding="utf-8") as f:
@@ -39,13 +60,13 @@ def _save_to_local_db():
 
 def _clear_local_db():
     """Removes the local database file and resets session to start fresh."""
-    _SESSION["xp"] = 0
-    _SESSION["streak"] = 0
-    _SESSION["max_streak"] = 0
+    _SESSION["experiments_done"] = []
+    _SESSION["visualizers_explored"] = []
+    _SESSION["viva_practiced"] = 0
+    _SESSION["trophies"] = []
+    _SESSION["badges"] = []
     _SESSION["correct"] = 0
     _SESSION["wrong"] = 0
-    _SESSION["experiments_done"] = []
-    _SESSION["badges"] = []
     if os.path.isfile(DB_PATH):
         try:
             os.remove(DB_PATH)
@@ -58,16 +79,73 @@ def _load_from_local_db():
         try:
             with open(DB_PATH, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            _SESSION["xp"] = data.get("xp", 0)
-            _SESSION["max_streak"] = data.get("max_streak", 0)
-            _SESSION["correct"] = data.get("correct", 0)
-            _SESSION["wrong"] = data.get("wrong", 0)
             _SESSION["experiments_done"] = data.get("experiments_done", [])
-            _SESSION["badges"] = data.get("badges", [])
+            _SESSION["visualizers_explored"] = data.get("visualizers_explored", [])
+            _SESSION["viva_practiced"] = data.get("viva_practiced", 0)
+            tr = data.get("trophies") or data.get("badges", [])
+            _SESSION["trophies"] = tr
+            _SESSION["badges"] = tr
             return True
         except Exception:
             pass
     return False
+
+def _unlock_trophy(trophy_id):
+    """Unlocks an educational milestone and notifies the student warmly."""
+    if trophy_id in _TROPHIES and trophy_id not in _SESSION["trophies"]:
+        _SESSION["trophies"].append(trophy_id)
+        if trophy_id not in _SESSION["badges"]:
+            _SESSION["badges"].append(trophy_id)
+        _save_to_local_db()
+        t = _TROPHIES[trophy_id]
+        print(f"\n  {Color.MAGENTA}{Color.BOLD}╔════════════════════════════════════════════════════════════════════╗")
+        print(f"  ║  🏆  EDUCATIONAL MILESTONE ACHIEVED: {t['name']:<31}║")
+        print(f"  ║  ↳ {t['desc']:<62}║")
+        print(f"  ╚════════════════════════════════════════════════════════════════════╝{Color.RESET}\n")
+
+def _unlock_badge(badge_id):
+    """Alias for unlocking educational milestones."""
+    _unlock_trophy(badge_id)
+
+def _check_milestone_badges():
+    """Evaluates real learning milestones across Git, DSA, and Java."""
+    exps = set(_SESSION.get("experiments_done", []))
+    vis = set(_SESSION.get("visualizers_explored", []))
+
+    # Git Milestones
+    git_count = len([e for e in exps if str(e).startswith("GIT-")])
+    if git_count >= 1:
+        _unlock_trophy("git_basics")
+    if git_count >= 6:
+        _unlock_trophy("git_branches")
+    if git_count >= 12:
+        _unlock_trophy("git_lab_complete")
+
+    # DSA Milestones
+    if "DSA-V1" in vis or "DSA-1" in exps:
+        _unlock_trophy("dsa_memory")
+    if any(e in exps for e in ("DSA-3", "DSA-4", "DSA-7")) or any(v in vis for v in ("DSA-V2", "DSA-V5", "DSA-V6")):
+        _unlock_trophy("dsa_linear")
+    if any(e in exps for e in ("DSA-5", "DSA-8")) or any(v in vis for v in ("DSA-V3", "DSA-V4")):
+        _unlock_trophy("dsa_linked")
+    if any(e in exps for e in ("DSA-6", "DSA-10")) or any(v in vis for v in ("DSA-V9", "DSA-V10")):
+        _unlock_trophy("dsa_trees")
+    if any(e in exps for e in ("DSA-9", "DSA-11", "DSA-12")) or any(v in vis for v in ("DSA-V7", "DSA-V8", "DSA-V11", "DSA-V12")):
+        _unlock_trophy("dsa_graphs_hash")
+
+    dsa_count = len([e for e in exps if str(e).startswith("DSA-")])
+    if dsa_count >= 12:
+        _unlock_trophy("dsa_lab_complete")
+
+    # Java Milestones
+    if any(e in exps for e in ("JAVA-1", "JAVA-2", "JAVA-3", "JAVA-4")) or any(v in vis for v in ("JAVA-J1", "JAVA-J2", "JAVA-J3", "JAVA-J5", "JAVA-J9")):
+        _unlock_trophy("java_oop_core")
+    if any(e in exps for e in ("JAVA-7", "JAVA-8")) or any(v in vis for v in ("JAVA-J7", "JAVA-J8")):
+        _unlock_trophy("java_concurrency")
+
+    java_count = len([e for e in exps if str(e).startswith("JAVA-")])
+    if java_count >= 10:
+        _unlock_trophy("java_lab_complete")
 
 def _init_profile_dialog():
     """Asks user on startup if they want to resume saved progress or start fresh."""
@@ -76,79 +154,45 @@ def _init_profile_dialog():
     try:
         with open(DB_PATH, "r", encoding="utf-8") as f:
             data = json.load(f)
-        saved_xp = data.get("xp", 0)
-        saved_badges = len(data.get("badges", []))
         saved_exps = len(data.get("experiments_done", []))
-        if saved_xp == 0 and saved_badges == 0 and saved_exps == 0:
+        saved_vis = len(data.get("visualizers_explored", []))
+        saved_trophies = len(data.get("trophies", []) or data.get("badges", []))
+        if saved_exps == 0 and saved_vis == 0 and saved_trophies == 0:
             return
 
         clear_screen()
         print(f"\n{Color.CYAN}{Color.BOLD}{'═'*78}{Color.RESET}")
-        print("  💾 LOCAL DATABASE FOUND ON THIS DEVICE")
+        print("  💾 SAVED LAB PROGRESS FOUND ON THIS DEVICE")
         print(f"{Color.CYAN}{Color.BOLD}{'═'*78}{Color.RESET}\n")
-        print("  We found a previously saved adventure on your laptop:\n")
-        print(f"    ⭐ Total XP     : {Color.YELLOW}{saved_xp} XP{Color.RESET} (Level {saved_xp // 100} · {_get_rank(saved_xp)})")
-        print(f"    🎖️ Badges       : {Color.MAGENTA}{saved_badges} Unlocked{Color.RESET}")
-        print(f"    🧪 Completed    : {Color.GREEN}{saved_exps} Lab Experiments{Color.RESET}")
+        print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+
+        exps = set(data.get("experiments_done", []))
+        git_done = len([e for e in exps if str(e).startswith("GIT-")])
+        dsa_done = len([e for e in exps if str(e).startswith("DSA-")])
+        java_done = len([e for e in exps if str(e).startswith("JAVA-")])
+
+        print(f"    🐙 Git Lab Progress      : {Color.GREEN}{git_done}/12 Experiments{Color.RESET}")
+        print(f"    🌳 DSA Lab Progress      : {Color.GREEN}{dsa_done}/12 Programs{Color.RESET}")
+        print(f"    ☕ Java Lab Progress     : {Color.GREEN}{java_done}/10 Programs{Color.RESET}")
+        print(f"    🎬 Visualizers Explored  : {Color.CYAN}{saved_vis}/13 Concepts{Color.RESET}")
+        print(f"    🏆 Milestones Achieved   : {Color.MAGENTA}{saved_trophies}/13 Milestones{Color.RESET}")
         if data.get("last_saved"):
-            print(f"    🕒 Last Saved   : {Color.DIM}{data.get('last_saved')}{Color.RESET}")
+            print(f"    🕒 Last Saved            : {Color.DIM}{data.get('last_saved')}{Color.RESET}")
         print()
-        print(f"  {Color.GREEN}{Color.BOLD}[Enter / C]{Color.RESET}  Continue your saved adventure")
-        print(f"  {Color.YELLOW}{Color.BOLD}[F]{Color.RESET}          Start completely fresh from Level 0 (Reset local save)\n")
+        print(f"  {Color.GREEN}{Color.BOLD}[Enter / C]{Color.RESET}  Continue your learning journey")
+        print(f"  {Color.YELLOW}{Color.BOLD}[F]{Color.RESET}          Start fresh (Reset saved progress)\n")
 
         choice = prompt_input(f"  {Color.BOLD}Your choice [Enter to continue, or 'F' to start fresh]: {Color.RESET}").strip().upper()
         if choice in ("F", "FRESH", "RESET", "NEW"):
             _clear_local_db()
-            print(f"\n  {Color.YELLOW}✨ Local save cleared! Starting completely fresh from Level 0!{Color.RESET}")
+            print(f"\n  {Color.YELLOW}✨ Progress reset! Starting fresh! ❤️{Color.RESET}")
             time.sleep(1.0)
         else:
             _load_from_local_db()
-            print(f"\n  {Color.GREEN}✔ Welcome back! Loaded your saved adventure.{Color.RESET}")
+            print(f"\n  {Color.GREEN}✔ Welcome back! Loaded your saved lab progress.{Color.RESET}")
             time.sleep(0.7)
     except Exception:
         pass
-
-_BADGES = {
-    "first_blood":   {"name": "🎯 First Blood", "desc": "Answer your very first question correctly!"},
-    "streak_3":      {"name": "🔥 On A Roll", "desc": "Score a 3-question streak!"},
-    "streak_5":      {"name": "⚡ Lightning Coder", "desc": "Score a 5-question streak without a single mistake!"},
-    "streak_10":     {"name": "🌋 Unstoppable Force", "desc": "Score a 10-question winning streak!"},
-    "git_survivor":  {"name": "🐙 Git Survivor", "desc": "Successfully resolve a real-world Git challenge!"},
-    "dsa_doctor":    {"name": "🩺 DSA Specialist", "desc": "Diagnose and resolve a tricky DSA bug!"},
-    "java_marshal":  {"name": "☕ JVM Whisperer", "desc": "Tame a Java runtime exception disaster!"},
-    "xp_500":        {"name": "📚 Bookworm", "desc": "Earn 500 total XP!"},
-    "xp_1000":       {"name": "💎 High Achiever", "desc": "Cross the 1,000 XP milestone!"},
-    "xp_2500":       {"name": "👑 Code Master", "desc": "Attain 2,500 XP — dedicated mastery of 3rd sem code!"},
-    "vault_dweller": {"name": "🔍 Code Inspector", "desc": "Inspect verified code inside the In-Terminal Code Vault!"},
-    "quickfire_ace": {"name": "⚡ Quick-Fire Ace", "desc": "Complete the 5-Question Mixed Quick-Fire Gauntlet!"},
-    "danger_radar":  {"name": "🧪 Git Bomb Defuser", "desc": "Inspect hazardous Git commands & master rescue plans in the Sandbox!"},
-}
-
-def _unlock_badge(badge_id):
-    if badge_id in _BADGES and badge_id not in _SESSION["badges"]:
-        _SESSION["badges"].append(badge_id)
-        _save_to_local_db()
-        b = _BADGES[badge_id]
-        print(f"\n  {Color.MAGENTA}{Color.BOLD}╔════════════════════════════════════════════════════════════════════╗")
-        print(f"  ║  🎖️  ACHIEVEMENT UNLOCKED: {b['name']:<39}║")
-        print(f"  ║  ↳ {b['desc']:<62}║")
-        print(f"  ╚════════════════════════════════════════════════════════════════════╝{Color.RESET}\n")
-
-def _check_milestone_badges():
-    if _SESSION["correct"] >= 1:
-        _unlock_badge("first_blood")
-    if _SESSION["streak"] >= 3:
-        _unlock_badge("streak_3")
-    if _SESSION["streak"] >= 5:
-        _unlock_badge("streak_5")
-    if _SESSION["streak"] >= 10:
-        _unlock_badge("streak_10")
-    if _SESSION["xp"] >= 500:
-        _unlock_badge("xp_500")
-    if _SESSION["xp"] >= 1000:
-        _unlock_badge("xp_1000")
-    if _SESSION["xp"] >= 2500:
-        _unlock_badge("xp_2500")
 
 _FUNNY_PRAISES = [
     "Spot on buddy! You nailed the core logic! ❤️",
@@ -195,23 +239,22 @@ _MEME_QUOTES = [
     "\"// TODO: understand this when I wake up\" — real comment energy 📝",
 ]
 
-_RANK_TITLES = [
-    (0,    "🌱 Code Explorer"),
-    (100,  "🐣 Curious Beginner"),
-    (250,  "📚 Logic Builder"),
-    (500,  "🔗 Pointer Friend"),
-    (800,  "🧠 Pattern Finder"),
-    (1200, "⚡ Code Crafter"),
-    (1700, "🌟 Steady Developer"),
-    (2500, "💎 Silicon Sage"),
-]
+def _record_concept_mastered(concept_name=""):
+    """Records that a concept or question was successfully understood."""
+    _SESSION["correct"] = _SESSION.get("correct", 0) + 1
+    _SESSION["viva_practiced"] = _SESSION.get("viva_practiced", 0) + 1
+    _check_milestone_badges()
+    _save_to_local_db()
 
-def _get_rank(xp):
-    rank = _RANK_TITLES[0][1]
-    for threshold, title in _RANK_TITLES:
-        if xp >= threshold:
-            rank = title
-    return rank
+def _award_xp(points=0, reason=""):
+    """Compatibility wrapper that records learning progress."""
+    _record_concept_mastered(reason)
+
+def _break_streak(reason=""):
+    """Compatibility wrapper that records a learning attempt."""
+    _SESSION["wrong"] = _SESSION.get("wrong", 0) + 1
+    _SESSION["viva_practiced"] = _SESSION.get("viva_practiced", 0) + 1
+    _save_to_local_db()
 
 def _make_progress_bar(done_count, total_count, width=40):
     """Returns an ASCII progress bar string."""
@@ -244,21 +287,18 @@ def _xp_bar(xp=None, width=40):
     """Progress bar string."""
     return f"  {_completion_bar(width)}"
 
-def _award_xp(points, reason=""):
-    """Records progress calmly and unlocks any milestone badges."""
-    _SESSION["xp"] += points
-    _SESSION["streak"] += 1
-    _SESSION["correct"] += 1
-    if _SESSION["streak"] > _SESSION["max_streak"]:
-        _SESSION["max_streak"] = _SESSION["streak"]
-    _check_milestone_badges()
-    _save_to_local_db()
-
-def _break_streak(reason=""):
-    """Records incorrect answer without harsh penalties."""
-    _SESSION["streak"] = 0
-    _SESSION["wrong"] += 1
-    _save_to_local_db()
+def _get_rank(xp=0):
+    """Clean title showing syllabus progress instead of gaming levels."""
+    exps = set(_SESSION.get("experiments_done", []))
+    total = len(exps)
+    if total >= 30:
+        return "💎 Lab Exam Ready"
+    elif total >= 15:
+        return "🌟 Steady Practitioner"
+    elif total >= 5:
+        return "🌱 Lab Explorer"
+    else:
+        return "🐣 Curious Beginner"
 
 def _show_session_header(show_welcome=True, subject=None):
     """Print clean learning progress and local DB status header."""
@@ -286,55 +326,55 @@ def _show_session_header(show_welcome=True, subject=None):
 
     print(f"  {Color.DIM}💾 Local DB: Active (Saved on your device){Color.RESET}\n")
 
+def _record_visualizer_explored(vis_id):
+    """Marks a visualizer as explored and checks milestones."""
+    if "visualizers_explored" not in _SESSION:
+        _SESSION["visualizers_explored"] = []
+    if vis_id not in _SESSION["visualizers_explored"]:
+        _SESSION["visualizers_explored"].append(vis_id)
+        _check_milestone_badges()
+        _save_to_local_db()
+
 def _end_of_session_summary():
-    """Full end-of-session stats screen — asks before saving progress."""
+    """Full end-of-session learning summary — asks before saving progress."""
     clear_screen()
-    elapsed = int(time.time() - _SESSION["start_time"])
+    elapsed = int(time.time() - _SESSION.get("start_time", time.time()))
     mins = elapsed // 60
     secs = elapsed % 60
-    xp = _SESSION["xp"]
-    correct = _SESSION["correct"]
-    wrong = _SESSION["wrong"]
-    total = correct + wrong
-    accuracy = int(correct / total * 100) if total > 0 else 0
-    rank = _get_rank(xp)
-    exps_done = len(_SESSION["experiments_done"])
+    
+    exps = set(_SESSION.get("experiments_done", []))
+    git_done = len([e for e in exps if str(e).startswith("GIT-")])
+    dsa_done = len([e for e in exps if str(e).startswith("DSA-")])
+    java_done = len([e for e in exps if str(e).startswith("JAVA-")])
+    total_exps = git_done + dsa_done + java_done
+    
+    vis_done = len(_SESSION.get("visualizers_explored", []))
+    viva_done = _SESSION.get("viva_practiced", 0)
+    trophies_unlocked = len(_SESSION.get("trophies", []) or _SESSION.get("badges", []))
 
-    print(f"\n{Color.MAGENTA}{Color.BOLD}{'═'*72}{Color.RESET}")
-    print(f"{Color.MAGENTA}{Color.BOLD}  🎮 SESSION COMPLETE — OILS-3 MASTER ARCADE{Color.RESET}")
-    print(f"{Color.MAGENTA}{Color.BOLD}{'═'*72}{Color.RESET}\n")
+    print(f"\n{Color.CYAN}{Color.BOLD}{'═'*74}{Color.RESET}")
+    print(f"{Color.CYAN}{Color.BOLD}  🎓 LEARNING SESSION SUMMARY — OILS-3 LAB COMPANION{Color.RESET}")
+    print(f"{Color.CYAN}{Color.BOLD}{'═'*74}{Color.RESET}\n")
 
-    typewrite(f"  ⏱️  Time Played   : {mins}m {secs}s", 0.012, Color.CYAN)
-    typewrite(f"  🧪 Experiments   : {exps_done} completed", 0.012, Color.GREEN)
-    typewrite(f"  ✅ Correct       : {correct}", 0.012, Color.GREEN)
-    typewrite(f"  ❌ Wrong         : {wrong}", 0.012, Color.RED)
-    typewrite(f"  🎯 Accuracy      : {accuracy}%", 0.012, Color.YELLOW)
-    typewrite(f"  🔥 Best Streak   : x{_SESSION['max_streak']}", 0.012, Color.RED)
-    print()
-    typewrite(f"  {Color.YELLOW}{Color.BOLD}Total XP Earned  : {xp} XP{Color.RESET}", 0.012)
-    typewrite(f"  {Color.CYAN}{Color.BOLD}Current Rank     : {rank}{Color.RESET}", 0.015)
-    print()
-    badges_count = len(_SESSION["badges"])
-    typewrite(f"  🎖️ Badges Earned : {badges_count}/{len(_BADGES)} Unlocked", 0.012, Color.MAGENTA)
-    if _SESSION["badges"]:
-        badge_names = ", ".join(_BADGES[bid]["name"] for bid in _SESSION["badges"])
-        print(f"     ↳ {badge_names}")
-    print()
-    print(_xp_bar(xp, width=50))
+    print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+    typewrite(f"  ⏱️  Time Spent Learning : {mins}m {secs}s", 0.012, Color.CYAN)
+    typewrite(f"  🧪 Lab Experiments Done : {total_exps}/34 (Git: {git_done}/12 · DSA: {dsa_done}/12 · Java: {java_done}/10)", 0.012, Color.GREEN)
+    typewrite(f"  🎬 Visualizers Explored : {vis_done}/22 Core Memory & Architecture Concepts", 0.012, Color.BLUE)
+    typewrite(f"  🎯 Viva Q&A Practiced   : {viva_done} Questions Explored", 0.012, Color.YELLOW)
+    typewrite(f"  🏆 Milestones Achieved  : {trophies_unlocked}/{len(_TROPHIES)} Educational Milestones Unlocked", 0.012, Color.MAGENTA)
     print()
 
-    if accuracy >= 90:
-        typewrite("  🌟 FANTASTIC SESSION! You're building genuine understanding, step by step! 💎", 0.015, Color.GREEN)
-    elif accuracy >= 70:
-        typewrite("  🌟 Really good effort! Every single concept you practice is starting to click!", 0.015, Color.YELLOW)
-    elif accuracy >= 50:
-        typewrite("  📚 Steady progress! Take your time, learning to code is a gradual journey!", 0.015, Color.CYAN)
-    else:
-        typewrite("  💡 Learning to code takes patience and practice. You took great steps today! 🫡", 0.015, Color.WHITE)
+    active_trophies = _SESSION.get("trophies", []) or _SESSION.get("badges", [])
+    if active_trophies:
+        names = ", ".join(_TROPHIES[tid]["name"] for tid in active_trophies if tid in _TROPHIES)
+        print(f"     ↳ {Color.GREEN}{names}{Color.RESET}")
+    print()
 
-    print(f"\n{Color.CYAN}{'─'*72}{Color.RESET}")
+    typewrite("  🌟 FANTASTIC SESSION! Every concept you practice gets you closer to cracking your labs! 💎", 0.015, Color.GREEN)
+
+    print(f"\n{Color.CYAN}{'─'*74}{Color.RESET}")
     print(f"  {Color.BOLD}💾 LOCAL DEVICE DATABASE SAVE:{Color.RESET}")
-    print("  Do you want to save what you've done until now to this device,")
+    print("  Do you want to save what you've learned until now on this device,")
     print("  or would you like to start fresh when you open the terminal again?\n")
     print(f"    {Color.GREEN}[Enter / Y]{Color.RESET}  Save my progress to this device (Resume next time)")
     print(f"    {Color.YELLOW}[N / F]{Color.RESET}      Don't save — start completely fresh next time\n")
@@ -342,37 +382,38 @@ def _end_of_session_summary():
 
     if save_choice in ("", "Y", "YES", "S", "SAVE"):
         _save_to_local_db()
-        print(f"\n  {Color.GREEN}✔ Progress saved locally on your device! You can pick up right here next time! 🫡{Color.RESET}\n")
+        print(f"\n  {Color.GREEN}✔ Progress saved locally on your device! See you next time buddy! ❤️{Color.RESET}\n")
     else:
         _clear_local_db()
-        print(f"\n  {Color.YELLOW}🔄 Local save cleared! You will start completely fresh next time! 🫡{Color.RESET}\n")
+        print(f"\n  {Color.YELLOW}🔄 Local save cleared! You will start fresh next time! ❤️{Color.RESET}\n")
 
-    print(f"{Color.MAGENTA}{Color.BOLD}{'═'*72}{Color.RESET}\n")
-    prompt_input("  Press Enter to exit... 🫡  ")
+    print(f"{Color.CYAN}{Color.BOLD}{'═'*74}{Color.RESET}\n")
+    prompt_input("  Press Enter to exit... ❤️  ")
 
 def _show_trophy_case():
-    """Displays the interactive achievement trophy case."""
+    """Displays the educational milestone cabinet."""
     clear_screen()
     print(f"\n{Color.MAGENTA}{Color.BOLD}{'═'*78}{Color.RESET}")
-    print("  🏆 OILS-3 TROPHY CASE & ACHIEVEMENT CABINET")
+    print("  🏆 OILS-3 EDUCATIONAL MILESTONES & SYLLABUS MASTERY")
     print(f"{Color.MAGENTA}{Color.BOLD}{'═'*78}{Color.RESET}")
     _show_session_header()
 
-    unlocked_count = len(_SESSION["badges"])
-    total_count = len(_BADGES)
-    print(f"  {Color.BOLD}Your Collection: {Color.YELLOW}{unlocked_count}/{total_count} Badges Unlocked{Color.RESET}\n")
+    active_trophies = _SESSION.get("trophies", []) or _SESSION.get("badges", [])
+    unlocked_count = len(active_trophies)
+    total_count = len(_TROPHIES)
+    print(f"  {Color.BOLD}Your Academic Milestones: {Color.YELLOW}{unlocked_count}/{total_count} Achieved{Color.RESET}\n")
 
-    for bid, b in _BADGES.items():
-        if bid in _SESSION["badges"]:
-            status = f"{Color.GREEN}{Color.BOLD}[🏆 UNLOCKED]{Color.RESET}"
-            title = f"{Color.GREEN}{Color.BOLD}{b['name']}{Color.RESET}"
+    for tid, t in _TROPHIES.items():
+        if tid in active_trophies:
+            status = f"{Color.GREEN}{Color.BOLD}[🏆 ACHIEVED]{Color.RESET}"
+            title = f"{Color.GREEN}{Color.BOLD}{t['name']}{Color.RESET}"
         else:
-            status = f"{Color.DIM}[🔒 LOCKED]{Color.RESET}  "
-            title = f"{Color.DIM}{b['name']}{Color.RESET}"
-        print(f"  {status} {title:<36} {Color.DIM}— {b['desc']}{Color.RESET}")
+            status = f"{Color.DIM}[🔒 PENDING ]{Color.RESET} "
+            title = f"{Color.DIM}{t['name']}{Color.RESET}"
+        print(f"  {status} {title:<36} {Color.DIM}— {t['desc']}{Color.RESET}")
 
     print(f"\n{Color.DIM}{'─'*78}{Color.RESET}")
-    prompt_input("\n  Press Enter to return to Main Arcade Menu... ")
+    prompt_input("\n  Press Enter to return to Main Menu... ")
 
 BANNER_ART = r"""
    ____  ___ _     ____       _____

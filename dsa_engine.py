@@ -739,7 +739,7 @@ def mode_dsa_studio():
         print(f"{Color.GREEN}{Color.BOLD}================================================================================{Color.RESET}\n")
         print(f"  {Color.YELLOW}[V1]{Color.RESET} 📦 Interactive Stack Visualizer (Push, Pop, Overflow)")
         print(f"  {Color.YELLOW}[V2]{Color.RESET} 🔗 Interactive Linked List Visualizer (Pointers, Head, Traversal)")
-        print(f"  {Color.MAGENTA}[VG]{Color.RESET} 🎓 External Examiner DSA Viva Gauntlet (3 Lives)")
+        print(f"  {Color.MAGENTA}[VG]{Color.RESET} 🎓 External Examiner DSA Viva Practice (Stress-Free Mastery)")
         print(f"  {Color.CYAN}------------------------------------------------------------------------------{Color.RESET}")
         print(f"  {Color.BOLD}PART A: FIXED EXPERIMENTS{Color.RESET}")
         for i in range(6):

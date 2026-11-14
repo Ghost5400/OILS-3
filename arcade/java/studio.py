@@ -10,10 +10,16 @@ from arcade.core import (
     print_slow, anim_correct, anim_wrong,
 )
 from arcade.session import (
-    _SESSION, _award_xp, _break_streak, _unlock_badge,
+    _SESSION, _record_concept_mastered, _unlock_badge,
     _save_to_local_db, _show_session_header,
 )
 from arcade.vault import _view_source_file
+from arcade.visualizers import (
+    vis_java_jvm_memory, vis_java_string_pool, vis_java_pass_by_value,
+    vis_java_gc_reachability, vis_java_dynamic_dispatch, vis_java_exception_stack,
+    vis_java_concurrency_lock, vis_java_producer_consumer,
+    vis_java_interfaces_abstract, vis_java_hashmap_internals,
+)
 
 JAVA_DISASTER_SCENARIOS = [
     {
@@ -608,14 +614,13 @@ def mode_java_disaster():
 
         if pick == s["ans_idx"]:
             anim_correct()
-            _award_xp(150, "java disaster averted")
+            _record_concept_mastered("java disaster averted")
             _unlock_badge("java_marshal")
             score += 150
-            print(f"\n{Color.GREEN}{Color.BOLD}✅ DISASTER AVERTED! (+150 XP){Color.RESET}")
+            print(f"\n{Color.GREEN}{Color.BOLD}✅ DISASTER AVERTED! Bug diagnosed and resolved.{Color.RESET}")
             print(f"{Color.GREEN}{s['reaction']}{Color.RESET}\n")
         else:
             anim_wrong()
-            _break_streak()
             print(f"\n{Color.RED}{Color.BOLD}❌ WRONG DIAGNOSIS! Correct answer was [{s['ans_idx']}]:{Color.RESET}")
             print(f"   {Color.WHITE}{s['choices'][s['ans_idx']-1]}{Color.RESET}")
             print(f"\n{Color.DIM}{s['reaction']}{Color.RESET}\n")
@@ -744,11 +749,10 @@ def run_java_experiment_lab(exp):
 
         if ans == ch.get("correct_opt", "A"):
             anim_correct()
-            _award_xp(50, "MCQ correct")
+            _record_concept_mastered("java MCQ correct")
             print(f"\n{Color.GREEN}{Color.BOLD}🎉 {ch['praise']}{Color.RESET}\n")
         else:
             anim_wrong()
-            _break_streak()
             print(f"\n{Color.RED}{Color.BOLD}❌ {ch['roast']}{Color.RESET}")
             print(f"   {Color.YELLOW}✅ Expected Answer was ({ch.get('correct_opt', 'A')}): {ch['hint']}{Color.RESET}\n")
     else:
@@ -759,11 +763,10 @@ def run_java_experiment_lab(exp):
 
         if norm_user in norm_accepted or any(norm_user in a for a in norm_accepted):
             anim_correct()
-            _award_xp(50, "correct")
+            _record_concept_mastered("java correct")
             print(f"\n{Color.GREEN}{Color.BOLD}🎉 {ch['praise']}{Color.RESET}\n")
         else:
             anim_wrong()
-            _break_streak()
             print(f"\n{Color.RED}{Color.BOLD}❌ {ch['roast']}{Color.RESET}")
             print(f"   {Color.YELLOW}Expected: {ch['hint']}{Color.RESET}\n")
 
@@ -813,7 +816,7 @@ def mode_java_viva():
             if ans == q["ans"]:
                 solved = True
                 anim_correct()
-                _award_xp(10, "java viva correct")
+                _record_concept_mastered("java viva correct")
                 score += 1
                 if attempt == 1:
                     print(f"  {Color.GREEN}{Color.BOLD}✔ {q['praise']}{Color.RESET}")
@@ -838,6 +841,41 @@ def mode_java_viva():
     prompt_input("Press Enter to return...")
 
 
+def mode_java_visualizers_menu():
+    """Submenu for all 10 Java visualizers + 2 interactive sandboxes."""
+    while True:
+        clear_screen()
+        print(f"\n{Color.CYAN}{Color.BOLD}╔══════════════════════════════════════════════════════════════════════════════╗")
+        print("║  🎬 JAVA VISUALIZER SUITE — 10 Architecture & Runtime Steppers               ║")
+        print(f"╚══════════════════════════════════════════════════════════════════════════════╝{Color.RESET}\n")
+        print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+        print(f"  {Color.CYAN}[1]{Color.RESET}  ☕ J1:  JVM Runtime Memory Layout (Metaspace, Stack Frames & Heap)")
+        print(f"  {Color.CYAN}[2]{Color.RESET}  🧵 J2:  String Constant Pool vs Heap (== vs .equals() & intern())")
+        print(f"  {Color.CYAN}[3]{Color.RESET}  📦 J3:  Java Pass-by-Value vs Object References (The Reassignment Trap)")
+        print(f"  {Color.CYAN}[4]{Color.RESET}  🧹 J4:  GC Root Reachability & Cyclic Reference Island Collection")
+        print(f"  {Color.CYAN}[5]{Color.RESET}  🎭 J5:  Dynamic Method Dispatch & Virtual Method Table (vtable)")
+        print(f"  {Color.CYAN}[6]{Color.RESET}  💥 J6:  Exception Call Stack Propagation & finally Block Guarantee")
+        print(f"  {Color.CYAN}[7]{Color.RESET}  🔒 J7:  Multithreading Concurrency & Synchronized Monitor Locks")
+        print(f"  {Color.CYAN}[8]{Color.RESET}  🏭 J8:  Producer-Consumer Concurrency Pattern (wait() & notify())")
+        print(f"  {Color.CYAN}[9]{Color.RESET}  🏛️ J9:  Interface vs Abstract Class (State vs Contract & Diamond Problem)")
+        print(f"  {Color.CYAN}[10]{Color.RESET} 🗄️ J10: Java HashMap Internals (Buckets, Chaining & Treeify at 8)")
+        print(f"  {Color.CYAN}[11]{Color.RESET} 🔄 S1:  Dynamic Dispatch Shape Stepper (Circle / Triangle / Square)")
+        print(f"  {Color.CYAN}[12]{Color.RESET} 🧵 S2:  Thread State Machine & Concurrent Execution")
+        print(f"\n  {Color.DIM}[0]   ⬅️  Back to Java Lab Studio{Color.RESET}\n")
+
+        ch = prompt_input(f"{Color.BOLD}Choose Visualizer [1 - 12, 0=Back]: {Color.RESET}").strip()
+        v_map = {
+            "1": vis_java_jvm_memory, "2": vis_java_string_pool, "3": vis_java_pass_by_value,
+            "4": vis_java_gc_reachability, "5": vis_java_dynamic_dispatch, "6": vis_java_exception_stack,
+            "7": vis_java_concurrency_lock, "8": vis_java_producer_consumer,
+            "9": vis_java_interfaces_abstract, "10": vis_java_hashmap_internals,
+            "11": visualizer_polymorphism, "12": visualizer_threads,
+        }
+        if ch in ("0", "B", "BACK", "EXIT"):
+            return
+        elif ch in v_map:
+            v_map[ch]()
+
 def mode_java_studio():
     while True:
         clear_screen()
@@ -845,10 +883,9 @@ def mode_java_studio():
         print("  ☕ JAVA OOP LAB STUDIO: 1BCS302 (VTU 2025 Scheme — 10 Experiments)")
         print(f"{Color.CYAN}{Color.BOLD}{'='*80}{Color.RESET}")
         _show_session_header(subject="java")
-        print(f"  {Color.YELLOW}[V1]{Color.RESET} 🔄 Interactive Runtime Polymorphism Visualizer (Dynamic Dispatch)")
-        print(f"  {Color.YELLOW}[V2]{Color.RESET} 🧵 Interactive Concurrency Visualizer (Race Conditions & Threads)")
-        print(f"  {Color.RED}[DR]{Color.RESET} 🚨 Java Lab Disaster Recovery (8 Real Exam Emergencies)")
-        print(f"  {Color.MAGENTA}[VG]{Color.RESET} 🎓 External Examiner Java Viva Gauntlet (3 Lives)")
+        print(f"  {Color.YELLOW}[VS]{Color.RESET} 🎬 {Color.BOLD}Interactive Java Visualizer Suite{Color.RESET} (6 Architecture & OOP Steppers)")
+        print(f"  {Color.RED}[DR]{Color.RESET} 🚨 Java Lab Emergency Recovery (8 Real Exam Problem Scenarios)")
+        print(f"  {Color.MAGENTA}[VG]{Color.RESET} 🎓 Java OOP Viva Prep & Examiner Expectations")
         print(f"  {Color.CYAN}{'─'*78}{Color.RESET}")
         print(f"  {Color.BOLD}VTU PRESCRIBED OOP EXPERIMENTS{Color.RESET}")
         for i in range(10):
@@ -856,23 +893,18 @@ def mode_java_studio():
             done = "✅" if f"JAVA-{exp['num']}" in _SESSION["experiments_done"] else "  "
             print(f"  {done} {Color.CYAN}[{exp['num']:02d}]{Color.RESET} {exp['title']}")
 
-        # Streak motivator
-        streak = _SESSION["streak"]
-        if streak >= 3:
-            print(f"\n  {Color.RED}{Color.BOLD}🔥 You're on a {streak}-streak! JVM is impressed!{Color.RESET}")
-        elif streak >= 1:
-            print(f"\n  {Color.YELLOW}⚡ Streak: {streak} — keep going!{Color.RESET}")
-
         print(f"\n  {Color.DIM}[0]  ⬅️  Back to Master OILS-3 Hub{Color.RESET}\n")
 
-        choice = prompt_input(f"{Color.BOLD}Select [01 - 10, V1, V2, DR, VG, 0]: {Color.RESET}").strip().upper()
+        choice = prompt_input(f"{Color.BOLD}Select [01 - 10, VS, DR, VG, 0]: {Color.RESET}").strip().upper()
 
         if choice in ("0", "B", "EXIT"):
             break
+        elif choice in ("VS", "V", "VIS"):
+            mode_java_visualizers_menu()
         elif choice == "V1":
-            visualizer_polymorphism()
+            vis_java_dynamic_dispatch()
         elif choice == "V2":
-            visualizer_threads()
+            vis_java_concurrency_lock()
         elif choice == "DR":
             mode_java_disaster()
         elif choice == "VG":

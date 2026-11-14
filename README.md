@@ -1,10 +1,10 @@
-# 🚀 OILS-3 : Oops, I Learnt Something! (3rd Sem)
+# 🚀 OILS-3 : Oops, I Learnt Something! (VTU 2025 Scheme)
 
-> *"Because engineering lab exams and git conflicts are scary, but learning shouldn't be."*
+> *"Welcome buddy, don't worry I am there for u ❤️; we will face it together..."*
 
 ![OILS-3](https://img.shields.io/badge/OILS--3-Oops%2C%20I%20Learnt%20Something!-6f42c1?style=for-the-badge&logo=codeforces&logoColor=white)
 ![Semester](https://img.shields.io/badge/Target-3rd%20Sem%20CSE%2FISE-informational?style=for-the-badge)
-![Git](https://img.shields.io/badge/Git-Survival%20Arcade-F05032?style=for-the-badge&logo=git&logoColor=white)
+![Git](https://img.shields.io/badge/Git-1BCSL307A%20Complete-F05032?style=for-the-badge&logo=git&logoColor=white)
 ![DSA](https://img.shields.io/badge/DSA-1BCSL306%20Complete-orange?style=for-the-badge&logo=c&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-1BCS302%20Complete-blue?style=for-the-badge&logo=openjdk&logoColor=white)
 
@@ -12,41 +12,44 @@
 
 ## 💡 What is OILS-3?
 
-**OILS-3** (*Oops, I Learnt Something! - 3rd Sem*) is the ultimate, hands-on survival repository and interactive terminal arcade built specifically for **3rd Semester Computer Science & Engineering students** (VTU 2025 Scheme & allied universities).
+**OILS-3** (*Oops, I Learnt Something! — 3rd Sem Engineering, An Interactive Game to Crack Your Labs*) is an empathetic, pedagogy-first learning companion built specifically for **3rd Semester Computer Science & Engineering students** (VTU 2025 Scheme & allied universities).
 
-Instead of boring, dry textbooks and cryptic lab PDFs, this repository brings together **three core engineering subjects** under one unified, practical roof:
+Instead of confusing code dumps, high-stress pressure, or disconnected textbook PDFs, this companion provides a warm, step-by-step environment to truly understand the core principles, memory models, and exam questions across all three 3rd semester labs:
 
 ```
 OILS-3/
-├── 🎮 Master Terminal Arcade (play.py / play.bat)
-│   ├── 🐙 Git Mastery & Survival Arcade (10 Chapters, Arena, Viva, Disaster Scenarios)
-│   ├── 🌳 DSA Lab Studio (12 Experiments, Visualizers, Code Challenges, Viva)
-│   └── ☕ Java OOP Studio (10 Experiments, OOP Simulators, Code Challenges, Viva)
-├── 🌳 DSA Lab Module (dsa-lab/programs/) — 12 Complete C Source Files (1BCSL306)
-└── ☕ Java Lab Module (java-lab/programs/) — 10 Complete Java Source Files (1BCS302)
+├── 🚀 Main Companion Launcher (play.py / play.bat)
+│   ├── 🐙 Git Lab Studio (1BCSL307A — 12 Experiments, Story Mode, Command Arena, Socratic Viva)
+│   ├── 🌳 DSA Lab Studio (1BCSL306 — 12 Experiments, 12 Visualizers, Sandboxes, Emergency Debugging, Viva)
+│   ├── ☕ Java OOP Studio (1BCS302 — 10 Experiments, 10 Visualizers, Sandboxes, Emergency Debugging, Viva)
+│   ├── 🎬 Visual Concept Studio (22 Deep Animated Memory & Architecture Visualizers)
+│   ├── 🎓 High-Yield Viva Practice Hub (6 Sets · 90 Top Questions with Socratic Guided Hints)
+│   ├── ⚡ Quick Reference & In-Terminal Code Vault (Instant access to all 34 lab source files)
+│   └── 🏆 Educational Milestones Cabinet (13 Syllabus Milestones tracked locally)
+├── 🌳 DSA Lab Module (dsa-lab/programs/) — 12 Verified C Source Files (1BCSL306)
+└── ☕ Java Lab Module (java-lab/programs/) — 10 Verified Java Source Files (1BCS302)
 ```
 
 ---
 
-## 🏛️ The Three Core Pillars
+## 🏛️ The Three Core Lab Modules
 
-### 1️⃣ 🐙 Git Mastery & Survival Arcade
-Master version control before your team project blows up!
-- **Run the Arcade:**
+### 1️⃣ 🐙 Git Lab Companion — 1BCSL307A
+Master version control before team project merge conflicts blow up!
+- **Run the Companion:**
   ```bash
   python play.py
   ```
-  *(On Windows, just double-click `play.bat` to launch in a retro arcade terminal window!)*
 - **Features:**
-  - 🐣 **'Git for Humans' Story Mode:** 10 interactive chapters with hands-on command simulators.
-  - 🧠 **Dynamic Question Pools (Online & Offline):** Randomized MCQs & manual command challenges every playthrough.
-  - 🎯 **Command Practice Arena:** 36 tiered challenges (Low, Medium, Ninja) with real terminal outputs.
-  - 🎓 **Viva Gauntlet:** 25 tricky viva questions with lives and examiner feedback.
-  - 🚨 **Disaster Recovery:** Fix detached HEAD, secret leaks, merge conflicts, and lost commits.
-  - 🧪 **Interactive Command Sandbox & Danger Radar:** Type ANY git command (or explore the 30-command categorized catalog) to inspect realistic simulated terminal output, a 0-10 Danger Meter (🔴 Danger Zone, 🟡 Caution, 🟢 Safe), when to run it, and an exact step-by-step rescue plan if executed by mistake (like `git reset --hard` or `git push -f`)!
+  - 🐣 **'Git for Humans' Story Mode:** 10 interactive chapters with hands-on command practice.
+  - 🧠 **Dynamic Question Pools:** Randomized conceptual challenges with Socratic clues.
+  - 🎯 **Command Practice Arena:** Tiered practical command drills with real terminal feedback.
+  - 🎓 **Stress-Free Viva Practice:** High-yield examiner questions with supportive guidance.
+  - 🚨 **Disaster Recovery:** Hands-on scenarios fixing detached HEAD, secret leaks, merge conflicts, and lost commits.
+  - 🧪 **Interactive Command Sandbox & Danger Radar:** Simulated execution of 30+ Git commands with safety meters and emergency undo blueprints.
 - **Handbooks & Cheatsheets:**
   - 📖 [GIT_FOR_HUMANS.md](GIT_FOR_HUMANS.md) — The plain-English zero-jargon guide.
-  - 📚 [GIT_COMMANDS.md](GIT_COMMANDS.md) — The ultimate cheatsheet from beginner to ninja.
+  - 📚 [GIT_COMMANDS.md](GIT_COMMANDS.md) — The complete cheatsheet from beginner to ninja.
 
 ---
 
@@ -70,10 +73,20 @@ All **12 VTU 2025 Scheme experiments** verified, bug-free, and thoroughly docume
 | **11** | Part B | Employee Record Management (Hash Table & Dept Filter) | [`lab11_employee_hash_table.c`](dsa-lab/programs/lab11_employee_hash_table.c) |
 | **12** | Part B | City Connectivity & Transit (Graphs & Depth-First Search - DFS) | [`lab12_city_connectivity.c`](dsa-lab/programs/lab12_city_connectivity.c) |
 
-- **Interactive Features in CLI:**
-  - 📦 **Interactive Stack Visualizer:** Live push/pop with visual container boundary checking.
-  - 🔗 **Interactive Linked List Visualizer:** Dynamic node chaining `[Head] -> [10|•] -> [20|•] -> NULL`.
-  - 🎓 **DSA External Examiner Viva Gauntlet:** 25 trap questions with 3 lives and examiner roasts.
+- **Interactive DSA Stepper Visualizers (Option [V] & [VS]):**
+  - 🧠 **V1: Memory Architecture & Pointers:** Stack vs Heap, `malloc()`, dangling pointers, `free()`.
+  - 🔄 **V2: Recursion & System Call Stack:** Frame pushing and popping with `fact(3)`.
+  - 🔗 **V3: Linked List 3-Pointer Reversal:** `prev`, `curr`, `next` choreography in-place.
+  - 🐢 **V4: Floyd's Cycle Detection:** Tortoise & Hare race detecting collision and entry node in O(1) space.
+  - 📥 **V5: Infix to Postfix Conversion:** Shunting-yard algorithm, operator precedence and stack frames.
+  - 🔄 **V6: Circular Queue Modulo Ring:** `(rear + 1) % MAX` ring wrap-around vs linear false overflow.
+  - ⚡ **V7: QuickSort In-Place Partitioning:** Lomuto two-pointer scan, pivot settling into permanent slot.
+  - 🔀 **V8: MergeSort Divide & Conquer Tree:** Recursive splitting down to single elements and 2-way sorted merge.
+  - 🌲 **V9: Binary Search Tree (BST):** Invariant `Left < Root < Right` and Inorder sorted output guarantee.
+  - ⚖️ **V10: AVL Tree Rotations:** LL Right, RR Left, LR Double, and RL rotations with balance factors.
+  - 🔑 **V11: Hash Table Collision Resolution:** Linear probing, clustering, and tombstone markers.
+  - 🕸️ **V12: Graph Traversal Stepper:** Queue-driven BFS vs Stack-driven DFS side by side.
+  - 📦 **Interactive Stack & Linked List Sandboxes:** Real-time container manipulation with boundary traces.
 
 ---
 
@@ -95,10 +108,35 @@ All **10 VTU 2025 Scheme experiments** verified, standard-compliant, and fully d
 | **09** | Enumeration with `valueOf()` | `enum`, String parsing & Exception Guard | [`Lab09DepartmentEnum.java`](java-lab/programs/Lab09DepartmentEnum.java) |
 | **10** | Wrapper Classes & Autoboxing | `Double.valueOf()`, Auto-unboxing in `+` | [`Lab10MarksCalculator.java`](java-lab/programs/Lab10MarksCalculator.java) |
 
-- **Interactive Features in CLI:**
-  - 🎭 **Runtime Polymorphism Visualizer:** Virtual Method Table (vtable) dispatch demonstration.
-  - 🧵 **Thread State Machine Visualizer:** Interactive state transitions (`NEW` → `RUNNABLE` → `TIMED_WAITING` → `TERMINATED`).
-  - 🎓 **Java OOP Viva Gauntlet:** 25 trap questions covering JVM memory, string pool, interfaces, and exceptions.
+- **Interactive Java Stepper Visualizers (Option [V] & [VS]):**
+  - ☕ **J1: JVM Runtime Memory Layout:** Metaspace, Thread Stacks, and Generational Heap.
+  - 🧵 **J2: String Constant Pool vs Heap:** `==` vs `.equals()`, literal interning, and wrapper objects.
+  - 📦 **J3: Java Pass-by-Value vs References:** Bit copying, parameter mutability, and the reassignment trap.
+  - 🧹 **J4: GC Root Reachability:** Tracing roots, mark-and-sweep, and cyclic reference collection.
+  - 🎭 **J5: Dynamic Method Dispatch & VTable:** Compile-time type checking vs runtime vtable lookup.
+  - 💥 **J6: Exception Stack Unwinding:** Frame popping and unconditional `finally` execution guarantee.
+  - 🔒 **J7: Multithreading & Synchronized Monitor Locks:** Object monitors, Entry Set, and BLOCKED state.
+  - 🏭 **J8: Producer-Consumer Concurrency:** Bounded buffers, lock releasing with `wait()`, and `notify()`.
+  - 🏛️ **J9: Interfaces vs Abstract Classes:** State vs Contract, Diamond problem resolution, default methods.
+  - 🗄️ **J10: Java HashMap Internals:** Array of buckets, bitwise hashing, separate chaining, and treeify threshold 8.
+
+---
+
+## 🎓 High-Yield Viva Practice Hub (Option [Q])
+
+OILS-3 provides 6 curated viva sets (15 questions each, 90 questions total) designed to prepare students for real external examiner interactions:
+- **Set 1:** Core fundamentals & lab exam favorites
+- **Set 2:** Tricky follow-ups & examiner traps
+- **Socratic Hinting:** If you miss a question, you receive an underlying principle clue and a second attempt to build genuine understanding.
+
+---
+
+## 🏆 Educational Milestones Cabinet (Option [T])
+
+Progress is tied strictly to genuine academic achievements, saved directly to your local device:
+- 🐙 **Git Milestones:** Foundations, Branch & Merge Navigator, Rescue Specialist, Full Lab Scholar.
+- 🌳 **DSA Milestones:** Pointer & Memory Master, Stack & Queue Architect, Linked List Virtuoso, BST & Tree Explorer, Graph & Hash Navigator, Full Lab Scholar.
+- ☕ **Java Milestones:** OOP Core Architect, Thread & Concurrency Specialist, Full Lab Scholar.
 
 ---
 
@@ -110,7 +148,7 @@ git clone https://github.com/prajwalchonnad/OILS-3.git
 cd OILS-3
 ```
 
-### 2. Launch the Master Arcade:
+### 2. Launch the Companion:
 ```bash
 python play.py
 ```
@@ -118,32 +156,8 @@ python play.py
 
 ---
 
-## 🗂️ Repository Roadmap
-
-| Milestone | Subject | Status |
-|---|---|---|
-| 🎮 Interactive Git Terminal Game & Checkpoints | Git | ✅ Complete (Story Mode, Arena, Viva, Disasters) |
-| 📖 Git for Humans & Complete Cheatsheet | Git | ✅ Complete ([GIT_FOR_HUMANS.md](GIT_FOR_HUMANS.md), [GIT_COMMANDS.md](GIT_COMMANDS.md)) |
-| 🌳 DSA Lab Manual & 12 Verified Programs (1BCSL306) | DSA | ✅ Complete ([dsa-lab/programs/](dsa-lab/programs/)) |
-| ☕ Java Lab Manual & 10 Verified Programs (1BCS302) | Java | ✅ Complete ([java-lab/programs/](java-lab/programs/)) |
-| ⚡ Quick Reference & Code Vault Inside CLI | All | ✅ Complete (Option [4] in `play.py`) |
-| 🎮 Gamification Engine, XP, Streaks & Badges | All | ✅ Complete (12 Badges, Trophy Case, 8 Rank Titles) |
-| ⚡ Quick-Fire 5-Question Mixed Speed Run | All | ✅ Complete (Option [Q] in `play.py`, Double XP) |
-
----
-
-## 🏆 Gamification, XP & Achievement Badges
-
-OILS-3 turns mundane lab exam prep into an addictive retro terminal arcade:
-- **XP & Levels:** Earn XP on every correct answer. Level up from **`🐣 Compilation Error`** all the way to **`💎 Silicon Sage`**!
-- **Hot Streaks:** Chain consecutive correct answers for **🔥 ×3 (+25 XP)**, **🔥🔥 ×5 (+50 XP)**, and **🔥🔥🔥 ×7+ (+75 XP)** bonuses!
-- **12 Collectible Badges:** Unlock trophies like `🎯 First Blood`, `🐙 Git Survivor`, `🩺 DSA Specialist`, `☕ JVM Whisperer`, and `⚡ Quick-Fire Ace` in your personal **Trophy Case** (`[T]`).
-- **⚡ Quick-Fire 5-Question Drill:** Rapid-fire speed run across Git, DSA, and Java with **2X DOUBLE XP** and a **+200 XP Perfect Score Bonus**!
-
----
-
-## 👨‍💻 Author & Contributions
+## 👨‍💻 Author & Dedication
 
 Curated with ❤️ by **Prajwal D. Chonnad** for engineering students everywhere.
 
-> *"Keep committing like a ninja! 🫡"*
+> *"Welcome buddy, don't worry I am there for u ❤️; we will face it together..."*

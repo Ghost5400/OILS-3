@@ -10,10 +10,18 @@ from arcade.core import (
     print_slow, anim_correct, anim_wrong,
 )
 from arcade.session import (
-    _SESSION, _award_xp, _break_streak, _unlock_badge,
+    _SESSION, _record_concept_mastered, _unlock_badge,
     _save_to_local_db, _show_session_header,
 )
 from arcade.vault import _view_source_file
+from arcade.visualizers import (
+    vis_dsa_memory, vis_dsa_recursion, vis_dsa_linked_reversal,
+    vis_dsa_floyd_cycle, vis_dsa_infix_postfix,
+    vis_dsa_circular_queue, vis_dsa_quicksort_partition,
+    vis_dsa_mergesort_tree, vis_dsa_bst_operations,
+    vis_dsa_avl_rotations, vis_dsa_hash_collision,
+    vis_dsa_graph_traversal,
+)
 
 DSA_DISASTER_SCENARIOS = [
     {
@@ -769,14 +777,13 @@ def mode_dsa_disaster():
 
         if pick == s["ans_idx"]:
             anim_correct()
-            _award_xp(150, "disaster averted")
-            _unlock_badge("dsa_doctor")
+            _record_concept_mastered("disaster averted")
+            _unlock_badge("dsa_memory")
             score += 150
-            print(f"\n{Color.GREEN}{Color.BOLD}✅ DISASTER AVERTED! (+150 XP){Color.RESET}")
+            print(f"\n{Color.GREEN}{Color.BOLD}✅ DISASTER AVERTED! Bug diagnosed and resolved.{Color.RESET}")
             print(f"{Color.GREEN}{s['reaction']}{Color.RESET}\n")
         else:
             anim_wrong()
-            _break_streak()
             print(f"\n{Color.RED}{Color.BOLD}❌ WRONG DIAGNOSIS! Correct answer was [{s['ans_idx']}]:{Color.RESET}")
             print(f"   {Color.WHITE}{s['choices'][s['ans_idx']-1]}{Color.RESET}")
             print(f"\n{Color.DIM}{s['reaction']}{Color.RESET}\n")
@@ -904,11 +911,10 @@ def run_dsa_experiment_lab(exp):
 
         if ans == ch.get("correct_opt", "A"):
             anim_correct()
-            _award_xp(50, "MCQ correct")
+            _record_concept_mastered("MCQ correct")
             print(f"\n{Color.GREEN}{Color.BOLD}🎉 {ch['praise']}{Color.RESET}\n")
         else:
             anim_wrong()
-            _break_streak()
             print(f"\n{Color.RED}{Color.BOLD}❌ {ch['roast']}{Color.RESET}")
             print(f"   {Color.YELLOW}✅ Expected Answer was ({ch.get('correct_opt', 'A')}): {ch['hint']}{Color.RESET}\n")
     else:
@@ -919,11 +925,10 @@ def run_dsa_experiment_lab(exp):
 
         if norm_user in norm_accepted or any(norm_user in a for a in norm_accepted):
             anim_correct()
-            _award_xp(50, "correct")
+            _record_concept_mastered("correct")
             print(f"\n{Color.GREEN}{Color.BOLD}🎉 {ch['praise']}{Color.RESET}\n")
         else:
             anim_wrong()
-            _break_streak()
             print(f"\n{Color.RED}{Color.BOLD}❌ {ch['roast']}{Color.RESET}")
             print(f"   {Color.YELLOW}Expected: {ch['hint']}{Color.RESET}\n")
 
@@ -973,7 +978,7 @@ def mode_dsa_viva():
             if ans == q["ans"]:
                 solved = True
                 anim_correct()
-                _award_xp(10, "viva correct")
+                _record_concept_mastered("viva correct")
                 score += 1
                 if attempt == 1:
                     print(f"  {Color.GREEN}{Color.BOLD}✔ {q['praise']}{Color.RESET}")
@@ -998,6 +1003,43 @@ def mode_dsa_viva():
     prompt_input("Press Enter to return...")
 
 
+def mode_dsa_visualizers_menu():
+    """Submenu for all 12 DSA visualizers + 2 interactive sandboxes."""
+    while True:
+        clear_screen()
+        print(f"\n{Color.CYAN}{Color.BOLD}╔══════════════════════════════════════════════════════════════════════════════╗")
+        print("║  🎬 DSA VISUALIZER SUITE — 12 Interactive Memory & Architecture Steppers     ║")
+        print(f"╚══════════════════════════════════════════════════════════════════════════════╝{Color.RESET}\n")
+        print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+        print(f"  {Color.YELLOW}[1]{Color.RESET}  🧠 V1:  Memory Architecture & Pointers (Stack vs Heap, Dangling Pointers)")
+        print(f"  {Color.YELLOW}[2]{Color.RESET}  🔄 V2:  Recursion & System Call Stack (Call Frame Pushing & Popping)")
+        print(f"  {Color.YELLOW}[3]{Color.RESET}  🔗 V3:  Linked List 3-Pointer Reversal (prev, curr, next In-Place)")
+        print(f"  {Color.YELLOW}[4]{Color.RESET}  🐢 V4:  Floyd's Cycle Detection (Tortoise & Hare, Finding Loop Entry)")
+        print(f"  {Color.YELLOW}[5]{Color.RESET}  📥 V5:  Infix to Postfix Conversion (Operator Precedence & Stack)")
+        print(f"  {Color.YELLOW}[6]{Color.RESET}  🔄 V6:  Circular Queue & Modulo Ring Buffer ((rear + 1) % MAX)")
+        print(f"  {Color.YELLOW}[7]{Color.RESET}  ⚡ V7:  QuickSort In-Place Partitioning (Lomuto Two-Pointer Scan)")
+        print(f"  {Color.YELLOW}[8]{Color.RESET}  🔀 V8:  MergeSort Divide & Conquer Tree (Splitting & Two-Pointer Merge)")
+        print(f"  {Color.YELLOW}[9]{Color.RESET}  🌲 V9:  Binary Search Tree (Left < Root < Right & Inorder Traversal)")
+        print(f"  {Color.YELLOW}[10]{Color.RESET} ⚖️ V10: AVL Tree Self-Balancing Rotations (LL, RR, LR, RL Rotations)")
+        print(f"  {Color.YELLOW}[11]{Color.RESET} 🔑 V11: Hash Table Collision Resolution (Linear Probing & Tombstones)")
+        print(f"  {Color.YELLOW}[12]{Color.RESET} 🕸️ V12: Graph Traversal Stepper (BFS Queue vs DFS Call Stack)")
+        print(f"  {Color.YELLOW}[13]{Color.RESET} 📦 S1:  Interactive Stack Sandbox (Push, Pop, Peek, Boundary Trace)")
+        print(f"  {Color.YELLOW}[14]{Color.RESET} 🔗 S2:  Interactive Linked List Sandbox (Head, Insert, Delete)")
+        print(f"\n  {Color.DIM}[0]   ⬅️  Back to DSA Lab Studio{Color.RESET}\n")
+
+        ch = prompt_input(f"{Color.BOLD}Choose Visualizer [1 - 14, 0=Back]: {Color.RESET}").strip()
+        v_map = {
+            "1": vis_dsa_memory, "2": vis_dsa_recursion, "3": vis_dsa_linked_reversal,
+            "4": vis_dsa_floyd_cycle, "5": vis_dsa_infix_postfix, "6": vis_dsa_circular_queue,
+            "7": vis_dsa_quicksort_partition, "8": vis_dsa_mergesort_tree, "9": vis_dsa_bst_operations,
+            "10": vis_dsa_avl_rotations, "11": vis_dsa_hash_collision, "12": vis_dsa_graph_traversal,
+            "13": visualizer_stack, "14": visualizer_linked_list,
+        }
+        if ch in ("0", "B", "BACK", "EXIT"):
+            return
+        elif ch in v_map:
+            v_map[ch]()
+
 def mode_dsa_studio():
     while True:
         clear_screen()
@@ -1005,10 +1047,9 @@ def mode_dsa_studio():
         print("  🌳 DSA LAB STUDIO: 1BCSL306 (VTU 2025 Scheme — 12 Experiments)")
         print(f"{Color.GREEN}{Color.BOLD}{'='*80}{Color.RESET}")
         _show_session_header(subject="dsa")
-        print(f"  {Color.YELLOW}[V1]{Color.RESET} 📦 Interactive Stack Visualizer (Push, Pop, Overflow)")
-        print(f"  {Color.YELLOW}[V2]{Color.RESET} 🔗 Interactive Linked List Visualizer (Pointers, Head, Traversal)")
-        print(f"  {Color.RED}[DR]{Color.RESET} 🚨 DSA Lab Disaster Recovery (8 Real Exam Emergencies)")
-        print(f"  {Color.MAGENTA}[VG]{Color.RESET} 🎓 External Examiner DSA Viva Gauntlet (3 Lives)")
+        print(f"  {Color.YELLOW}[VS]{Color.RESET} 🎬 {Color.BOLD}Interactive DSA Visualizer Suite{Color.RESET} (12 Memory & Structure Steppers + 2 Sandboxes)")
+        print(f"  {Color.RED}[DR]{Color.RESET} 🚨 DSA Lab Emergency Recovery (8 Real Exam Problem Scenarios)")
+        print(f"  {Color.MAGENTA}[VG]{Color.RESET} 🎓 DSA Lab Viva Prep & Examiner Expectations")
         print(f"  {Color.CYAN}{'─'*78}{Color.RESET}")
         print(f"  {Color.BOLD}PART A: FIXED EXPERIMENTS{Color.RESET}")
         for i in range(6):
@@ -1022,23 +1063,18 @@ def mode_dsa_studio():
             done = "✅" if f"DSA-{exp['num']}" in _SESSION["experiments_done"] else "  "
             print(f"  {done} {Color.CYAN}[{exp['num']:02d}]{Color.RESET} {exp['title']}")
 
-        # Streak motivator
-        streak = _SESSION["streak"]
-        if streak >= 3:
-            print(f"\n  {Color.RED}{Color.BOLD}🔥 You're on a {streak}-streak! Don't stop now!{Color.RESET}")
-        elif streak >= 1:
-            print(f"\n  {Color.YELLOW}⚡ Streak: {streak} — keep it going!{Color.RESET}")
-
         print(f"\n  {Color.DIM}[0]  ⬅️  Back to Master OILS-3 Hub{Color.RESET}\n")
 
-        choice = prompt_input(f"{Color.BOLD}Select [01 - 12, V1, V2, DR, VG, 0]: {Color.RESET}").strip().upper()
+        choice = prompt_input(f"{Color.BOLD}Select [01 - 12, VS, DR, VG, 0]: {Color.RESET}").strip().upper()
 
         if choice in ("0", "B", "EXIT"):
             break
+        elif choice in ("VS", "V", "VIS"):
+            mode_dsa_visualizers_menu()
         elif choice == "V1":
-            visualizer_stack()
+            vis_dsa_memory()
         elif choice == "V2":
-            visualizer_linked_list()
+            vis_dsa_linked_reversal()
         elif choice == "DR":
             mode_dsa_disaster()
         elif choice == "VG":

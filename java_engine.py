@@ -582,7 +582,7 @@ def mode_java_studio():
         print(f"{Color.BLUE}{Color.BOLD}================================================================================{Color.RESET}\n")
         print(f"  {Color.YELLOW}[V1]{Color.RESET} 🎭 Runtime Polymorphism & Virtual Method Table Visualizer")
         print(f"  {Color.YELLOW}[V2]{Color.RESET} 🧵 Multithreading State Machine Visualizer")
-        print(f"  {Color.MAGENTA}[VG]{Color.RESET} 🎓 External Examiner Java Viva Gauntlet (3 Lives)")
+        print(f"  {Color.MAGENTA}[VG]{Color.RESET} 🎓 External Examiner Java Viva Practice (Stress-Free Mastery)")
         print(f"  {Color.CYAN}------------------------------------------------------------------------------{Color.RESET}")
         print(f"  {Color.BOLD}LAB EXPERIMENTS{Color.RESET}")
         for exp in JAVA_EXPERIMENTS:
