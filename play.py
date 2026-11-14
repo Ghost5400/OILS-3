@@ -12,6 +12,13 @@ Master Arcade Hub for all three 3rd-Sem engineering lab subjects:
 
 import os
 import sys
+
+# Ensure For_Developers directory is on Python search path
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DEV_DIR = os.path.join(SCRIPT_DIR, "For_Developers")
+if DEV_DIR not in sys.path:
+    sys.path.insert(0, DEV_DIR)
+
 import time
 import random
 import subprocess

@@ -22,6 +22,20 @@ intuition, ASCII memory sandboxes, disaster recoveries, and viva drills!
 
 
 ================================================================================
+📂 REPOSITORY STRUCTURE (WHAT YOU SEE IN THIS FOLDER)
+================================================================================
+To keep things super clean and non-intimidating for students, the main folder 
+contains ONLY direct launchers and info files:
+
+• play.bat        -> Double-click to launch on Windows (Easiest!)
+• play.sh         -> Launch script for macOS, Linux, and Mobile terminals
+• play.py         -> Python entry point
+• open_me.txt     -> Quickstart guide & syllabus catalog (this file)
+• about_us.txt    -> The creators & project origin
+• For_Developers/ -> Internal engines, source code, lab programs & docs
+
+
+================================================================================
 🚀 HOW TO RUN THIS INTERACTIVE COMPANION ON YOUR DEVICE
 ================================================================================
 
