@@ -58,8 +58,8 @@ from arcade.session import (
     _init_profile_dialog, _get_rank, _xp_bar,
     BANNER, _BADGES, _clear_local_db,
 )
-from arcade.git.story import (
-    mode_git_arcade, VIVA_QUESTIONS,
+from arcade.git.studio import (
+    mode_git_studio, GIT_EXPERIMENTS,
 )
 from arcade.git.sandbox import (
     mode_git_command_sandbox,
@@ -69,7 +69,6 @@ from arcade.dsa.studio import mode_dsa_studio, DSA_EXPERIMENTS
 from arcade.java.studio import mode_java_studio, JAVA_EXPERIMENTS
 from arcade.vault import _show_code_vault
 from arcade.viva_bank import run_viva_drill_session
-from arcade.visualizers import visualizer_theater_hub
 
 __all__ = [
     "analyze_universal_git_command",
@@ -133,20 +132,17 @@ def main():
         _show_session_header()
 
         print(f"{Color.BOLD}VTU 3RD SEM LAB MODULES & CONCEPT STUDIOS:{Color.RESET}")
-        print(f"  {Color.YELLOW}[1]{Color.RESET} 🐙  {Color.BOLD}Git Lab{Color.RESET}  {Color.DIM}(1BCSL307A · 12 Experiments){Color.RESET}")
-        print(f"      {Color.DIM}↳ Practical commands, commit workflows, merge/rebase & disaster recovery{Color.RESET}")
+        print(f"  {Color.YELLOW}[1]{Color.RESET} 🐙  {Color.BOLD}Git Lab Studio{Color.RESET}  {Color.DIM}(1BCSL307A · 12 Experiments){Color.RESET}")
+        print(f"      {Color.DIM}↳ 12 VTU Lab Experiments, Block Explanations, Command Library, Sandbox & Socratic Viva{Color.RESET}")
 
-        print(f"\n  {Color.GREEN}[2]{Color.RESET} 🌳  {Color.BOLD}DSA Lab{Color.RESET}  {Color.DIM}(1BCSL306 · 12 Experiments){Color.RESET}")
-        print(f"      {Color.DIM}↳ 12 Stepper Visualizers, Sandboxes, Block Logic, Code Challenges, Emergency Debugging, Viva{Color.RESET}")
+        print(f"\n  {Color.GREEN}[2]{Color.RESET} 🌳  {Color.BOLD}DSA Lab Studio{Color.RESET}  {Color.DIM}(1BCSL306 · 12 Experiments){Color.RESET}")
+        print(f"      {Color.DIM}↳ Interactive Memory Sandboxes, 3-Part Block Logic, Disaster Scenarios & Viva{Color.RESET}")
 
         print(f"\n  {Color.CYAN}[3]{Color.RESET} ☕  {Color.BOLD}Java OOP Lab Studio{Color.RESET}  {Color.DIM}(1BCS302 · 10 Experiments){Color.RESET}")
-        print(f"      {Color.DIM}↳ 10 Architecture Visualizers, Sandboxes, Block Logic, Code Challenges, Emergency Debugging, Viva{Color.RESET}")
+        print(f"      {Color.DIM}↳ 10 Experiments with 3-Part Block Logic Breakdown, Disaster Scenarios & Viva{Color.RESET}")
 
         print(f"\n  {Color.MAGENTA}[4]{Color.RESET} ⚡  {Color.BOLD}Quick Reference & In-Terminal Code Vault{Color.RESET}")
         print(f"      {Color.DIM}↳ Instant in-terminal access to all lab source files and experiments at once...{Color.RESET}")
-
-        print(f"\n  {Color.BLUE}[V]{Color.RESET} 🎬  {Color.BOLD}Visual Concept Studio{Color.RESET}  {Color.CYAN}(22 Deep Memory & Architecture Visualizers for DSA & Java){Color.RESET}")
-        print(f"      {Color.DIM}↳ Step-by-step & animated visualizers: Pointers, Heap vs Stack, Floyd's Cycle, Infix/Postfix, QuickSort, MergeSort, BST, AVL, JVM, String Pool, Threads & HashMaps{Color.RESET}")
 
         print(f"\n  {Color.YELLOW}[Q]{Color.RESET} 🎓  {Color.BOLD}High-Yield Viva Practice Hub{Color.RESET}  {Color.DIM}(6 Sets · 90 Top Viva Questions with Socratic Hints){Color.RESET}")
 
@@ -156,18 +152,16 @@ def main():
         print(f"\n  {Color.DIM}[R]{Color.RESET} 🔄  {Color.DIM}Start Fresh / Reset Local Progress{Color.RESET}")
         print(f"  {Color.DIM}[5]{Color.RESET} 🏃  Exit to Terminal  {Color.DIM}(choose whether to save progress){Color.RESET}\n")
 
-        choice = prompt_input(f"{Color.BOLD}Enter your choice [1 - 5, V, Q, T, R]: {Color.RESET}").strip().upper()
+        choice = prompt_input(f"{Color.BOLD}Enter your choice [1 - 5, Q, T, R]: {Color.RESET}").strip().upper()
 
         if choice == "1":
-            mode_git_arcade()
+            mode_git_studio()
         elif choice == "2":
             mode_dsa_studio()
         elif choice == "3":
             mode_java_studio()
         elif choice == "4":
             _show_code_vault()
-        elif choice == "V":
-            visualizer_theater_hub()
         elif choice == "Q":
             mode_quickfire_drill_hub()
         elif choice == "T":
