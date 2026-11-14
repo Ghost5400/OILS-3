@@ -524,35 +524,48 @@ JAVA_VIVA_GAUNTLET = [
 def visualizer_polymorphism():
     clear_screen()
     print(f"\n{Color.CYAN}{Color.BOLD}========== 🎭 RUNTIME POLYMORPHISM & VIRTUAL METHOD TABLE =========={Color.RESET}\n")
-    print("Concept: Superclass reference pointing to different objects on the Heap:")
-    print(f"""
-    {Color.YELLOW}Shape s;{Color.RESET} (Reference on Stack)
-        │
-        ├──> {Color.GREEN}new Circle(){Color.RESET}   ==> s.draw() invokes {Color.GREEN}Circle.draw() ⭕{Color.RESET}
-        ├──> {Color.BLUE}new Triangle(){Color.RESET} ==> s.draw() invokes {Color.BLUE}Triangle.draw() 🔺{Color.RESET}
-        └──> {Color.MAGENTA}new Square(){Color.RESET}   ==> s.draw() invokes {Color.MAGENTA}Square.draw() ⬛{Color.RESET}
-    """)
-    print("How the JVM resolves this at runtime:")
-    print("1. Method call `s.draw()` looks up the object's Virtual Method Table (vtable) pointer.")
-    print("2. Even though `s` is declared of type Shape, the JVM calls the child's overridden implementation.")
-    print("3. This enables loose coupling and extensibility without changing the caller code!\n")
+    print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+    print("Concept: Superclass reference pointing to different objects on the Heap:\n")
+    print(f"  {Color.YELLOW}Shape s;{Color.RESET} (Reference variable allocated on Call Stack)")
+    prompt_input(f"  {Color.DIM}Press Enter for Step 1 (Instantiating Circle)...{Color.RESET}")
+    print(f"\n  [Step 1] s = {Color.GREEN}new Circle(){Color.RESET};  --> Heap allocates Circle object with its own vtable")
+    print(f"           s.draw();           --> JVM invokes {Color.GREEN}Circle.draw() ⭕{Color.RESET}")
+    prompt_input(f"  {Color.DIM}Press Enter for Step 2 (Reassigning to Triangle)...{Color.RESET}")
+    print(f"\n  [Step 2] s = {Color.BLUE}new Triangle(){Color.RESET}; --> Heap allocates Triangle object")
+    print(f"           s.draw();             --> Dynamic dispatch invokes {Color.BLUE}Triangle.draw() 🔺{Color.RESET}")
+    prompt_input(f"  {Color.DIM}Press Enter for Step 3 (Reassigning to Square)...{Color.RESET}")
+    print(f"\n  [Step 3] s = {Color.MAGENTA}new Square(){Color.RESET};   --> Heap allocates Square object")
+    print(f"           s.draw();           --> Dynamic dispatch invokes {Color.MAGENTA}Square.draw() ⬛{Color.RESET}")
+    print(f"\n{Color.CYAN}────────────────────────────────────────────────────────────────────────{Color.RESET}")
+    print("Why Examiners Love This:")
+    print("1. Method call `s.draw()` resolves at RUNTIME based on the ACTUAL OBJECT type, not reference type.")
+    print("2. This is the definition of Dynamic Method Dispatch (Runtime Polymorphism).")
+    print(f"{Color.CYAN}────────────────────────────────────────────────────────────────────────{Color.RESET}\n")
     prompt_input("Press Enter to return...")
 
 def visualizer_threads():
     clear_screen()
     print(f"\n{Color.CYAN}{Color.BOLD}========== 🧵 THREAD LIFE-CYCLE STATE MACHINE =========={Color.RESET}\n")
+    print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
     print("""
      [NEW] ──(start())──> [RUNNABLE] <───> [TIMED_WAITING] (sleep / wait)
                                │
                                └──(run() ends)──> [TERMINATED]
     """)
-    print("Demonstration: Main Thread & Child Thread concurrency:")
+    print("Step-by-step thread execution trace:\n")
+    print("  [Step 1] Thread t = new MyThread();  --> State: [NEW] (Object created, no thread spawned yet)")
+    prompt_input(f"  {Color.DIM}Press Enter for Step 2...{Color.RESET}")
+    print("  [Step 2] t.start();                   --> State: [RUNNABLE] (JVM scheduler allocates thread call stack)")
+    prompt_input(f"  {Color.DIM}Press Enter for Step 3 (Concurrent execution)...{Color.RESET}")
+    print("\n  [Step 3] JVM context switching between Main & Child thread:")
     for i in range(1, 4):
-        print(f"  {Color.BLUE}[Main Thread] Iteration {i}{Color.RESET}")
-        time.sleep(0.3)
-        print(f"  {Color.GREEN}[Child Thread] Iteration {i}{Color.RESET}")
-        time.sleep(0.3)
-    print(f"\n{Color.GREEN}✔ Concurrent execution complete!{Color.RESET}\n")
+        print(f"     {Color.BLUE}[Main Thread]  Running task iteration {i}{Color.RESET}")
+        time.sleep(0.35)
+        print(f"     {Color.GREEN}[Child Thread] Running concurrent iteration {i}{Color.RESET}")
+        time.sleep(0.35)
+    prompt_input(f"\n  {Color.DIM}Press Enter for Step 4...{Color.RESET}")
+    print("\n  [Step 4] run() method completes      --> State: [TERMINATED] (Thread terminates cleanly)")
+    print(f"\n{Color.GREEN}✔ Concurrent execution and life-cycle demonstrated cleanly!{Color.RESET}\n")
     prompt_input("Press Enter to return...")
 
 # ==============================================================================
@@ -621,7 +634,7 @@ def run_java_experiment_lab(exp):
     # Stage 1: The Big Picture & Intuition
     clear_screen()
     print()
-    _show_session_header()
+    _show_session_header(subject="java")
     print(Color.CYAN + Color.BOLD + "╔" + ("═" * 78) + "╗")
     print(f"║  ☕ JAVA EXPERIMENT {exp['num']:02d}: {exp['title']:<55} ║")
     print("╚" + ("═" * 78) + "╝" + Color.RESET)
@@ -701,7 +714,7 @@ def run_java_experiment_lab(exp):
     print("║  🎮 [Stage 4/4] GUIDED CODE CHALLENGE — Check Your Understanding!             ║")
     print("╚" + ("═" * 78) + "╝" + Color.RESET)
     print()
-    _show_session_header()
+    _show_session_header(subject="java")
 
     print(f"{Color.BOLD}{Color.WHITE}{ch['prompt']}{Color.RESET}")
     print()
@@ -767,43 +780,60 @@ def run_java_experiment_lab(exp):
 def mode_java_viva():
     clear_screen()
     print(f"\n{Color.YELLOW}{Color.BOLD}=================================================================={Color.RESET}")
-    print(f"{Color.YELLOW}{Color.BOLD}  🎓 JAVA OOP EXTERNAL EXAMINER VIVA GAUNTLET (3 LIVES) 🎓{Color.RESET}")
+    print(f"{Color.YELLOW}{Color.BOLD}  🎓 JAVA OOP VIVA PREP & CONCEPT MASTERY (1BCS302) 🎓{Color.RESET}")
     print(f"{Color.YELLOW}{Color.BOLD}=================================================================={Color.RESET}")
-    print("Answer the trap questions asked by external lab examiners.\n")
+    print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+    print("  Stress-free practice with Socratic hints and examiner expectations.\n")
 
-    lives = 3
     score = 0
     questions = list(JAVA_VIVA_GAUNTLET)
     random.shuffle(questions)
 
     for idx, q in enumerate(questions, 1):
-        if lives <= 0:
-            print(f"\n{Color.RED}{Color.BOLD}💀 YOU FAILED THE VIVA! All 3 lives lost. Back to reading the JVM spec!{Color.RESET}\n")
-            break
-
-        print(f"\n{Color.CYAN}{Color.BOLD}[Question {idx}/{len(questions)}] (Lives: {'❤️ ' * lives}){Color.RESET}")
+        print(f"\n{Color.CYAN}{Color.BOLD}[Question {idx}/{len(questions)}]{Color.RESET}")
         print(f"{Color.BOLD}{q['q']}{Color.RESET}\n")
         for opt in q["options"]:
             print(f"  {opt}")
 
-        ans = prompt_input("\nYour Answer [A / B / C / D]: ").strip().upper()
+        attempt = 1
+        solved = False
+        while attempt <= 2 and not solved:
+            prompt_str = "\nYour Answer [A / B / C / D] (or 'H' for Clue, 0 to Exit): " if attempt == 1 else "\nSecond Try [A / B / C / D]: "
+            ans = prompt_input(prompt_str).strip().upper()
 
-        if ans == q["ans"]:
-            anim_correct()
-            _award_xp(10, "java viva correct")
-            score += 10
-            print(f"{Color.GREEN}{q['praise']}{Color.RESET}")
-        else:
-            anim_wrong()
-            _break_streak()
-            lives -= 1
-            print(f"{Color.RED}{q['roast']}{Color.RESET}")
-            print(f"{Color.YELLOW}💡 Examiner Tip: {q['tip']}{Color.RESET}")
+            if ans in ("0", "EXIT", "Q"):
+                return
+            if ans == "H":
+                print(f"  {Color.YELLOW}💡 Clue: {q['tip']}{Color.RESET}")
+                continue
+            if ans not in ("A", "B", "C", "D"):
+                print(f"  {Color.RED}Please type A, B, C, or D!{Color.RESET}")
+                continue
 
-        time.sleep(0.5)
+            if ans == q["ans"]:
+                solved = True
+                anim_correct()
+                _award_xp(10, "java viva correct")
+                score += 1
+                if attempt == 1:
+                    print(f"  {Color.GREEN}{Color.BOLD}✔ {q['praise']}{Color.RESET}")
+                else:
+                    print(f"  {Color.GREEN}{Color.BOLD}🎉 Excellent recovery buddy! You got it right! ❤️{Color.RESET}")
+            else:
+                anim_wrong()
+                if attempt == 1:
+                    print(f"  {Color.YELLOW}🌱 Not quite buddy! {q['roast']}{Color.RESET}")
+                    print(f"  {Color.YELLOW}💡 Clue: {q['tip']}{Color.RESET}")
+                    attempt += 1
+                else:
+                    print(f"  {Color.MAGENTA}🤝 No worries buddy! The correct answer is [{q['ans']}].{Color.RESET}")
+                    attempt += 1
+
+        print(f"\n  {Color.CYAN}💡 Examiner Expectation: {q['tip']}{Color.RESET}")
+        prompt_input(f"\n{Color.DIM}Press Enter for next question...{Color.RESET}")
 
     print(f"\n{Color.CYAN}===================================================={Color.RESET}")
-    print(f"  Viva Complete! Final Score: {Color.BOLD}{score} Points{Color.RESET}")
+    print(f"  🎉 Viva Practice Complete! Mastered: {Color.BOLD}{score}/{len(questions)} Concepts{Color.RESET}")
     print(f"{Color.CYAN}===================================================={Color.RESET}\n")
     prompt_input("Press Enter to return...")
 
@@ -814,7 +844,7 @@ def mode_java_studio():
         print(f"\n{Color.CYAN}{Color.BOLD}{'='*80}{Color.RESET}")
         print("  ☕ JAVA OOP LAB STUDIO: 1BCS302 (VTU 2025 Scheme — 10 Experiments)")
         print(f"{Color.CYAN}{Color.BOLD}{'='*80}{Color.RESET}")
-        _show_session_header()
+        _show_session_header(subject="java")
         print(f"  {Color.YELLOW}[V1]{Color.RESET} 🔄 Interactive Runtime Polymorphism Visualizer (Dynamic Dispatch)")
         print(f"  {Color.YELLOW}[V2]{Color.RESET} 🧵 Interactive Concurrency Visualizer (Race Conditions & Threads)")
         print(f"  {Color.RED}[DR]{Color.RESET} 🚨 Java Lab Disaster Recovery (8 Real Exam Emergencies)")

@@ -11,7 +11,7 @@ from arcade.core import (
 )
 from arcade.session import (
     _award_xp, _break_streak, _unlock_badge,
-    _show_session_header, BANNER,
+    _show_session_header, BANNER, _SESSION, _save_to_local_db,
 )
 from arcade.git.questions import _run_step_checkpoint
 from arcade.git.sandbox import mode_git_command_sandbox
@@ -471,64 +471,64 @@ LAB_EXPERIMENTS = [
 def mode_viva_gauntlet():
     clear_screen()
     print(f"{Color.CYAN}{Color.BOLD}╔════════════════════════════════════════════════════════════════════╗")
-    print("║        🎓 MODE 3: SURVIVE THE TECH INTERVIEW & VIVA GAUNTLET       ║")
+    print("║   🎓 MODE 3: GIT LAB VIVA PREP & CONCEPTUAL Q&A (1BCSL307A)       ║")
     print("╚════════════════════════════════════════════════════════════════════╝\n")
-    print_slow("A lead interviewer walks into the room with a notepad, a hot cup of coffee, and zero patience.", 0.02, Color.YELLOW)
-    print_slow("Answer the questions correctly to earn your developer cred. You have 3 lives (☕ Coffee Cups).\n", 0.02)
+    print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+    print_slow("Explore real examiner questions at your own pace with Socratic hints and clear takeaways.\n", 0.015, Color.CYAN)
     
     score = 0
-    lives = 3
     questions = list(VIVA_QUESTIONS)
     random.shuffle(questions)
 
     total_viva = min(10, len(questions))
     for i, item in enumerate(questions[:total_viva], 1):
-        print(f"\n{Color.BOLD}{Color.WHITE}─── QUESTION {i}/{total_viva} | Lives: {'☕ ' * lives} | Score: {score} ───{Color.RESET}")
+        print(f"\n{Color.BOLD}{Color.WHITE}─── QUESTION {i}/{total_viva} | Concepts Mastered: {score} ───{Color.RESET}")
         print_slow(f"\n{Color.CYAN}{item['q']}{Color.RESET}", 0.015)
         print()
         for opt in item["options"]:
             print(f"  {Color.YELLOW}{opt}{Color.RESET}")
         
-        while True:
-            choice = prompt_input(f"\n{Color.BOLD}Your Answer [A / B / C / D] (or '0' for Menu): {Color.RESET}").strip().upper()
+        attempt = 1
+        solved = False
+        while attempt <= 2 and not solved:
+            prompt_str = f"\n{Color.BOLD}Your Answer [A / B / C / D] (or 'H' for Clue, 0 to Exit): {Color.RESET}" if attempt == 1 else f"\n{Color.BOLD}Second Try [A / B / C / D]: {Color.RESET}"
+            choice = prompt_input(prompt_str).strip().upper()
             if choice in ["0", "MENU", "HOME", "Q", "EXIT"]:
                 print(f"\n{Color.YELLOW}🏠 Returning to Main Menu...{Color.RESET}\n")
                 time.sleep(0.5)
                 return
-            if choice in ["A", "B", "C", "D"]:
-                break
-            print(f"{Color.RED}Please type A, B, C, or D (or '0' for Menu)!{Color.RESET}")
+            if choice == "H":
+                print(f"  {Color.YELLOW}💡 Clue: {item['tip']}{Color.RESET}")
+                continue
+            if choice not in ["A", "B", "C", "D"]:
+                print(f"{Color.RED}Please type A, B, C, or D!{Color.RESET}")
+                continue
 
-        spinner("Interview panel evaluating your response", duration=0.6, color=Color.YELLOW)
-
-        if choice == item["ans"]:
-            anim_correct()
-            _award_xp(100, "git viva")
-            score += 100
-            print(f"\n{Color.GREEN}{Color.BOLD}🎉 CORRECT! (+100 XP){Color.RESET}")
-            print(f"{Color.GREEN}{item['praise']}{Color.RESET}")
-        else:
-            anim_wrong()
-            _break_streak()
-            lives -= 1
-            print(f"\n{Color.RED}{Color.BOLD}❌ WRONG! Correct Answer was ({item['ans']}){Color.RESET}")
-            print(f"{Color.RED}{item['roast']}{Color.RESET}")
-            if lives == 0:
-                print_slow(f"\n{Color.RED}{Color.BOLD}💀 OUT OF LIVES! The interview is cut short. Time to read GIT_COMMANDS.md!{Color.RESET}", 0.03)
-                break
+            if choice == item["ans"]:
+                solved = True
+                anim_correct()
+                _award_xp(20, "git viva")
+                score += 1
+                if attempt == 1:
+                    print(f"\n{Color.GREEN}{Color.BOLD}✔ CORRECT! {item['praise']}{Color.RESET}")
+                else:
+                    print(f"\n{Color.GREEN}{Color.BOLD}🎉 Excellent recovery buddy! You nailed it! ❤️{Color.RESET}")
+            else:
+                anim_wrong()
+                if attempt == 1:
+                    print(f"\n{Color.YELLOW}🌱 Not quite buddy! {item['roast']}{Color.RESET}")
+                    print(f"  {Color.YELLOW}💡 Clue: {item['tip']}{Color.RESET}")
+                    attempt += 1
+                else:
+                    print(f"\n{Color.MAGENTA}🤝 No worries buddy! The correct answer is [{item['ans']}].{Color.RESET}")
+                    attempt += 1
         
-        print(f"{Color.DIM}💡 Tip: {item['tip']}{Color.RESET}")
-        time.sleep(1.2)
+        print(f"\n{Color.DIM}💡 Key Examiner Takeaway: {item['tip']}{Color.RESET}")
+        prompt_input(f"\n{Color.DIM}Press Enter for next question...{Color.RESET}")
 
-    max_viva = total_viva * 100
     print(f"\n{Color.BOLD}{Color.MAGENTA}═══════════════════════════════════════════════════")
-    print(f"   CHALLENGE FINISHED! Final Score: {score}/{max_viva}")
-    if score >= max_viva * 0.8:
-        print("   🏆 Great job! You navigated tricky situations and learned how Git thinks!")
-    elif score >= max_viva * 0.5:
-        print("   ⭐ Good progress! Keep practicing and these concepts will feel like second nature!")
-    else:
-        print("   🌱 Good start! Take your time, re-read GIT_COMMANDS.md, and try again!")
+    print(f"   🎉 Viva Practice Complete! Mastered: {score}/{total_viva} Concepts")
+    print("   🏆 Great job! You navigated tricky situations and learned how Git thinks!")
     print(f"═══════════════════════════════════════════════════{Color.RESET}\n")
     prompt_input(f"{Color.DIM}Press Enter to return to main menu...{Color.RESET}")
 
@@ -620,8 +620,12 @@ def mode_vtu_cheatbook():
                 return
             if 1 <= choice <= 12:
                 step_code, name, code = LAB_EXPERIMENTS[choice - 1]
+                exp_id = f"GIT-{choice}"
+                if exp_id not in _SESSION["experiments_done"]:
+                    _SESSION["experiments_done"].append(exp_id)
+                    _save_to_local_db()
                 print(f"\n{Color.GREEN}{Color.BOLD}═════════════════════════════════════════════════════")
-                print(f"📖 {step_code}: {name}")
+                print(f"📖 {step_code}: {name}  {Color.YELLOW}✔ [Progress Saved]{Color.RESET}")
                 print(f"═════════════════════════════════════════════════════{Color.RESET}")
                 print(f"{Color.WHITE}{code}{Color.RESET}")
                 print(f"{Color.GREEN}═════════════════════════════════════════════════════{Color.RESET}")
@@ -1970,17 +1974,17 @@ def mode_git_arcade():
     while True:
         clear_screen()
         print(BANNER)
-        _show_session_header()
-        print(f"{Color.BOLD}  🐙 GIT MASTERY & SURVIVAL ARCADE — Choose your mode:{Color.RESET}\n")
-        print(f"  {Color.YELLOW}[1]{Color.RESET} 🐣  'Git for Humans' (10-Chapter Interactive Story)")
-        print(f"  {Color.GREEN}[2]{Color.RESET} 🎯  'Type The Command' Practice Arena (36 Challenges)")
-        print(f"  {Color.CYAN}[3]{Color.RESET} 🎓  Survive the Viva & Tech Interview (25 Boss Questions)")
-        print(f"  {Color.RED}[4]{Color.RESET} 🚨  'Oh No, Git!' Disaster Recovery (8 Emergencies)")
+        _show_session_header(subject="git")
+        print(f"{Color.BOLD}  🐙 GIT LAB COMPANION: 1BCSL307A — Choose your learning mode:{Color.RESET}\n")
+        print(f"  {Color.YELLOW}[1]{Color.RESET} 🐣  'Git for Humans' (10-Chapter Visual Concepts)")
+        print(f"  {Color.GREEN}[2]{Color.RESET} 🎯  Hands-on Command Practice (36 Challenges)")
+        print(f"  {Color.CYAN}[3]{Color.RESET} 🎓  Viva Prep & Conceptual Q&A (25 High-Yield Questions)")
+        print(f"  {Color.RED}[4]{Color.RESET} 🚨  Real-World Scenarios & Recovery Guide (8 Common Fixes)")
         print(f"  {Color.BLUE}[5]{Color.RESET} 📚  12-Step Practical Lab & Workflow Cheatbook")
         print(f"  {Color.MAGENTA}[6]{Color.RESET} 🧬  Git Internals & Architecture Masterclass")
         print(f"  {Color.WHITE}[7]{Color.RESET} ⚡  Show My Configured Git Aliases")
-        print(f"  {Color.GREEN}[8]{Color.RESET} 🧪  Interactive Command Sandbox & Danger Radar")
-        print(f"  {Color.DIM}[0]{Color.RESET} ⬅️   Back to Master OILS-3 Hub\n")
+        print(f"  {Color.GREEN}[8]{Color.RESET} 🧪  Interactive Command Sandbox & Safety Checker")
+        print(f"  {Color.DIM}[0]{Color.RESET} ⬅️   Back to Main Menu\n")
 
         choice = prompt_input(f"{Color.BOLD}Enter your choice [0 - 8]: {Color.RESET}").strip()
 

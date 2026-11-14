@@ -633,22 +633,36 @@ def visualizer_stack():
         if cmd == "1":
             if len(stack) >= cap:
                 print(f"{Color.RED}🚨 STACK OVERFLOW! Stack is full ({cap}/{cap})!{Color.RESET}")
-                time.sleep(1.0)
+                print(f"  {Color.DIM}Explanation: Array indices 0 to {cap-1} are occupied. Cannot insert without overwriting.{Color.RESET}")
+                prompt_input("Press Enter to continue...")
             else:
                 val = prompt_input("Enter integer to push: ").strip()
                 if val.isdigit() or (val.startswith("-") and val[1:].isdigit()):
-                    stack.append(int(val))
-                    spinner(f"Pushing {val} to stack", duration=0.6)
+                    int_val = int(val)
+                    print(f"\n  {Color.YELLOW}Step 1: Check boundary{Color.RESET} -> top < MAX-1 ({len(stack)-1} < {cap-1}) [OK]")
+                    prompt_input(f"  {Color.DIM}Press Enter for Step 2...{Color.RESET}")
+                    print(f"  {Color.YELLOW}Step 2: Advance pointer{Color.RESET} -> top = top + 1 (new top index: {len(stack)})")
+                    prompt_input(f"  {Color.DIM}Press Enter for Step 3...{Color.RESET}")
+                    print(f"  {Color.YELLOW}Step 3: Write memory{Color.RESET}   -> stack[{len(stack)}] = {int_val}")
+                    stack.append(int_val)
+                    time.sleep(0.4)
                 else:
                     print(f"{Color.RED}Please enter a valid integer!{Color.RESET}")
                     time.sleep(0.8)
         elif cmd == "2":
             if not stack:
                 print(f"{Color.RED}🚨 STACK UNDERFLOW! Stack is empty.{Color.RESET}")
-                time.sleep(1.0)
+                print(f"  {Color.DIM}Explanation: top == -1. There are no elements in memory to pop.{Color.RESET}")
+                prompt_input("Press Enter to continue...")
             else:
-                popped = stack.pop()
-                spinner(f"Popping {popped} from stack", duration=0.6)
+                popped = stack[-1]
+                print(f"\n  {Color.YELLOW}Step 1: Check boundary{Color.RESET} -> top >= 0 ({len(stack)-1} >= 0) [OK]")
+                prompt_input(f"  {Color.DIM}Press Enter for Step 2...{Color.RESET}")
+                print(f"  {Color.YELLOW}Step 2: Read data element{Color.RESET} -> item = stack[top] (retrieved: {popped})")
+                prompt_input(f"  {Color.DIM}Press Enter for Step 3...{Color.RESET}")
+                print(f"  {Color.YELLOW}Step 3: Decrement pointer{Color.RESET} -> top = top - 1 (freed slot {len(stack)-1})")
+                stack.pop()
+                time.sleep(0.4)
         elif cmd == "3":
             if not stack:
                 print(f"{Color.YELLOW}Stack is empty. Nothing to peek.{Color.RESET}")
@@ -680,20 +694,38 @@ def visualizer_linked_list():
         if cmd == "1":
             val = prompt_input("Enter integer for new node: ").strip()
             if val.isdigit():
-                nodes.insert(0, int(val))
-                spinner(f"Allocating node {val} with malloc() and updating HEAD", duration=0.7)
+                int_val = int(val)
+                print(f"\n  {Color.YELLOW}Step 1: Allocate Heap Node{Color.RESET} -> new_node = malloc(sizeof(Node)); new_node->data = {int_val};")
+                prompt_input(f"  {Color.DIM}Press Enter for Step 2...{Color.RESET}")
+                print(f"  {Color.YELLOW}Step 2: Wire next pointer{Color.RESET}  -> new_node->next = HEAD (points to previous first node)")
+                prompt_input(f"  {Color.DIM}Press Enter for Step 3...{Color.RESET}")
+                print(f"  {Color.YELLOW}Step 3: Update HEAD{Color.RESET}        -> HEAD = new_node (new node is now the list entry point)")
+                nodes.insert(0, int_val)
+                time.sleep(0.4)
         elif cmd == "2":
             val = prompt_input("Enter integer for new node: ").strip()
             if val.isdigit():
-                nodes.append(int(val))
-                spinner(f"Traversing to end and linking node {val}", duration=0.7)
+                int_val = int(val)
+                print(f"\n  {Color.YELLOW}Step 1: Allocate Heap Node{Color.RESET} -> new_node = malloc(sizeof(Node)); new_node->data = {int_val}; new_node->next = NULL;")
+                prompt_input(f"  {Color.DIM}Press Enter for Step 2...{Color.RESET}")
+                print(f"  {Color.YELLOW}Step 2: Traverse to Tail{Color.RESET}   -> while (temp->next != NULL) temp = temp->next;")
+                prompt_input(f"  {Color.DIM}Press Enter for Step 3...{Color.RESET}")
+                print(f"  {Color.YELLOW}Step 3: Attach to Tail{Color.RESET}     -> temp->next = new_node;")
+                nodes.append(int_val)
+                time.sleep(0.4)
         elif cmd == "3":
             if not nodes:
                 print(f"{Color.RED}List is empty. Nothing to delete!{Color.RESET}")
                 time.sleep(0.8)
             else:
-                removed = nodes.pop(0)
-                spinner(f"Updating HEAD = HEAD->next and calling free({removed})", duration=0.7)
+                removed = nodes[0]
+                print(f"\n  {Color.YELLOW}Step 1: Save Target Pointer{Color.RESET} -> temp = HEAD (storing address of node {removed})")
+                prompt_input(f"  {Color.DIM}Press Enter for Step 2...{Color.RESET}")
+                print(f"  {Color.YELLOW}Step 2: Advance HEAD{Color.RESET}        -> HEAD = HEAD->next (moving list entry to 2nd node)")
+                prompt_input(f"  {Color.DIM}Press Enter for Step 3...{Color.RESET}")
+                print(f"  {Color.YELLOW}Step 3: Reclaim Memory{Color.RESET}      -> free(temp) (deallocates heap memory, avoids memory leak!)")
+                nodes.pop(0)
+                time.sleep(0.4)
         elif cmd in ("0", "b", "exit"):
             break
 
@@ -763,7 +795,7 @@ def run_dsa_experiment_lab(exp):
     # Stage 1: The Big Picture & Intuition
     clear_screen()
     print()
-    _show_session_header()
+    _show_session_header(subject="dsa")
     print(Color.CYAN + Color.BOLD + "╔" + ("═" * 78) + "╗")
     print(f"║  🌳 EXPERIMENT {exp['num']:02d} ({exp['part']}): {exp['title']:<52} ║")
     print("╚" + ("═" * 78) + "╝" + Color.RESET)
@@ -842,7 +874,7 @@ def run_dsa_experiment_lab(exp):
     print("║  🎮 [Stage 4/4] GUIDED CODE CHALLENGE — Check Your Understanding!             ║")
     print("╚" + ("═" * 78) + "╝" + Color.RESET)
     print()
-    _show_session_header()
+    _show_session_header(subject="dsa")
 
     print(f"{Color.BOLD}{Color.WHITE}{ch['prompt']}{Color.RESET}")
     print()
@@ -908,43 +940,60 @@ def run_dsa_experiment_lab(exp):
 def mode_dsa_viva():
     clear_screen()
     print(f"\n{Color.YELLOW}{Color.BOLD}=================================================================={Color.RESET}")
-    print(f"{Color.YELLOW}{Color.BOLD}  🎓 DSA EXTERNAL EXAMINER VIVA GAUNTLET (3 LIVES) 🎓{Color.RESET}")
+    print(f"{Color.YELLOW}{Color.BOLD}  🎓 DSA LAB VIVA PREP & CONCEPT MASTERY (1BCSL306) 🎓{Color.RESET}")
     print(f"{Color.YELLOW}{Color.BOLD}=================================================================={Color.RESET}")
-    print("Answer the trap questions asked by external lab examiners.\n")
+    print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+    print("  Stress-free practice with Socratic hints and examiner expectations.\n")
 
-    lives = 3
     score = 0
     questions = list(DSA_VIVA_GAUNTLET)
     random.shuffle(questions)
 
     for idx, q in enumerate(questions, 1):
-        if lives <= 0:
-            print(f"\n{Color.RED}{Color.BOLD}💀 YOU FAILED THE VIVA! All 3 lives lost. Back to reading the lab manual!{Color.RESET}\n")
-            break
-
-        print(f"\n{Color.CYAN}{Color.BOLD}[Question {idx}/{len(questions)}] (Lives: {'❤️ ' * lives}){Color.RESET}")
+        print(f"\n{Color.CYAN}{Color.BOLD}[Question {idx}/{len(questions)}]{Color.RESET}")
         print(f"{Color.BOLD}{q['q']}{Color.RESET}\n")
         for opt in q["options"]:
             print(f"  {opt}")
 
-        ans = prompt_input("\nYour Answer [A / B / C / D]: ").strip().upper()
+        attempt = 1
+        solved = False
+        while attempt <= 2 and not solved:
+            prompt_str = "\nYour Answer [A / B / C / D] (or 'H' for Clue, 0 to Exit): " if attempt == 1 else "\nSecond Try [A / B / C / D]: "
+            ans = prompt_input(prompt_str).strip().upper()
 
-        if ans == q["ans"]:
-            anim_correct()
-            _award_xp(10, "viva correct")
-            score += 10
-            print(f"{Color.GREEN}{q['praise']}{Color.RESET}")
-        else:
-            anim_wrong()
-            _break_streak()
-            lives -= 1
-            print(f"{Color.RED}{q['roast']}{Color.RESET}")
-            print(f"{Color.YELLOW}💡 Examiner Tip: {q['tip']}{Color.RESET}")
+            if ans in ("0", "EXIT", "Q"):
+                return
+            if ans == "H":
+                print(f"  {Color.YELLOW}💡 Clue: {q['tip']}{Color.RESET}")
+                continue
+            if ans not in ("A", "B", "C", "D"):
+                print(f"  {Color.RED}Please type A, B, C, or D!{Color.RESET}")
+                continue
 
-        time.sleep(0.5)
+            if ans == q["ans"]:
+                solved = True
+                anim_correct()
+                _award_xp(10, "viva correct")
+                score += 1
+                if attempt == 1:
+                    print(f"  {Color.GREEN}{Color.BOLD}✔ {q['praise']}{Color.RESET}")
+                else:
+                    print(f"  {Color.GREEN}{Color.BOLD}🎉 Excellent recovery buddy! You got it right! ❤️{Color.RESET}")
+            else:
+                anim_wrong()
+                if attempt == 1:
+                    print(f"  {Color.YELLOW}🌱 Not quite buddy! {q['roast']}{Color.RESET}")
+                    print(f"  {Color.YELLOW}💡 Clue: {q['tip']}{Color.RESET}")
+                    attempt += 1
+                else:
+                    print(f"  {Color.MAGENTA}🤝 No worries buddy! The correct answer is [{q['ans']}].{Color.RESET}")
+                    attempt += 1
+
+        print(f"\n  {Color.CYAN}💡 Examiner Expectation: {q['tip']}{Color.RESET}")
+        prompt_input(f"\n{Color.DIM}Press Enter for next question...{Color.RESET}")
 
     print(f"\n{Color.CYAN}===================================================={Color.RESET}")
-    print(f"  Viva Complete! Final Score: {Color.BOLD}{score} Points{Color.RESET}")
+    print(f"  🎉 Viva Practice Complete! Mastered: {Color.BOLD}{score}/{len(questions)} Concepts{Color.RESET}")
     print(f"{Color.CYAN}===================================================={Color.RESET}\n")
     prompt_input("Press Enter to return...")
 
@@ -955,7 +1004,7 @@ def mode_dsa_studio():
         print(f"\n{Color.GREEN}{Color.BOLD}{'='*80}{Color.RESET}")
         print("  🌳 DSA LAB STUDIO: 1BCSL306 (VTU 2025 Scheme — 12 Experiments)")
         print(f"{Color.GREEN}{Color.BOLD}{'='*80}{Color.RESET}")
-        _show_session_header()
+        _show_session_header(subject="dsa")
         print(f"  {Color.YELLOW}[V1]{Color.RESET} 📦 Interactive Stack Visualizer (Push, Pop, Overflow)")
         print(f"  {Color.YELLOW}[V2]{Color.RESET} 🔗 Interactive Linked List Visualizer (Pointers, Head, Traversal)")
         print(f"  {Color.RED}[DR]{Color.RESET} 🚨 DSA Lab Disaster Recovery (8 Real Exam Emergencies)")

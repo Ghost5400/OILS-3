@@ -151,39 +151,27 @@ def _check_milestone_badges():
         _unlock_badge("xp_2500")
 
 _FUNNY_PRAISES = [
-    "Awesome job! That was spot on! 🌟",
-    "Your brain just connected the dots! 🧠✨",
-    "High five! That was clean and accurate! 🙌",
-    "You're making real progress, one step at a time! 🚀",
-    "Look at that — you're getting comfortable with this! 💡",
-    "Even your computer is nodding in approval! 💻✨",
-    "Clean logic! That's how it's done! 🎯",
-    "Step by step, you're picking this up! 🌱",
-    "Great catch! Code makes sense when you take your time! 👏",
-    "Your understanding just leveled up! 📈",
-    "Brilliant! The concepts are starting to click! 🧩",
-    "Nice and steady! You nailed that one! 💎",
-    "Zero hesitation, perfect choice! 🎉",
-    "You're building real programming intuition! 🧠",
-    "Keep this energy going — you're doing great! ✨",
+    "Spot on buddy! You nailed the core logic! ❤️",
+    "Great job! That's exactly how it works in memory. 🧠✨",
+    "Brilliant catch! You're really mastering this concept step by step. 🌱",
+    "Clean and confident! Keep this momentum going, we've got this! 🙌",
+    "Awesome! Your conceptual foundation is getting super solid. 💡",
+    "You're making genuine progress, one experiment at a time! 🚀",
+    "Look at that — you're getting really comfortable with this! 👏",
+    "Step by step, everything is starting to make sense! 🧩",
+    "Perfect answer buddy! The examiner will love this clarity. 🌟",
+    "You're building real engineering intuition! 💎",
 ]
 
 _FUNNY_ROASTS = [
-    "Oops! No worries at all — even NASA engineers miss things! 🚀",
-    "Nice try! Making mistakes is literally how we learn code! 🌱",
-    "Brain had a little hiccup! Read the clue and take another shot! ☕",
-    "Hey, learning code is tricky! Give yourself credit for trying! 💡",
-    "Computer says 'Almost there!' Let's see why the other option works! 💻",
-    "Don't sweat it! Even the creators of C had bugs on day one! 🤷",
-    "Semicolons and brackets love playing hide-and-seek! Try again! 🙈",
-    "Mistakes are just undocumented learning features! 🐛✨",
-    "Every wrong answer gets you closer to the right one! 🎯",
-    "Take a breath! Code is a journey, not a sprint! 🧘",
-    "No big deal! That's why we have hints and second chances! 💡",
-    "Debugging is 90% of programming anyway! You're in good company! 🔍",
-    "A tiny slip! The explanation below makes it crystal clear! 📖",
-    "Progress isn't a straight line — keep exploring! 🌟",
-    "You've got this! One step at a time! 💪",
+    "No worries at all buddy! Learning code takes patience — let's review why this works. ❤️",
+    "You're close! Take a breath, trace the logic step-by-step, and it will click. 💡",
+    "Mistakes are just steps on the way to mastery! Let's break down the concept together. 🌱",
+    "Don't worry buddy, tricky concepts take a moment. We will face it together! 🤝",
+    "Good try! Look at the underlying principle and you'll see why the other option fits. 🔍",
+    "Every small attempt gets you closer to cracking your lab exam! Keep your spirits high! ✨",
+    "Take your time buddy! Nobody masters memory and syntax in a single day. ☕",
+    "No stress at all! Let's check the explanation below to make it crystal clear. 📖",
 ]
 
 _MEME_QUOTES = [
@@ -225,62 +213,78 @@ def _get_rank(xp):
             rank = title
     return rank
 
-def _xp_bar(xp, width=40):
-    """Returns a coloured ASCII XP progress bar string."""
-    lvl = xp // 100
-    xp_in_level = xp % 100
-    filled = int(xp_in_level / 100 * width)
+def _make_progress_bar(done_count, total_count, width=40):
+    """Returns an ASCII progress bar string."""
+    pct = int((done_count / total_count) * 100) if total_count > 0 else 0
+    pct = min(100, pct)
+    filled = int(pct / 100 * width)
     bar = Color.GREEN + "█" * filled + Color.DIM + "░" * (width - filled) + Color.RESET
-    return f"  {Color.BOLD}LVL {lvl}{Color.RESET} [{bar}] {xp_in_level}/100 XP  |  {Color.YELLOW}Total: {xp} XP{Color.RESET}  |  Rank: {_get_rank(xp)}"
+    return f"[{bar}] {done_count:2d}/{total_count:2d} Experiments ({pct}%)"
+
+def _get_subject_counts():
+    """Returns (git_done, dsa_done, java_done)."""
+    exps = set(_SESSION.get("experiments_done", []))
+    git_done = len([e for e in exps if str(e).startswith("GIT-")])
+    dsa_done = len([e for e in exps if str(e).startswith("DSA-")])
+    java_done = len([e for e in exps if str(e).startswith("JAVA-")])
+    return git_done, dsa_done, java_done
+
+def _completion_bar(width=40):
+    """Returns overall completion progress across all subjects."""
+    git_done, dsa_done, java_done = _get_subject_counts()
+    total_done = git_done + dsa_done + java_done
+    total_target = 34  # 12 Git + 12 DSA + 10 Java
+    pct = int((total_done / total_target) * 100) if total_target > 0 else 0
+    pct = min(100, pct)
+    filled = int(pct / 100 * width)
+    bar = Color.GREEN + "█" * filled + Color.DIM + "░" * (width - filled) + Color.RESET
+    return f"Completion [{bar}] {pct}/100 %"
+
+def _xp_bar(xp=None, width=40):
+    """Progress bar string."""
+    return f"  {_completion_bar(width)}"
 
 def _award_xp(points, reason=""):
-    """Awards XP, increments streak, prints XP gain line."""
+    """Records progress calmly and unlocks any milestone badges."""
     _SESSION["xp"] += points
     _SESSION["streak"] += 1
     _SESSION["correct"] += 1
     if _SESSION["streak"] > _SESSION["max_streak"]:
         _SESSION["max_streak"] = _SESSION["streak"]
-    streak = _SESSION["streak"]
-    xp = _SESSION["xp"]
-    bonus = 0
-    bonus_msg = ""
-    if streak == 3:
-        bonus = 25
-        bonus_msg = f"  {Color.RED}🔥 HOT STREAK x3! Bonus +{bonus} XP!{Color.RESET}"
-    elif streak == 5:
-        bonus = 50
-        bonus_msg = f"  {Color.RED}🔥🔥 ON FIRE x5! Bonus +{bonus} XP!{Color.RESET}"
-    elif streak >= 7:
-        bonus = 75
-        bonus_msg = f"  {Color.RED}🔥🔥🔥 UNSTOPPABLE x{streak}! Bonus +{bonus} XP!{Color.RESET}"
-    if bonus:
-        _SESSION["xp"] += bonus
-    fire = "🔥" * min(streak, 5)
-    print(f"\n  {Color.GREEN}{Color.BOLD}+{points} XP!{Color.RESET}  Streak: {fire} x{streak}  |  Total: {Color.YELLOW}{xp + bonus} XP{Color.RESET}")
-    if bonus_msg:
-        print(bonus_msg)
     _check_milestone_badges()
     _save_to_local_db()
 
 def _break_streak(reason=""):
-    """Resets streak on wrong answer."""
+    """Records incorrect answer without harsh penalties."""
     _SESSION["streak"] = 0
     _SESSION["wrong"] += 1
     _save_to_local_db()
 
-def _show_session_header():
-    """Print a compact XP/streak header at top of screens."""
-    xp = _SESSION["xp"]
-    streak = _SESSION["streak"]
-    fire = ("🔥" * min(streak, 5)) if streak > 0 else "  "
-    quote = random.choice(_MEME_QUOTES)
-    print(f"  {Color.DIM}{quote}{Color.RESET}")
-    print(_xp_bar(xp))
-    status_line = []
-    if streak >= 2:
-        status_line.append(f"{Color.RED}{Color.BOLD}{fire} Streak x{streak}!{Color.RESET}")
-    status_line.append(f"{Color.DIM}💾 Local DB: Active (Saved on your device){Color.RESET}")
-    print(f"  {'  |  '.join(status_line)}\n")
+def _show_session_header(show_welcome=True, subject=None):
+    """Print clean learning progress and local DB status header."""
+    if show_welcome:
+        print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}")
+
+    git_done, dsa_done, java_done = _get_subject_counts()
+
+    if subject == "git":
+        bar = _make_progress_bar(git_done, 12, width=40)
+        print(f"  {Color.BOLD}Git Lab (1BCSL307A):{Color.RESET}   {bar}")
+    elif subject == "dsa":
+        bar = _make_progress_bar(dsa_done, 12, width=40)
+        print(f"  {Color.BOLD}DSA Lab (1BCSL306):{Color.RESET}    {bar}")
+    elif subject == "java":
+        bar = _make_progress_bar(java_done, 10, width=40)
+        print(f"  {Color.BOLD}Java Lab (1BCS302):{Color.RESET}    {bar}")
+    else:
+        bar_git = _make_progress_bar(git_done, 12, width=40)
+        bar_dsa = _make_progress_bar(dsa_done, 12, width=40)
+        bar_java = _make_progress_bar(java_done, 10, width=40)
+        print(f"  {Color.BOLD}Git Lab (1BCSL307A):{Color.RESET}   {bar_git}")
+        print(f"  {Color.BOLD}DSA Lab (1BCSL306):{Color.RESET}    {bar_dsa}")
+        print(f"  {Color.BOLD}Java Lab (1BCS302):{Color.RESET}    {bar_java}")
+
+    print(f"  {Color.DIM}💾 Local DB: Active (Saved on your device){Color.RESET}\n")
 
 def _end_of_session_summary():
     """Full end-of-session stats screen — asks before saving progress."""
@@ -379,8 +383,8 @@ BANNER_ART = r"""
 """
 
 BANNER = f"""{Color.CYAN}{Color.BOLD}{BANNER_ART}{Color.RESET}
-{Color.YELLOW}{Color.BOLD}        🚀 Oops, I Learnt Something! — 3rd Sem Engineering Survival Arcade (VTU 2025)
-{Color.DIM}        Git · DSA Lab (1BCSL306) · Java OOP Lab (1BCS302){Color.RESET}
+{Color.YELLOW}{Color.BOLD}        🚀 Oops, I Learnt Something! — 3rd Sem Engineering, An Interactive Game to Crack Your Labs (VTU 2025 Scheme)
+{Color.DIM}        Git (1BCSL307A) · DSA Lab (1BCSL306) · Java OOP Lab (1BCS302){Color.RESET}
 """
 
 

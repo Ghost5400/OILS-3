@@ -671,41 +671,59 @@ def run_experiment_lab(exp):
 def mode_dsa_viva():
     clear_screen()
     print(f"\n{Color.YELLOW}{Color.BOLD}=================================================================={Color.RESET}")
-    print(f"{Color.YELLOW}{Color.BOLD}  🎓 DSA EXTERNAL EXAMINER VIVA GAUNTLET (3 LIVES) 🎓{Color.RESET}")
+    print(f"{Color.YELLOW}{Color.BOLD}  🎓 DSA LAB VIVA PREP & CONCEPT MASTERY (1BCSL306) 🎓{Color.RESET}")
     print(f"{Color.YELLOW}{Color.BOLD}=================================================================={Color.RESET}")
-    print("Answer the trap questions asked by external lab examiners.\n")
+    print(f"  {Color.YELLOW}Welcome buddy , don't worry I am there for u ❤️ ; we will face it together...{Color.RESET}\n")
+    print("  Stress-free practice with Socratic hints and examiner expectations.\n")
 
-    lives = 3
     score = 0
     questions = list(DSA_VIVA_GAUNTLET)
     random.shuffle(questions)
 
     for idx, q in enumerate(questions, 1):
-        if lives <= 0:
-            print(f"\n{Color.RED}{Color.BOLD}💀 YOU FAILED THE VIVA! All 3 lives lost. Back to the lab to study!{Color.RESET}\n")
-            break
-
-        print(f"\n{Color.CYAN}{Color.BOLD}[Question {idx}/{len(questions)}] (Lives: {'❤️ ' * lives}){Color.RESET}")
+        print(f"\n{Color.CYAN}{Color.BOLD}[Question {idx}/{len(questions)}]{Color.RESET}")
         print(f"{Color.BOLD}{q['q']}{Color.RESET}\n")
         for opt in q["options"]:
             print(f"  {opt}")
 
-        ans = prompt_input("\nYour Answer [A / B / C / D]: ").strip().upper()
+        attempt = 1
+        solved = False
+        while attempt <= 2 and not solved:
+            prompt_str = "\nYour Answer [A / B / C / D] (or 'H' for Clue, 0 to Exit): " if attempt == 1 else "\nSecond Try [A / B / C / D]: "
+            ans = prompt_input(prompt_str).strip().upper()
 
-        if ans == q["ans"]:
-            anim_correct()
-            score += 10
-            print(f"{Color.GREEN}{q['praise']}{Color.RESET}")
-        else:
-            anim_wrong()
-            lives -= 1
-            print(f"{Color.RED}{q['roast']}{Color.RESET}")
-            print(f"{Color.YELLOW}💡 Examiner Tip: {q['tip']}{Color.RESET}")
+            if ans in ("0", "EXIT", "Q"):
+                return
+            if ans == "H":
+                print(f"  {Color.YELLOW}💡 Clue: {q['tip']}{Color.RESET}")
+                continue
+            if ans not in ("A", "B", "C", "D"):
+                print(f"  {Color.RED}Please type A, B, C, or D!{Color.RESET}")
+                continue
 
-        time.sleep(0.5)
+            if ans == q["ans"]:
+                solved = True
+                anim_correct()
+                score += 1
+                if attempt == 1:
+                    print(f"  {Color.GREEN}{Color.BOLD}✔ {q['praise']}{Color.RESET}")
+                else:
+                    print(f"  {Color.GREEN}{Color.BOLD}🎉 Excellent recovery buddy! You got it right! ❤️{Color.RESET}")
+            else:
+                anim_wrong()
+                if attempt == 1:
+                    print(f"  {Color.YELLOW}🌱 Not quite buddy! {q['roast']}{Color.RESET}")
+                    print(f"  {Color.YELLOW}💡 Clue: {q['tip']}{Color.RESET}")
+                    attempt += 1
+                else:
+                    print(f"  {Color.MAGENTA}🤝 No worries buddy! The correct answer is [{q['ans']}].{Color.RESET}")
+                    attempt += 1
+
+        print(f"\n  {Color.CYAN}💡 Examiner Expectation: {q['tip']}{Color.RESET}")
+        prompt_input(f"\n{Color.DIM}Press Enter for next question...{Color.RESET}")
 
     print(f"\n{Color.CYAN}===================================================={Color.RESET}")
-    print(f"  Viva Complete! Final Score: {Color.BOLD}{score} Points{Color.RESET}")
+    print(f"  🎉 Viva Practice Complete! Mastered: {Color.BOLD}{score}/{len(questions)} Concepts{Color.RESET}")
     print(f"{Color.CYAN}===================================================={Color.RESET}\n")
     prompt_input("Press Enter to return...")
 
