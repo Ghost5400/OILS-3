@@ -52,6 +52,17 @@ _BADGES = {
 
 _TROPHIES = _BADGES
 
+_VISUALIZERS = {
+    "DSA-V1": "Stack Memory Sandbox",
+    "DSA-V2": "Linear Queue Sandbox",
+    "DSA-V3": "Circular Queue Sandbox",
+    "DSA-V4": "Singly Linked List Sandbox",
+    "DSA-V5": "Circular Linked List Sandbox",
+    "DSA-V6": "Binary Search Tree Sandbox",
+    "DSA-V7": "Hash Table Sandbox",
+}
+VISUALIZERS = _VISUALIZERS
+
 def _save_to_local_db():
     """Saves user progress right to their local device — no cloud/backend needed!"""
     try:
@@ -134,13 +145,13 @@ def _check_milestone_badges():
     # DSA Milestones
     if "DSA-V1" in vis or "DSA-1" in exps:
         _unlock_trophy("dsa_memory")
-    if any(e in exps for e in ("DSA-3", "DSA-4", "DSA-7")) or any(v in vis for v in ("DSA-V2", "DSA-V5", "DSA-V6")):
+    if any(e in exps for e in ("DSA-3", "DSA-4", "DSA-7")) or any(v in vis for v in ("DSA-V1", "DSA-V2", "DSA-V3")):
         _unlock_trophy("dsa_linear")
-    if any(e in exps for e in ("DSA-5", "DSA-8")) or any(v in vis for v in ("DSA-V3", "DSA-V4")):
+    if any(e in exps for e in ("DSA-5", "DSA-8")) or any(v in vis for v in ("DSA-V4", "DSA-V5")):
         _unlock_trophy("dsa_linked")
-    if any(e in exps for e in ("DSA-6", "DSA-10")) or any(v in vis for v in ("DSA-V9", "DSA-V10")):
+    if any(e in exps for e in ("DSA-6", "DSA-10")) or "DSA-V6" in vis:
         _unlock_trophy("dsa_trees")
-    if any(e in exps for e in ("DSA-9", "DSA-11", "DSA-12")) or any(v in vis for v in ("DSA-V7", "DSA-V8", "DSA-V11", "DSA-V12")):
+    if any(e in exps for e in ("DSA-9", "DSA-11", "DSA-12")) or "DSA-V7" in vis:
         _unlock_trophy("dsa_graphs_hash")
 
     dsa_count = len([e for e in exps if str(e).startswith("DSA-")])
@@ -148,9 +159,9 @@ def _check_milestone_badges():
         _unlock_trophy("dsa_lab_complete")
 
     # Java Milestones
-    if any(e in exps for e in ("JAVA-1", "JAVA-2", "JAVA-3", "JAVA-4")) or any(v in vis for v in ("JAVA-J1", "JAVA-J2", "JAVA-J3", "JAVA-J5", "JAVA-J9")):
+    if any(e in exps for e in ("JAVA-1", "JAVA-2", "JAVA-3", "JAVA-4")):
         _unlock_trophy("java_oop_core")
-    if any(e in exps for e in ("JAVA-7", "JAVA-8")) or any(v in vis for v in ("JAVA-J7", "JAVA-J8")):
+    if any(e in exps for e in ("JAVA-7", "JAVA-8")):
         _unlock_trophy("java_concurrency")
 
     java_count = len([e for e in exps if str(e).startswith("JAVA-")])
@@ -184,7 +195,7 @@ def _init_profile_dialog():
         print(f"    🐙 Git Lab Progress      : {Color.GREEN}{git_done}/12 Experiments{Color.RESET}")
         print(f"    🌳 DSA Lab Progress      : {Color.GREEN}{dsa_done}/12 Programs{Color.RESET}")
         print(f"    ☕ Java Lab Progress     : {Color.GREEN}{java_done}/10 Programs{Color.RESET}")
-        print(f"    🎬 Visualizers Explored  : {Color.CYAN}{saved_vis}/13 Concepts{Color.RESET}")
+        print(f"    🎬 Visualizers Explored  : {Color.CYAN}{saved_vis}/{len(_VISUALIZERS)} Concepts{Color.RESET}")
         print(f"    🏆 Milestones Achieved   : {Color.MAGENTA}{saved_trophies}/{len(_BADGES)} Milestones{Color.RESET}")
         if data.get("last_saved"):
             print(f"    🕒 Last Saved            : {Color.DIM}{data.get('last_saved')}{Color.RESET}")
@@ -369,7 +380,7 @@ def _end_of_session_summary():
     print_dialogue("general")
     typewrite(f"  ⏱️  Time Spent Learning : {mins}m {secs}s", 0.012, Color.CYAN)
     typewrite(f"  🧪 Lab Experiments Done : {total_exps}/34 (Git: {git_done}/12 · DSA: {dsa_done}/12 · Java: {java_done}/10)", 0.012, Color.GREEN)
-    typewrite(f"  🎬 Visualizers Explored : {vis_done}/22 Core Memory & Architecture Concepts", 0.012, Color.BLUE)
+    typewrite(f"  🎬 Visualizers Explored : {vis_done}/{len(_VISUALIZERS)} Core Memory & Architecture Concepts", 0.012, Color.BLUE)
     typewrite(f"  🎯 Viva Q&A Practiced   : {viva_done} Questions Explored", 0.012, Color.YELLOW)
     typewrite(f"  🏆 Milestones Achieved  : {trophies_unlocked}/{len(_TROPHIES)} Educational Milestones Unlocked", 0.012, Color.MAGENTA)
     print()

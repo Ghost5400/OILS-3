@@ -6,8 +6,10 @@ Preserves the user-driven, step-by-step learning style of commit 237ae62.
 import time
 try:
     from arcade.core import Color, clear_screen, prompt_input  # type: ignore
+    from arcade.session import _record_visualizer_explored  # type: ignore
 except (ImportError, ValueError):
     from ..core import Color, clear_screen, prompt_input  # type: ignore
+    from ..session import _record_visualizer_explored  # type: ignore
 
 
 # ==============================================================================
@@ -15,6 +17,7 @@ except (ImportError, ValueError):
 # ==============================================================================
 
 def visualizer_stack():
+    _record_visualizer_explored("DSA-V1")
     stack = [10, 25, 42]
     cap = 5
     while True:
@@ -97,6 +100,7 @@ def visualizer_stack():
 # ==============================================================================
 
 def visualizer_linear_queue():
+    _record_visualizer_explored("DSA-V2")
     cap = 5
     items = [None] * cap
     items[0] = 10
@@ -216,6 +220,7 @@ def visualizer_linear_queue():
 # ==============================================================================
 
 def visualizer_circular_queue():
+    _record_visualizer_explored("DSA-V3")
     cap = 5
     items = [None] * cap
     items[3] = 10
@@ -326,6 +331,7 @@ def visualizer_circular_queue():
 # ==============================================================================
 
 def visualizer_singly_linked_list():
+    _record_visualizer_explored("DSA-V4")
     nodes = [10, 25, 42]
     while True:
         clear_screen()
@@ -452,6 +458,7 @@ def visualizer_singly_linked_list():
 # ==============================================================================
 
 def visualizer_circular_linked_list():
+    _record_visualizer_explored("DSA-V5")
     terms = [(8, 3), (4, 2), (2, 0)]  # (coeff, exp)
     while True:
         clear_screen()
@@ -523,6 +530,7 @@ def visualizer_circular_linked_list():
 # ==============================================================================
 
 def visualizer_bst():
+    _record_visualizer_explored("DSA-V6")
     keys = [50, 30, 70, 20, 40]
     while True:
         clear_screen()
@@ -629,6 +637,7 @@ def visualizer_bst():
 # ==============================================================================
 
 def visualizer_hash_table():
+    _record_visualizer_explored("DSA-V7")
     size = 7
     table = [None] * size
     # initial sample items
