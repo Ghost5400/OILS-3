@@ -51,9 +51,9 @@ public class Lab10MarksCalculator {
             System.out.printf("Total Marks    : %.2f%n", total);
             System.out.printf("Average Marks  : %.2f%n", average);
             System.out.println("-------------------------------------------");
-            System.out.println("✔ Wrapper parsing and autoboxing/unboxing verified!");
+            System.out.println("[OK] Wrapper parsing and autoboxing/unboxing verified!");
         } catch (NumberFormatException e) {
-            System.out.println("\n❌ Error: Please enter valid numeric values for marks (e.g., 85.5)!");
+            System.out.println("\n[ERROR] Error: Please enter valid numeric values for marks (e.g., 85.5)!");
         } finally {
             scanner.close();
         }

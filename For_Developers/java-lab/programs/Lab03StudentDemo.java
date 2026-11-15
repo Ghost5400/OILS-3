@@ -43,9 +43,21 @@ public class Lab03StudentDemo {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("========== EXPERIMENT 03: STUDENT OBJECT ARRAY ==========");
-        System.out.print("Enter the number of students: ");
-        int n = sc.nextInt();
-        sc.nextLine(); // Consume newline
+        int n = 0;
+        try {
+            System.out.print("Enter the number of students: ");
+            n = sc.nextInt();
+            sc.nextLine(); // Consume newline
+            if (n <= 0) {
+                System.out.println("Error: Number of students must be a positive integer!");
+                sc.close();
+                return;
+            }
+        } catch (java.util.InputMismatchException e) {
+            System.out.println("Error: Invalid numeric input entered!");
+            sc.close();
+            return;
+        }
 
         Student[] students = new Student[n];
 

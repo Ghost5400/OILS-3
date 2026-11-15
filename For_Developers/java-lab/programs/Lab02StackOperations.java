@@ -83,13 +83,25 @@ public class Lab02StackOperations {
             System.out.println("5. Check isFull");
             System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
-            choice = sc.nextInt();
+            try {
+                choice = sc.nextInt();
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a number [1 - 6].");
+                sc.nextLine(); // clear buffer
+                choice = 0;
+                continue;
+            }
 
             switch (choice) {
                 case 1:
                     System.out.print("Enter integer value to push: ");
-                    value = sc.nextInt();
-                    s.push(value);
+                    try {
+                        value = sc.nextInt();
+                        s.push(value);
+                    } catch (java.util.InputMismatchException e) {
+                        System.out.println("Invalid input! Value must be an integer.");
+                        sc.nextLine(); // clear buffer
+                    }
                     break;
                 case 2:
                     s.pop();

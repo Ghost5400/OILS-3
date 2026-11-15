@@ -21,45 +21,54 @@ public class Lab01MatrixAddition {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("========== EXPERIMENT 01: MATRIX ADDITION ==========");
-        System.out.print("Enter number of rows: ");
-        int rows = sc.nextInt();
-        System.out.print("Enter number of columns: ");
-        int cols = sc.nextInt();
+        try {
+            System.out.print("Enter number of rows: ");
+            int rows = sc.nextInt();
+            System.out.print("Enter number of columns: ");
+            int cols = sc.nextInt();
 
-        int[][] A = new int[rows][cols];
-        int[][] B = new int[rows][cols];
-        int[][] C = new int[rows][cols];
-
-        System.out.println("\nEnter elements of First Matrix A (" + rows + "x" + cols + "):");
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                A[i][j] = sc.nextInt();
+            if (rows <= 0 || cols <= 0) {
+                System.out.println("Error: Rows and columns must be positive integers!");
+                return;
             }
-        }
 
-        System.out.println("\nEnter elements of Second Matrix B (" + rows + "x" + cols + "):");
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                B[i][j] = sc.nextInt();
+            int[][] A = new int[rows][cols];
+            int[][] B = new int[rows][cols];
+            int[][] C = new int[rows][cols];
+
+            System.out.println("\nEnter elements of First Matrix A (" + rows + "x" + cols + "):");
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    A[i][j] = sc.nextInt();
+                }
             }
-        }
 
-        // Add corresponding elements
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                C[i][j] = A[i][j] + B[i][j];
+            System.out.println("\nEnter elements of Second Matrix B (" + rows + "x" + cols + "):");
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    B[i][j] = sc.nextInt();
+                }
             }
-        }
 
-        System.out.println("\n--- Resultant Matrix Sum (A + B) ---");
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                System.out.printf("%5d ", C[i][j]);
+            // Add corresponding elements
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    C[i][j] = A[i][j] + B[i][j];
+                }
             }
-            System.out.println();
-        }
 
-        sc.close();
+            System.out.println("\n--- Resultant Matrix Sum (A + B) ---");
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    System.out.printf("%5d ", C[i][j]);
+                }
+                System.out.println();
+            }
+        } catch (java.util.InputMismatchException e) {
+            System.out.println("Error: Invalid numeric input entered!");
+        } finally {
+            sc.close();
+        }
     }
 }
 

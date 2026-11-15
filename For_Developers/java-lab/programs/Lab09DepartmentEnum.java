@@ -35,10 +35,10 @@ public class Lab09DepartmentEnum {
         try {
             // Convert user string into enum constant
             Department selectedDept = Department.valueOf(input);
-            System.out.println("\n✔ Successfully selected valid department: " + selectedDept);
+            System.out.println("\n[OK] Successfully selected valid department: " + selectedDept);
             System.out.println("  Ordinal Index: " + selectedDept.ordinal());
         } catch (IllegalArgumentException e) {
-            System.out.println("\n❌ Error: '" + input + "' is NOT a recognized college department!");
+            System.out.println("\n[ERROR] Error: '" + input + "' is NOT a recognized college department!");
             System.out.println("   Please choose from [CSE, ISE, ECE, MECH].");
         } finally {
             scanner.close();
