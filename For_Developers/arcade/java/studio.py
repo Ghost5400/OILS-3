@@ -247,7 +247,7 @@ def mode_java_disaster():
         if pick == target_idx:
             anim_correct()
             _record_concept_mastered("java disaster averted")
-            _unlock_badge("java_oop")
+            _unlock_badge("java_oop_core")
             score += 150
             print(f"\n{Color.GREEN}{Color.BOLD}✅ DISASTER AVERTED! Exception resolved.{Color.RESET}")
             print(f"{Color.GREEN}{s['reaction']}{Color.RESET}\n")

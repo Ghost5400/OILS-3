@@ -45,7 +45,9 @@ _BADGES = {
     "dsa_lab_complete":  {"name": "🌳 DSA Lab Scholar", "desc": "Completed all 12 verified Data Structures lab programs (1BCSL306)."},
     "java_oop_core":     {"name": "☕ OOP Core Architect", "desc": "Mastered Classes, Inheritance, Encapsulation & Dynamic Dispatch."},
     "java_concurrency":  {"name": "🧵 Thread & Concurrency Specialist", "desc": "Mastered Multithreading lifecycle, synchronized locks & monitors."},
-    "java_lab_complete": {"name": "☕ Java Lab Scholar", "desc": "Completed all 10 verified Java OOP lab programs (1BCS302)."}
+    "java_lab_complete": {"name": "☕ Java Lab Scholar", "desc": "Completed all 10 verified Java OOP lab programs (1BCS302)."},
+    "quickfire_ace":     {"name": "⚡ Quickfire Ace", "desc": "Scored 13+ in a comprehensive viva drill practice set."},
+    "vault_dweller":     {"name": "📚 Vault Dweller", "desc": "Explored verified source files in the in-terminal Code Vault."}
 }
 
 _TROPHIES = _BADGES
@@ -183,7 +185,7 @@ def _init_profile_dialog():
         print(f"    🌳 DSA Lab Progress      : {Color.GREEN}{dsa_done}/12 Programs{Color.RESET}")
         print(f"    ☕ Java Lab Progress     : {Color.GREEN}{java_done}/10 Programs{Color.RESET}")
         print(f"    🎬 Visualizers Explored  : {Color.CYAN}{saved_vis}/13 Concepts{Color.RESET}")
-        print(f"    🏆 Milestones Achieved   : {Color.MAGENTA}{saved_trophies}/13 Milestones{Color.RESET}")
+        print(f"    🏆 Milestones Achieved   : {Color.MAGENTA}{saved_trophies}/{len(_BADGES)} Milestones{Color.RESET}")
         if data.get("last_saved"):
             print(f"    🕒 Last Saved            : {Color.DIM}{data.get('last_saved')}{Color.RESET}")
         print()
