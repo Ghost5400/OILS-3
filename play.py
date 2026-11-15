@@ -2,7 +2,7 @@
 # pyright: reportMissingImports=false
 """
 🎮 OILS-3: OOPS, I LEARNT SOMETHING! (3rd Sem Engineering Edition)
-Author: Prajwal D. Chonnad
+Authors: Prajwal D. Chonnad & Aditya Gothe (Vajravyuha)
 Repository: Ghost5400/OILS-3
 
 Master Arcade Hub for all three 3rd-Sem engineering lab subjects:
