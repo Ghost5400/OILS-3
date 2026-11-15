@@ -59,6 +59,7 @@ def _configure_console():
 # ── Arcade Submodule Imports ────────────────────────────────────────────────
 try:
     from arcade.core import Color, clear_screen, prompt_input  # type: ignore
+    from arcade.constants import CODE_DSA_LAB, CODE_DSA_THEORY, CODE_JAVA, CODE_GIT  # type: ignore
     from arcade.session import (  # type: ignore
         _SESSION, _show_session_header, _end_of_session_summary,
         _show_trophy_case, _init_profile_dialog, BANNER, _BADGES, _clear_local_db,
@@ -71,6 +72,7 @@ try:
     from arcade.dialogues import print_dialogue  # type: ignore
 except ImportError:
     from For_Developers.arcade.core import Color, clear_screen, prompt_input  # type: ignore
+    from For_Developers.arcade.constants import CODE_DSA_LAB, CODE_DSA_THEORY, CODE_JAVA, CODE_GIT  # type: ignore
     from For_Developers.arcade.session import (  # type: ignore
         _SESSION, _show_session_header, _end_of_session_summary,
         _show_trophy_case, _init_profile_dialog, BANNER, _BADGES, _clear_local_db,
@@ -94,9 +96,9 @@ def mode_quickfire_drill_hub():
         print(f"╚══════════════════════════════════════════════════════════════════════════════╝{Color.RESET}\n")
         print_dialogue("viva")
         print("  Select your lab to get the 15 most important viva questions (2 sets per lab):\n")
-        print(f"  {Color.YELLOW}[1]{Color.RESET} 🐙  {Color.BOLD}Git Lab (1BCSL307A){Color.RESET}        (2 Sets · 30 Top Viva Questions)")
-        print(f"  {Color.GREEN}[2]{Color.RESET} 🌳  {Color.BOLD}DSA Lab (1BCS304){Color.RESET}           (2 Sets · 30 Top Viva Questions)")
-        print(f"  {Color.CYAN}[3]{Color.RESET} ☕  {Color.BOLD}Java OOP Lab (1BCS302){Color.RESET}     (2 Sets · 30 Top Viva Questions)")
+        print(f"  {Color.YELLOW}[1]{Color.RESET} 🐙  {Color.BOLD}Git Lab ({CODE_GIT}){Color.RESET}        (2 Sets · 30 Top Viva Questions)")
+        print(f"  {Color.GREEN}[2]{Color.RESET} 🌳  {Color.BOLD}DSA Lab ({CODE_DSA_LAB}){Color.RESET}           (2 Sets · 30 Top Viva Questions)")
+        print(f"  {Color.CYAN}[3]{Color.RESET} ☕  {Color.BOLD}Java OOP Lab ({CODE_JAVA}){Color.RESET}     (2 Sets · 30 Top Viva Questions)")
         print(f"  {Color.DIM}[0]{Color.RESET} ⬅️   Back to Main Menu\n")
 
         lab_choice = prompt_input(f"{Color.BOLD}Choose Lab [1 - 3, 0=Back]: {Color.RESET}").strip()
@@ -141,7 +143,7 @@ def main():
         print(f"  {Color.YELLOW}[1]{Color.RESET} 🐙  {Color.BOLD}Git Lab Studio{Color.RESET}  {Color.DIM}(1BCSL307A · 12 Experiments){Color.RESET}")
         print(f"      {Color.DIM}↳ 12 VTU Lab Experiments, Block Explanations, Command Library, Sandbox & Socratic Viva{Color.RESET}")
 
-        print(f"\n  {Color.GREEN}[2]{Color.RESET} 🌳  {Color.BOLD}DSA Lab Studio{Color.RESET}  {Color.DIM}(1BCS304 · 12 Experiments){Color.RESET}")
+        print(f"\n  {Color.GREEN}[2]{Color.RESET} 🌳  {Color.BOLD}DSA Lab Studio{Color.RESET}  {Color.DIM}({CODE_DSA_LAB} · 12 Experiments){Color.RESET}")
         print(f"      {Color.DIM}↳ Interactive Memory Sandboxes, 3-Part Block Logic, Disaster Scenarios & Viva{Color.RESET}")
 
         print(f"\n  {Color.CYAN}[3]{Color.RESET} ☕  {Color.BOLD}Java OOP Lab Studio{Color.RESET}  {Color.DIM}(1BCS302 · 10 Experiments){Color.RESET}")

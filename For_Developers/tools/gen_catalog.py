@@ -31,7 +31,7 @@ def generate_catalog():
     lines.append("")
     
     # 1. DSA
-    lines.append("1. 💻 DATA STRUCTURES AND APPLICATIONS (VTU Code: 1BCS304)")
+    lines.append("1. 💻 DATA STRUCTURES AND APPLICATIONS (VTU Code: 1BCSL306 / Theory: 1BCS305)")
     lines.append("   -----------------------------------------------------------------------------")
     lines.append(f"   Total Experiments : {len(DSA_EXPERIMENTS)} Full Programs + Interactive ASCII Sandboxes")
     for exp in sorted(DSA_EXPERIMENTS, key=lambda x: x["num"]):
@@ -66,3 +66,4 @@ def generate_catalog():
 
 if __name__ == "__main__":
     print(generate_catalog())
+

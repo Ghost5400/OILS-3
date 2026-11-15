@@ -92,7 +92,7 @@ You can run the genuine Linux terminal version directly inside your web browser:
 📚 SUBJECTS & EXPERIMENTS COVERED (VTU 2025 SCHEME - 3RD SEM CSE)
 ================================================================================
 
-1. 💻 DATA STRUCTURES AND APPLICATIONS (VTU Code: 1BCS304)
+1. 💻 DATA STRUCTURES AND APPLICATIONS (VTU Code: 1BCSL306 / Theory: 1BCS305)
    -----------------------------------------------------------------------------
    Total Experiments : 12 Full Programs + Interactive ASCII Sandboxes
    - Exp 01: Library Book Management (Structures & Dynamic Memory)
