@@ -165,7 +165,7 @@ def visualizer_linear_queue():
                     print(f"\n  {Color.YELLOW}Step 2: Advance Pointer(s){Color.RESET}")
                     if front == -1:
                         front = 0
-                        print(f"          First element: front set to 0")
+                        print("          First element: front set to 0")
                     rear += 1
                     print(f"          rear = rear + 1 -> New rear index: {rear}")
                     prompt_input(f"  {Color.DIM}Press Enter for Step 3...{Color.RESET}")
@@ -184,7 +184,7 @@ def visualizer_linear_queue():
             else:
                 removed = items[front]
                 print(f"\n  {Color.YELLOW}Step 1: Check Boundary Condition{Color.RESET}")
-                print(f"          if (front == -1 || front > rear) is FALSE [Queue has items]")
+                print("          if (front == -1 || front > rear) is FALSE [Queue has items]")
                 prompt_input(f"  {Color.DIM}Press Enter for Step 2...{Color.RESET}")
                 print(f"\n  {Color.YELLOW}Step 2: Retrieve Element at Front{Color.RESET}")
                 print(f"          item = queue[front] -> Retrieved value: {Color.GREEN}{removed}{Color.RESET}")
@@ -283,7 +283,7 @@ def visualizer_circular_queue():
                     if front == -1:
                         front = 0
                         rear = 0
-                        print(f"          Queue was empty -> front = 0, rear = 0")
+                        print("          Queue was empty -> front = 0, rear = 0")
                     else:
                         rear = next_rear
                         print(f"          rear updated to index [{rear}]")
@@ -336,7 +336,7 @@ def visualizer_singly_linked_list():
     while True:
         clear_screen()
         print(f"\n{Color.CYAN}{Color.BOLD}╔══════════════════════════════════════════════════════════════════════════════╗")
-        print(f"║   🔗 INTERACTIVE SINGLY LINKED LIST SANDBOX (Dynamic Heap Node Pointers)     ║")
+        print("║   🔗 INTERACTIVE SINGLY LINKED LIST SANDBOX (Dynamic Heap Node Pointers)     ║")
         print(f"╚══════════════════════════════════════════════════════════════════════════════╝{Color.RESET}\n")
         print("  Memory Pointer Chain (Heap Nodes):")
         if not nodes:
@@ -359,14 +359,14 @@ def visualizer_singly_linked_list():
             if val.isdigit() or (val.startswith("-") and val[1:].isdigit()):
                 int_val = int(val)
                 print(f"\n  {Color.YELLOW}Step 1: Allocate Node on Heap & Set Data{Color.RESET}")
-                print(f"          new_node = (Node *)malloc(sizeof(Node));")
+                print("          new_node = (Node *)malloc(sizeof(Node));")
                 print(f"          new_node->data = {int_val};")
                 prompt_input(f"  {Color.DIM}Press Enter for Step 2...{Color.RESET}")
                 print(f"\n  {Color.YELLOW}Step 2: Connect New Node's Next Pointer to Current Head{Color.RESET}")
-                print(f"          new_node->next = HEAD;  (links new node to previous first node)")
+                print("          new_node->next = HEAD;  (links new node to previous first node)")
                 prompt_input(f"  {Color.DIM}Press Enter for Step 3...{Color.RESET}")
                 print(f"\n  {Color.YELLOW}Step 3: Update HEAD Pointer to New Node{Color.RESET}")
-                print(f"          HEAD = new_node;        (new node is now the list starting point)")
+                print("          HEAD = new_node;        (new node is now the list starting point)")
                 nodes.insert(0, int_val)
                 time.sleep(0.4)
             else:
@@ -377,17 +377,17 @@ def visualizer_singly_linked_list():
             if val.isdigit() or (val.startswith("-") and val[1:].isdigit()):
                 int_val = int(val)
                 print(f"\n  {Color.YELLOW}Step 1: Allocate Heap Node & Set Tail Next to NULL{Color.RESET}")
-                print(f"          new_node = (Node *)malloc(sizeof(Node));")
+                print("          new_node = (Node *)malloc(sizeof(Node));")
                 print(f"          new_node->data = {int_val}; new_node->next = NULL;")
                 prompt_input(f"  {Color.DIM}Press Enter for Step 2...{Color.RESET}")
                 if not nodes:
                     print(f"\n  {Color.YELLOW}Step 2: List was empty -> Set HEAD = new_node{Color.RESET}")
                 else:
                     print(f"\n  {Color.YELLOW}Step 2: Traverse from HEAD until Last Node{Color.RESET}")
-                    print(f"          temp = HEAD; while (temp->next != NULL) temp = temp->next;")
+                    print("          temp = HEAD; while (temp->next != NULL) temp = temp->next;")
                     prompt_input(f"  {Color.DIM}Press Enter for Step 3...{Color.RESET}")
                     print(f"\n  {Color.YELLOW}Step 3: Attach New Node to Tail{Color.RESET}")
-                    print(f"          temp->next = new_node; (previous tail now points to new node)")
+                    print("          temp->next = new_node; (previous tail now points to new node)")
                 nodes.append(int_val)
                 time.sleep(0.4)
             else:
@@ -403,10 +403,10 @@ def visualizer_singly_linked_list():
                 print(f"          temp = HEAD;  (holds memory address of node with data {removed})")
                 prompt_input(f"  {Color.DIM}Press Enter for Step 2...{Color.RESET}")
                 print(f"\n  {Color.YELLOW}Step 2: Advance HEAD Pointer{Color.RESET}")
-                print(f"          HEAD = HEAD->next;  (second node becomes the new HEAD)")
+                print("          HEAD = HEAD->next;  (second node becomes the new HEAD)")
                 prompt_input(f"  {Color.DIM}Press Enter for Step 3...{Color.RESET}")
                 print(f"\n  {Color.YELLOW}Step 3: Reclaim Heap Memory{Color.RESET}")
-                print(f"          free(temp);  (releases heap memory to prevent memory leaks!)")
+                print("          free(temp);  (releases heap memory to prevent memory leaks!)")
                 nodes.pop(0)
                 time.sleep(0.4)
         elif cmd == "4":
@@ -420,13 +420,13 @@ def visualizer_singly_linked_list():
             else:
                 removed = nodes[-1]
                 print(f"\n  {Color.YELLOW}Step 1: Traverse to Second-to-Last Node{Color.RESET}")
-                print(f"          temp = HEAD; while (temp->next->next != NULL) temp = temp->next;")
+                print("          temp = HEAD; while (temp->next->next != NULL) temp = temp->next;")
                 prompt_input(f"  {Color.DIM}Press Enter for Step 2...{Color.RESET}")
                 print(f"\n  {Color.YELLOW}Step 2: Free Last Node Memory{Color.RESET}")
                 print(f"          free(temp->next);  (deallocated tail node holding {removed})")
                 prompt_input(f"  {Color.DIM}Press Enter for Step 3...{Color.RESET}")
                 print(f"\n  {Color.YELLOW}Step 3: Terminate List with NULL{Color.RESET}")
-                print(f"          temp->next = NULL; (new tail now properly points to NULL)")
+                print("          temp->next = NULL; (new tail now properly points to NULL)")
                 nodes.pop()
                 time.sleep(0.4)
         elif cmd == "5":
@@ -463,7 +463,7 @@ def visualizer_circular_linked_list():
     while True:
         clear_screen()
         print(f"\n{Color.CYAN}{Color.BOLD}╔══════════════════════════════════════════════════════════════════════════════╗")
-        print(f"║   ⭕ CIRCULAR LINKED LIST WITH HEADER NODE (Lab 05: Polynomial Addition)     ║")
+        print("║   ⭕ CIRCULAR LINKED LIST WITH HEADER NODE (Lab 05: Polynomial Addition)     ║")
         print(f"╚══════════════════════════════════════════════════════════════════════════════╝{Color.RESET}\n")
 
         print("  Polynomial Expression:  " + " + ".join([f"{c}x^{e}" for c, e in terms]))
@@ -471,8 +471,8 @@ def visualizer_circular_linked_list():
         print("    [HEADER (exp: -1)] ──> ", end="")
         for c, e in terms:
             print(f"[{c}x^{e} | •] ──> ", end="")
-        print(f"\n    ▲                                                        │")
-        print(f"    └────────────────── (Loops Back to Header) ──────────────┘\n")
+        print("\n    ▲                                                        │")
+        print("    └────────────────── (Loops Back to Header) ──────────────┘\n")
 
         print(f"  {Color.CYAN}💡 Examiner Secret:{Color.RESET} The header node has a dummy exponent (-1).")
         print("     This eliminates NULL pointer checks! Traversal simply continues `while (p != header)`.\n")
@@ -492,7 +492,7 @@ def visualizer_circular_linked_list():
                 print(f"\n  {Color.YELLOW}Step 2: Traverse while p->next != header && p->next->exp > {e_val}{Color.RESET}")
                 prompt_input(f"  {Color.DIM}Press Enter for Step 3...{Color.RESET}")
                 print(f"\n  {Color.YELLOW}Step 3: Wire Circular Pointers In-Place{Color.RESET}")
-                print(f"          new_node->next = p->next; p->next = new_node;")
+                print("          new_node->next = p->next; p->next = new_node;")
                 terms.append((c_val, e_val))
                 terms.sort(key=lambda t: t[1], reverse=True)
                 time.sleep(0.4)
@@ -535,7 +535,7 @@ def visualizer_bst():
     while True:
         clear_screen()
         print(f"\n{Color.CYAN}{Color.BOLD}╔══════════════════════════════════════════════════════════════════════════════╗")
-        print(f"║   🌳 INTERACTIVE BINARY SEARCH TREE SANDBOX (Lab 10: Numeric BST)            ║")
+        print("║   🌳 INTERACTIVE BINARY SEARCH TREE SANDBOX (Lab 10: Numeric BST)            ║")
         print(f"╚══════════════════════════════════════════════════════════════════════════════╝{Color.RESET}\n")
 
         print("  Current Keys in Tree: " + ", ".join(map(str, keys)))

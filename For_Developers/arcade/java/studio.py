@@ -104,7 +104,7 @@ def visualizer_stack_java():
     while True:
         clear_screen()
         print(f"\n{Color.CYAN}{Color.BOLD}╔══════════════════════════════════════════════════════════════════════════════╗")
-        print(f"║   ☕ JAVA STACK OOP ENCAPSULATION SANDBOX (Lab 02: Stack Class)               ║")
+        print("║   ☕ JAVA STACK OOP ENCAPSULATION SANDBOX (Lab 02: Stack Class)               ║")
         print(f"╚══════════════════════════════════════════════════════════════════════════════╝{Color.RESET}\n")
         print("  Heap Object State:")
         print("    Instance: Stack@7a81197d  |  private int[] s = new int[4]")
