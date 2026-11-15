@@ -29,8 +29,13 @@ def _view_source_file(file_path, title):
         prompt_input("Press Enter to return...")
         return
 
-    with open(file_path, "r", encoding="utf-8", errors="replace") as f:
-        lines = f.readlines()
+    try:
+        with open(file_path, "r", encoding="utf-8", errors="replace") as f:
+            lines = f.readlines()
+    except Exception as e:
+        print(f"{Color.RED}Could not read file: {e}{Color.RESET}\n")
+        prompt_input("Press Enter to return...")
+        return
 
     for idx, l in enumerate(lines, 1):
         print(f"{Color.DIM}{idx:3d} |{Color.RESET} {l}", end="")
@@ -82,7 +87,7 @@ def _show_code_vault():
         for i, (step_code, name, _) in enumerate(LAB_EXPERIMENTS, 1):
             print(f"    {Color.CYAN}[G{i:02d}]{Color.RESET} {step_code}: {name}")
 
-        print(f"\n  {Color.MAGENTA}[DOC1]{Color.RESET} GIT_FOR_HUMANS.md — Zero-jargon visual guide")
+        print(f"\n  {Color.MAGENTA}[DOC1]{Color.RESET} GIT_REFERENCE.md — Git for Humans zero-jargon guide")
         print(f"  {Color.MAGENTA}[DOC2]{Color.RESET} GIT_COMMANDS.md  — Complete Git cheatsheet")
 
         print(f"\n  {Color.DIM}[0]  ⬅️   Back to Master Hub{Color.RESET}\n")
@@ -104,10 +109,10 @@ def _show_code_vault():
             if 0 <= idx < len(LAB_EXPERIMENTS):
                 step_code, name, code = LAB_EXPERIMENTS[idx]
                 _view_git_experiment(step_code, name, code, idx + 1)
-        elif choice in ("DOC1", "G1"):
-            _view_source_file(os.path.join(base, 'GIT_FOR_HUMANS.md'), "Git for Humans Handbook")
-        elif choice in ("DOC2", "G2"):
-            _view_source_file(os.path.join(base, 'GIT_COMMANDS.md'), "Git Commands Ninja Cheatsheet")
+        elif choice == "DOC1":
+            _view_source_file(os.path.join(base, "docs", "GIT_REFERENCE.md"), "Git for Humans Handbook (GIT_REFERENCE.md)")
+        elif choice == "DOC2":
+            _view_source_file(os.path.join(base, "docs", "GIT_COMMANDS.md"), "Git Commands Ninja Cheatsheet (GIT_COMMANDS.md)")
 
 # ==============================================================================
 # 🐙 GIT ARCADE SUB-MENU (Option 1)
