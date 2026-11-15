@@ -18,7 +18,7 @@ try:
     )
     from arcade.session import (  # type: ignore
         _SESSION, _record_concept_mastered, _unlock_badge,
-        _save_to_local_db, _show_session_header, BANNER,
+        _save_to_local_db, _show_session_header, BANNER, _mark_experiment_done,
     )
     from arcade.git.sandbox import mode_git_command_sandbox  # type: ignore
     from arcade.git.experiments_data import GIT_EXPERIMENTS  # type: ignore
@@ -29,7 +29,7 @@ except (ImportError, ValueError):
     )
     from ..session import (  # type: ignore
         _SESSION, _record_concept_mastered, _unlock_badge,
-        _save_to_local_db, _show_session_header, BANNER,
+        _save_to_local_db, _show_session_header, BANNER, _mark_experiment_done,
     )
     from .sandbox import mode_git_command_sandbox  # type: ignore
     from .experiments_data import GIT_EXPERIMENTS  # type: ignore
@@ -389,9 +389,7 @@ def run_git_experiment_lab(exp):
         print(f"   {Color.YELLOW}Expected ({target_opt}): {ch['hint']}{Color.RESET}\n")
 
     exp_id = f"GIT-{exp['num']}"
-    if exp_id not in _SESSION["experiments_done"]:
-        _SESSION["experiments_done"].append(exp_id)
-        _save_to_local_db()
+    _mark_experiment_done(exp_id)
 
     prompt_input("Press Enter to return to Git Lab Studio...")
 

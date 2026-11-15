@@ -347,6 +347,15 @@ def _show_session_header(show_welcome=True, subject=None):
 
     print(f"  {Color.DIM}💾 Local DB: Active (Saved on your device){Color.RESET}\n")
 
+def _mark_experiment_done(exp_id):
+    """Marks an experiment as completed, evaluates milestones, and saves to DB."""
+    if "experiments_done" not in _SESSION:
+        _SESSION["experiments_done"] = []
+    if exp_id not in _SESSION["experiments_done"]:
+        _SESSION["experiments_done"].append(exp_id)
+    _check_milestone_badges()
+    _save_to_local_db()
+
 def _record_visualizer_explored(vis_id):
     """Marks a visualizer as explored and checks milestones."""
     if "visualizers_explored" not in _SESSION:

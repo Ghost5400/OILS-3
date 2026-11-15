@@ -7,12 +7,12 @@ import os
 
 try:
     from arcade.core import PROJECT_ROOT, Color, clear_screen, prompt_input  # type: ignore
-    from arcade.session import _unlock_badge, _SESSION, _save_to_local_db  # type: ignore
+    from arcade.session import _unlock_badge, _SESSION, _save_to_local_db, _mark_experiment_done  # type: ignore
     from arcade.git.story import LAB_EXPERIMENTS  # type: ignore
     from arcade.dialogues import print_dialogue  # type: ignore
 except (ImportError, ValueError):
     from .core import PROJECT_ROOT, Color, clear_screen, prompt_input  # type: ignore
-    from .session import _unlock_badge, _SESSION, _save_to_local_db  # type: ignore
+    from .session import _unlock_badge, _SESSION, _save_to_local_db, _mark_experiment_done  # type: ignore
     from .git.story import LAB_EXPERIMENTS  # type: ignore
     from .dialogues import print_dialogue  # type: ignore
 
@@ -49,9 +49,7 @@ def _view_git_experiment(step_code, name, code, step_num=None):
     _unlock_badge("vault_dweller")
     if step_num:
         exp_id = f"GIT-{step_num}"
-        if exp_id not in _SESSION["experiments_done"]:
-            _SESSION["experiments_done"].append(exp_id)
-            _save_to_local_db()
+        _mark_experiment_done(exp_id)
 
     print(f"\n{Color.YELLOW}{Color.BOLD}================================================================================{Color.RESET}")
     print(f"  🐙 GIT LAB EXPERIMENT: {step_code} — {name}")

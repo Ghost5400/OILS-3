@@ -14,7 +14,7 @@ try:
     )
     from arcade.session import (  # type: ignore
         _SESSION, _record_concept_mastered, _unlock_badge,
-        _save_to_local_db, _show_session_header,
+        _save_to_local_db, _show_session_header, _mark_experiment_done,
     )
     from arcade.vault import _view_source_file  # type: ignore
     from arcade.dsa.experiments_data import DSA_EXPERIMENTS  # type: ignore
@@ -37,7 +37,7 @@ except (ImportError, ValueError):
     )
     from ..session import (  # type: ignore
         _SESSION, _record_concept_mastered, _unlock_badge,
-        _save_to_local_db, _show_session_header,
+        _save_to_local_db, _show_session_header, _mark_experiment_done,
     )
     from ..vault import _view_source_file  # type: ignore
     from .experiments_data import DSA_EXPERIMENTS  # type: ignore
@@ -273,9 +273,7 @@ def run_dsa_experiment_lab(exp):
 
     # Mark experiment as done
     exp_id = f"DSA-{exp['num']}"
-    if exp_id not in _SESSION["experiments_done"]:
-        _SESSION["experiments_done"].append(exp_id)
-        _save_to_local_db()
+    _mark_experiment_done(exp_id)
 
     print(f"{Color.DIM}File location: {exp['file']}{Color.RESET}")
     prompt_input(f"\n{Color.DIM}Press Enter to return to DSA Lab Studio...{Color.RESET}")

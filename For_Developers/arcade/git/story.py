@@ -14,6 +14,7 @@ try:
     from arcade.session import (  # type: ignore
         _record_concept_mastered, _unlock_badge,
         _show_session_header, BANNER, _SESSION, _save_to_local_db,
+        _mark_experiment_done,
     )
     from arcade.git.questions import _run_step_checkpoint  # type: ignore
     from arcade.git.sandbox import mode_git_command_sandbox  # type: ignore
@@ -26,6 +27,7 @@ except (ImportError, ValueError):
     from ..session import (  # type: ignore
         _record_concept_mastered, _unlock_badge,
         _show_session_header, BANNER, _SESSION, _save_to_local_db,
+        _mark_experiment_done,
     )
     from .questions import _run_step_checkpoint  # type: ignore
     from .sandbox import mode_git_command_sandbox  # type: ignore
@@ -635,9 +637,7 @@ def mode_vtu_cheatbook():
             if 1 <= choice <= 12:
                 step_code, name, code = LAB_EXPERIMENTS[choice - 1]
                 exp_id = f"GIT-{choice}"
-                if exp_id not in _SESSION["experiments_done"]:
-                    _SESSION["experiments_done"].append(exp_id)
-                    _save_to_local_db()
+                _mark_experiment_done(exp_id)
                 print(f"\n{Color.GREEN}{Color.BOLD}═════════════════════════════════════════════════════")
                 print(f"📖 {step_code}: {name}  {Color.YELLOW}✔ [Progress Saved]{Color.RESET}")
                 print(f"═════════════════════════════════════════════════════{Color.RESET}")
