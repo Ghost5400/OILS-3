@@ -183,7 +183,7 @@ JAVA_EXPERIMENTS = [
     # ── Experiment 04 ─────────────────────────────────────────────────────────
     {
         "num": 4,
-        "title": "Runtime Polymorphism and Method Overriding",
+        "title": "Runtime Polymorphism and Method Overriding (Shape)",
         "file": "java-lab/programs/Lab04ShapePolymorphism.java",
         "story": "Polymorphism means 'many forms'! Imagine a universal remote: the button says 'Draw', but when pointed at a Circle, it draws a circle; pointed at a Triangle, it draws a triangle! In Java, a single Superclass variable (`Shape s`) can point to any child object on the Heap. The JVM checks what object is actually there at runtime and calls the right method using Dynamic Method Dispatch (VTable).",
         "problem": "Create a base class Shape with draw() and erase(). Create subclasses Circle, Triangle, Square that override draw() and erase(). Demonstrate polymorphism using a single Shape reference.",
